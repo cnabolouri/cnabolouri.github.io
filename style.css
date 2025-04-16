@@ -127,8 +127,8 @@ h2 {
 }
 
 .profile_image {
-  width: 500px;
-  height: fit-content;
+  width: 150px;
+  height: 200px;
   vertical-align: middle;
   margin: 5px;
 }
