@@ -1,3 +1,21 @@
+
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
 body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -38,10 +56,10 @@ body {
 .profile_name {
   float: left;
   padding-left: 2cm;
-  lighting-color: azure;
+  color: rgb(255, 255, 255);
   font-size: 20px;
-  /* Add the styles here */
 }
+
 
 .profile_name .contact_info {
   font-size: 15px;
@@ -60,12 +78,13 @@ body {
 
 /* Titles */
 
+
 h2 {
   text-align: justify;
   font-size: 50px;
   text-align: center;
   float: left;
-  color: #050505;
+  border: 1px solid lightgray;
   margin: 30px;
   margin-left: 60px;
   margin-top: 40px;
@@ -99,18 +118,16 @@ h2 {
 #about-me h1 {
   font-size: 65px;
   margin-top: 90px;
-  color: #000000;
+  border: 1px solid lightgray;
 }
 
 #about-me p {
   font-size: 25px;
-  color: rgb(128, 128, 128);
+  /*color: rgb(255, 255, 255);*/
   margin-top: -1cm;
 }
 
 .profile_image {
-  width: 500px;
-  height: fit-content;
   vertical-align: middle;
   margin: 5px;
 }
@@ -206,7 +223,7 @@ h2 {
   text-align: left;
   width: 21.875rem;
   padding: 1rem;
-  background-color: #fff;
+  /*background-color: #fff;*/
   border-radius: 11px;
   box-shadow: 0 3px 10px var(--primary-shadow);
   padding: 20px;
@@ -325,5 +342,42 @@ button:hover {
   display: block;
   border-radius: 6px;
   text-align: center;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px 30px;
+  text-align: center;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 0 10px #333;
+}
+
+.modal-icon {
+  font-size: 28px;
+  color: green;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#close-modal {
+  margin-top: 15px;
+  padding: 8px 20px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background: none;
   cursor: pointer;
 }
