@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic 209 Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Mechanical 210 Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+   const quizData = [
+  { question: "1. Smaller dirt particles are removed from the air by the filter's __________.", options: ["Deflector", "Baffle", "Element", "Bowl"], answer: "Element" },
+  { question: "2. Pressure is a measure of __________.", options: ["Distance", "Volume", "Time", "Force intensity"], answer: "Force intensity" },
+  { question: "3. A regulator is used in pneumatics to __________.", options: ["Remove dirt from the air", "Shut-off the compressor", "Connect three branch circuits to a supply", "Provide a constant pressure to the circuit"], answer: "Provide a constant pressure to the circuit" },
+  { question: "4. This fitting is used to connect two branch circuits to a single supply line.", options: ["Elbow", "Tee", "Male connector", "Plug"], answer: "Tee" },
+{
+  question: `5. The symbol shown here represents <br><img src="blocked_port_symbol.png" alt="Blocked Port Symbol" style="height:80px;margin:12px 0;">`,
+  options: ["A port", "A blocked port", "A way", "A valve"],
+  answer: "A blocked port"
+},
+  { question: "6. DCV stands for __________.", options: ["Digital control variable", "Dynamic cost variable", "Directional control valve", "Directional control vane"], answer: "Directional control valve" },
+  { question: "7. Filters should be used on all pneumatic systems because atmospheric air contains __________.", options: ["Carbon", "Lead", "Dust", "Viton"], answer: "Dust" },
+  { question: "8. Industry uses quick-connect fittings when __________.", options: ["Ever possible", "Low cost is desired", "The equipment is used at high altitudes", "There is a frequent need to connect and disconnect a hose"], answer: "There is a frequent need to connect and disconnect a hose" },
+  { question: "9. This assembly moves inside the barrel-shaped body of a cylinder.", options: ["Piston/Rod", "Poppet/Spring", "Element", "Vane"], answer: "Piston/Rod" },
+  { question: "10. Pneumatic symbols have been standardized by the ISO which stands for __________.", options: ["International Standards Organization", "International Organization for Standardization", "International Systems Organization", "Information Superhighway Organization"], answer: "International Organization for Standardization" },
+  { question: "11. Which of the following is not a pneumatic safety rule?", options: ["Do not point compressed air at eyes.", "Use low pressure when cleaning with air.", "Use any container for compressed air.", "Use safety glasses."], answer: "Use any container for compressed air." },
+  { question: "12. The number of __________ on a Directional Control Valve indicates the number of paths air can flow through the valve.", options: ["Positions", "Operators", "Ports", "Levers"], answer: "Ports" },
+  { question: "13. What causes the poppet of a pressure regulator to close?", options: ["An increase in upstream pressure", "An increase in downstream pressure", "A decrease in upstream pressure", "A decrease in downstream pressure"], answer: "An increase in downstream pressure" },
+  { question: "14. On a pressure gauge with a full-scale reading of 100 psi, a 3% error rating means the actual psi may be up to __________ psi different than what the gauge indicates.", options: ["300", "100", "3", "30"], answer: "3" },
+  { question: "15. Which fluid is most commonly used in pneumatics?", options: ["Air", "Oxyacetylene", "Water", "Oil"], answer: "Air" },
+  { question: "16. The control devices used in pneumatics are called __________.", options: ["Compressors", "Actuators", "Valves", "Conductors"], answer: "Valves" },
+  { question: "17. Which pneumatic component provides straight-line motion?", options: ["Motor", "DCV", "Cylinder", "Muffler"], answer: "Cylinder" },
+  { question: "18. To reduce the noise of a pneumatic 3-position, 4-way DCV, a __________ is used.", options: ["Spring", "Quick-connect fitting", "Spool", "Muffler"], answer: "Muffler" },
+  { question: "19. Pneumatic motors operate by using air pressure to create a turning force called __________.", options: ["Rotation", "Back pressure", "Torque", "Uni-directional"], answer: "Torque" },
+  { question: "20. The 3-port DCV is held in the energized position by the __________.", options: ["Operator", "Spool", "Body", "Spring"], answer: "Operator" },
+  { question: "21. The 3-port DCV is used in applications where the actuator needs to be powered in __________.", options: ["One direction", "Two directions", "Three directions", "Four directions"], answer: "One direction" },
+  { question: "22. The single-acting to extend spring return cylinder is extended by the __________.", options: ["Load", "Pressure", "Spring", "Bushing"], answer: "Pressure" },
+  { question: "23. A dashed line in a pneumatic schematic diagram represents a(n) __________.", options: ["Main line", "Exhaust line", "Pilot line", "Enclosure line"], answer: "Pilot line" },
+  { question: "24. Symbols in pneumatics are used to show __________.", options: ["Size of components", "Function", "Port locations", "Pressure settings"], answer: "Function" },
+  { question: "25. Two of the most common design types of pneumatic motors are __________.", options: ["Turbine and piston", "Lobed rotor and vane", "Vane and V-type", "Vane and piston"], answer: "Vane and piston" },
+  { question: "26. Which pneumatic actuator converts compressed air flow into rotary motion?", options: ["Motor", "Single acting cylinder", "Double acting cylinder", "All of the above"], answer: "Motor" },
+  { question: "27. The body of a single-acting, spring-return cylinder has __________.", options: ["One connection port", "Two connection ports", "No connection ports", "Four connection ports"], answer: "One connection port" }
+];
+
+
+
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+    function loadQuestion() {
+      const q = quizData[current];
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option}')">${option}</button>`).join('');
+      quizEl.innerHTML = `<div class="card"><h2>${q.question}</h2><div class="options">${options}</div><div class="result" id="result"></div></div>`;
+    }
+    function checkAnswer(btn, selected) {
+      const correct = quizData[current].answer;
+      const resultEl = document.getElementById('result');
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+      if (selected === correct) {
+        btn.classList.add('correct');
+        resultEl.textContent = '✅ Correct!';
+        score++;
+      } else {
+        btn.classList.add('incorrect');
+        resultEl.textContent = `❌ Incorrect. Correct answer: ${correct}`;
+      }
+      setTimeout(() => {
+        current++;
+        if (current < quizData.length) {
+          loadQuestion();
+        } else {
+          quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p></div>`;
+        }
+      }, 1500);
+    }
+    loadQuestion();
+  </script>
+</body>
+</html>
