@@ -204,6 +204,7 @@
         });
 
       }
+      const delay = (selected === correct) ? 1500 : 5000;  // 1.5s if correct, 5s if incorrect
       setTimeout(() => {
         current++;
         if (current < quizData.length) {
@@ -224,7 +225,7 @@
           }
           quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p>${reviewHTML}</div>`;
         }
-      }, 1500);
+      }, delay);
 
     }
     loadQuestion();
