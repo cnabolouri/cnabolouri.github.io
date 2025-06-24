@@ -190,27 +190,23 @@
         if (current < quizData.length) {
           loadQuestion();
         } else {
-          quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p></div>`;
-          if (current < quizData.length) {
-            loadQuestion();
+          // Build review of wrong answers if any
+          let reviewHTML = "";
+          if (wrongAnswers.length > 0) {
+            reviewHTML = "<h3>Review: Questions You Missed</h3><ul>";
+            wrongAnswers.forEach(q => {
+              reviewHTML += `<li><strong>Q:</strong> ${q.question}<br>
+              <span style="color:#f33;">Your answer:</span> ${q.userAnswer}<br>
+              <span style="color:#090;">Correct answer:</span> ${q.correct}</li><br>`;
+            });
+            reviewHTML += "</ul>";
           } else {
-            let reviewHTML = "";
-            if (wrongAnswers.length > 0) {
-              reviewHTML = "<h3>Review: Questions You Missed</h3><ul>";
-              wrongAnswers.forEach(q => {
-                reviewHTML += `<li><strong>Q:</strong> ${q.question}<br>
-                <span style="color:#f33;">Your answer:</span> ${q.userAnswer}<br>
-                <span style="color:#090;">Correct answer:</span> ${q.correct}</li><br>`;
-              });
-              reviewHTML += "</ul>";
-            } else {
-              reviewHTML = "<p>🎉 You got everything correct!</p>";
-            }
-            quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p>${reviewHTML}</div>`;
+            reviewHTML = "<p>🎉 You got everything correct!</p>";
           }
-
+          quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p>${reviewHTML}</div>`;
         }
       }, 1500);
+
     }
     loadQuestion();
   </script>
