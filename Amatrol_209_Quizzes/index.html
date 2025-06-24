@@ -161,11 +161,27 @@
     let current = 0;
     let score = 0;
     const quizEl = document.getElementById('quiz');
+
     function loadQuestion() {
-      const q = quizData[current];
-      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option}')">${option}</button>`).join('');
-      quizEl.innerHTML = `<div class="card"><h2>${q.question}</h2><div class="options">${options}</div><div class="result" id="result"></div></div>`;
-    }
+  const q = quizData[current];
+  const counterHTML = `
+    <div style="margin-bottom:0.8em;font-size:1.1em;">
+      <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+      <span>Correct answers so far: ${score}</span>
+    </div>
+  `;
+  const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option}')">${option}</button>`).join('');
+  quizEl.innerHTML = `
+    <div class="card">
+      ${counterHTML}
+      <h2>${q.question}</h2>
+      <div class="options">${options}</div>
+      <div class="result" id="result"></div>
+    </div>
+  `;
+}
+
+    
     function checkAnswer(btn, selected) {
       const correct = quizData[current].answer;
       const resultEl = document.getElementById('result');
