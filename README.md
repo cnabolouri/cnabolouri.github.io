@@ -1,1 +1,1 @@
-# https://github.com/cnabolouri/cnabolouri.github.io.git
+https://cnabolouri.github.io/
