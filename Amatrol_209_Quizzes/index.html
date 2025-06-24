@@ -204,7 +204,7 @@
         });
 
       }
-      const delay = (selected === correct) ? 1500 : 5000;  // 1.5s if correct, 5s if incorrect
+      const delay = (selected === correct) ? 1000 : 3000;  // 1.5s if correct, 5s if incorrect
       setTimeout(() => {
         current++;
         if (current < quizData.length) {
