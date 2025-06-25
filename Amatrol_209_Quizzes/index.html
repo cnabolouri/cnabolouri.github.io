@@ -185,6 +185,34 @@
 }
 
     
+function showResults() {
+  let reviewHTML = "";
+  if (wrongAnswers.length === 0) {
+    reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+  } else {
+    reviewHTML = `
+      <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+      <ol>
+        ${wrongAnswers.map(item => `
+          <li style="margin-bottom:1em;">
+            <div style="font-weight:500;">${item.question}</div>
+            <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+            <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+          </li>
+        `).join('')}
+      </ol>
+    `;
+  }
+  quizEl.innerHTML = `
+    <div class='card'>
+      <h2>🎉 Quiz Completed!</h2>
+      <p>Your Score: ${score} / ${quizData.length}</p>
+      ${reviewHTML}
+      <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+    </div>
+  `;
+}
+    
 function checkAnswer(btn, selected) {
   const qObj = quizData[current];
   const correct = qObj.answer;
@@ -193,24 +221,31 @@ function checkAnswer(btn, selected) {
   buttons.forEach(b => b.disabled = true);
 
   if (selected === correct) {
-    btn.classList.add('correct');
-    resultEl.textContent = '✅ Correct!';
-    score++;
-    setTimeout(() => {
-      current++;
-      if (current < quizData.length) {
-        loadQuestion();
-      } else {
-        quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p></div>`;
-      }
-    }, 300);
-  } else {
-    btn.classList.add('incorrect');
+  btn.classList.add('correct');
+  resultEl.textContent = '✅ Correct!';
+  score++;
+  setTimeout(() => {
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  }, 300);
+} else {
+  btn.classList.add('incorrect');
+  // Save the wrong answer for review
+  wrongAnswers.push({
+    question: qObj.question,
+    options: qObj.options,
+    correct: correct,
+    selected: selected
+  });
     // Add extra note for this specific question
     let extraNote = "";
     if (qObj.question.startsWith("Air logic is popular in the food processing industry because")) {
       extraNote = `<div style="margin-top:0.6em; color:#0066cc; font-size:0.98em; border-left:3px solid #0066cc; padding-left:0.7em;">
-      Note: The answer in Amatrol Quiz is <b>'It is cleaner than electricity'</b>, but in the book, it's <b>'Of the moisture present during cleaning'</b>.
+      Note: The answer in Amatrol Quiz is <b>'It is cleaner than electricity'</b>, but in the book, it's <b>'of the moisture present during cleaning'</b>.
       </div>`;
     }
     resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
@@ -223,7 +258,8 @@ function checkAnswer(btn, selected) {
       if (current < quizData.length) {
         loadQuestion();
       } else {
-        quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p></div>`;
+        showResults();
+
       }
     }
     setTimeout(() => {
@@ -231,6 +267,7 @@ function checkAnswer(btn, selected) {
     }, 200);
   }
 }
+
 
     loadQuestion();
   </script>
