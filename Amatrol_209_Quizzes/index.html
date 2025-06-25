@@ -205,12 +205,6 @@ function checkAnswer(btn, selected) {
     }, 500);
   } else {
     btn.classList.add('incorrect');
-    let extraNote = "";
-    if (qObj.question.startsWith("Air logic is popular in the food processing industry because")) {
-      extraNote = `<div style="margin-top:0.6em; color:#0066cc; font-size:0.98em; border-left:3px solid #0066cc; padding-left:0.7em;">
-      Note: The answer in Amatrol Quiz is <b>'It is cleaner than electricity'</b>, but in the book, it's <b>'of the moisture present during cleaning'</b>.
-      </div>`;
-    }
     resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}<br><span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click here to continue…</span>`;
     // Handler to advance on any click
     function nextQuestionHandler() {
