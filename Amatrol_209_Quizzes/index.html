@@ -186,7 +186,8 @@
 
     
 function checkAnswer(btn, selected) {
-  const correct = quizData[current].answer;
+  const qObj = quizData[current];
+  const correct = qObj.answer;
   const resultEl = document.getElementById('result');
   const buttons = document.querySelectorAll('button');
   buttons.forEach(b => b.disabled = true);
@@ -202,10 +203,19 @@ function checkAnswer(btn, selected) {
       } else {
         quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p></div>`;
       }
-    }, 500);
+    }, 1500);
   } else {
     btn.classList.add('incorrect');
-    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}<br><span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click here to continue…</span>`;
+    // Add extra note for this specific question
+    let extraNote = "";
+    if (qObj.question.startsWith("Air logic is popular in the food processing industry because")) {
+      extraNote = `<div style="margin-top:0.6em; color:#0066cc; font-size:0.98em; border-left:3px solid #0066cc; padding-left:0.7em;">
+      Note: The answer in Amatrol Quiz is <b>'It is cleaner than electricity'</b>, but in the book, it's <b>'Of the moisture present during cleaning'</b>.
+      </div>`;
+    }
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>
+    ${extraNote}`;
     // Handler to advance on any click
     function nextQuestionHandler() {
       document.body.removeEventListener('click', nextQuestionHandler);
@@ -216,12 +226,12 @@ function checkAnswer(btn, selected) {
         quizEl.innerHTML = `<div class='card'><h2>🎉 Quiz Completed!</h2><p>Your Score: ${score} / ${quizData.length}</p></div>`;
       }
     }
-    // Slight delay so user doesn't instantly advance by accident
     setTimeout(() => {
       document.body.addEventListener('click', nextQuestionHandler);
     }, 200);
   }
 }
+
     loadQuestion();
   </script>
 </body>
