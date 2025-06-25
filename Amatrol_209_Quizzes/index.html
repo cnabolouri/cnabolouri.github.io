@@ -184,7 +184,6 @@
   `;
 }
 
-    
 function showResults() {
   let reviewHTML = "";
   if (wrongAnswers.length === 0) {
@@ -193,13 +192,23 @@ function showResults() {
     reviewHTML = `
       <h3 style="margin-top:2em;">Review: Missed Questions</h3>
       <ol>
-        ${wrongAnswers.map(item => `
-          <li style="margin-bottom:1em;">
-            <div style="font-weight:500;">${item.question}</div>
-            <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
-            <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
-          </li>
-        `).join('')}
+        ${wrongAnswers.map(item => {
+          // Special note for the food processing question
+          let extraNote = "";
+          if (item.question.startsWith("Air logic is popular in the food processing industry because")) {
+            extraNote = `<div style="margin-top:0.4em; color:#0066cc; font-size:0.98em; border-left:3px solid #0066cc; padding-left:0.7em;">
+              Note: The answer in Amatrol Quiz is <b>'It is cleaner than electricity'</b>, but in the book, it's <b>'Of the moisture present during cleaning'</b>.
+              </div>`;
+          }
+          return `
+            <li style="margin-bottom:1em;">
+              <div style="font-weight:500;">${item.question}</div>
+              <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+              <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              ${extraNote}
+            </li>
+          `;
+        }).join('')}
       </ol>
     `;
   }
@@ -212,6 +221,7 @@ function showResults() {
     </div>
   `;
 }
+
     
 function checkAnswer(btn, selected) {
   const qObj = quizData[current];
