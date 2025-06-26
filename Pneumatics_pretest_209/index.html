@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+    const quizData = [
+      {
+        question: "Smaller dirt particles are removed from the air by the filter's __________.",
+        options: ["Deflector", "Baffle", "Element", "Bowl"],
+        answer: "Element"
+      },
+      {
+        question: "What pneumatic component provides straight line motion?",
+        options: ["Motor", "DCV", "Cylinder", "Muffler"],
+        answer: "Cylinder"
+      },
+      {
+        question: "Pressure, is a measurement of __________ when an object acts over the area of another.",
+        options: ["Distance", "Volume", "Time", "Force intensity"],
+        answer: "Force intensity"
+      },
+      {
+        question: "Pneumatic actuators can be stopped without causing damage.",
+        options: ["True", "False"],
+        answer: "True"
+      },
+      {
+        question: "Which is not a component of a pneumatic pressure regulator?",
+        options: ["Vent", "Poppet", "Needle valve", "None of the above", "All the above"],
+        answer: "Needle valve"
+      },
+      {
+        question: "A pneumatic main line is symbolically represented by a __________ line.",
+        options: ["Dashed", "Dotted", "Checkout", "Solid"],
+        answer: "Solid"
+      },
+      {
+        question: "Three of the most common design types of pneumatic motors are __________.",
+        options: [
+          "Turbine, piston, lobed rotor",
+          "Lobed rotor, vane, V-type",
+          "Vane, V-type, axial",
+          "Vane, radial piston, axial piston"
+        ],
+        answer: "Vane, radial piston, axial piston"
+      },
+      {
+        question: "The 3-port DCV is held in the energized position by the __________.",
+        options: ["Operator", "Spool", "Body", "Spring"],
+        answer: "Operator"
+      },
+      {
+        question: "What is represented by this symbol?",
+        options: ["Single-acting cylinder", "Muffler", "Double-acting cylinder", "Accumulator"],
+        answer: "Muffler"
+      },
+      {
+        question: "What is represented by this symbol?",
+        options: [
+          "Double-acting",
+          "Single acting to extend",
+          "Single acting to retract",
+          "None of the above"
+        ],
+        answer: "Single acting to retract"
+      },
+      {
+        question: "Boyle's Law states that __________.",
+        options: [
+          "Pressure in a confined volume is equal",
+          "Pressure is force intensity",
+          "Pressure is inversely proportional to volume",
+          "Volume is directly proportional to pressure"
+        ],
+        answer: "Pressure is inversely proportional to volume"
+      },
+      {
+        question: "To convert gauge pressure to absolute __________.",
+        options: [
+          "Add atmospheric pressure to the gauge pressure",
+          "Add 14.7 psi to the psig reading",
+          "Add 101.3 kPa to the kPa gauge reading",
+          "All of the above"
+        ],
+        answer: "All of the above"
+      },
+      {
+        question: "The force output of a cylinder when extending can be calculated by pressure x(     ) .7854 __________.",
+        options: [
+          "Rod area",
+          "Annular area ^2",
+          "Piston diameter ^2",
+          "Travel distance"
+        ],
+        answer: "Piston diameter ^2"
+      },
+      {
+        question: "Pascal’s law states that in a confined container the same pressure exists throughout the entire volume of the fluid and acts perpendicular to all internal surfaces.",
+        options: ["True", "False"],
+        answer: "True"
+      },
+      {
+        question: "If the load on the actuator changes, the pressure required to move the load will __________",
+        options: [
+          "Also change",
+          "Remain the same",
+          "Compensate the DCV",
+          "Cause the vane to stall"
+        ],
+        answer: "Also change"
+      },
+      {
+        question: "A flow control valve is a combination of a __________.",
+        options: [
+          "Flow meter and a check valve",
+          "DCV and a check valve",
+          "Needle valve and a check valve",
+          "Needle valve and a restrictor valve"
+        ],
+        answer: "Needle valve and a check valve"
+      },
+      {
+        question: "The flow rate of air is the amount of air that passes through a system __________.",
+        options: [
+          "In a certain amount of time",
+          "At a given temperature",
+          "And not returned to the atmosphere",
+          "Before the compressor is started"
+        ],
+        answer: "In a certain amount of time"
+      },
+      {
+        question: "What is represented by this symbol?",
+        options: [
+          "Flow control valve",
+          "Pressure relief valve",
+          "Needle valve",
+          "None of the above"
+        ],
+        answer: "Flow control valve"
+      },
+      {
+        question: "The function of a pneumatic cam-operated valve is __________.",
+        options: [
+          "To stop the cylinder from moving any farther",
+          "A pneumatic limit switch",
+          "To control the DCV",
+          "All of the above",
+          "None of the above"
+        ],
+        answer: "A pneumatic limit switch"
+      },
+      {
+        question: "A characteristic of the DCV ports is they can __________ to obtain different operational characteristics.",
+        options: [
+          "Use enlarged A ports",
+          "Exhaust only to another cylinder",
+          "Switch port connections to switch functions",
+          "Be timed controlled"
+        ],
+        answer: "Switch port connections to switch functions"
+      },
+      {
+        question: "The deceleration method used to slow pneumatic cylinders by switching to a slower flow control speed is __________.",
+        options: [
+          "2-speed control with a cam valve",
+          "Power braking",
+          "External shock absorbers",
+          "None of the above, this is not attempted"
+        ],
+        answer: "2-speed control with a cam valve"
+      },
+      {
+        question: "What operator method is used in this picture?",
+        options: [
+          "Cam/roller-operated",
+          "Lever-operated",
+          "Pilot-operated",
+          "DCV"
+        ],
+        answer: "Cam/roller-operated"
+      },
+      {
+        question: "Which is not a method of pneumatic deceleration?",
+        options: [
+          "Two-speed control w/cam valve",
+          "Power braking",
+          "Shock-absorbers",
+          "None of the above"
+        ],
+        answer: "None of the above"
+      },
+      {
+        question: "Shuttle valves are used in air logic circuits to __________.",
+        options: [
+          "Provide OR logic",
+          "Latch in spring offset externally piloted DCVs",
+          "Provide an output when either of two input signals are applied",
+          "All of the above",
+          "None of the above"
+        ],
+        answer: "All of the above"
+      },
+      {
+        question: "For shifting, externally air-piloted pneumatic DCVs use __________.",
+        options: [
+          "Remote air pressure",
+          "Solenoids",
+          "Levers",
+          "Manual overrides"
+        ],
+        answer: "Remote air pressure"
+      },
+      {
+        question: "A __________ is used when the application requires a DCV to remain in a shifted position.",
+        options: [
+          "Detent",
+          "Solenoid",
+          "Lever",
+          "None of the above"
+        ],
+        answer: "Detent"
+      },
+      {
+        question: "What is represented by this symbol?",
+        options: [
+          "Pressure reducing valve",
+          "DCV",
+          "Needle valve",
+          "None of the above"
+        ],
+        answer: "Needle valve"
+      },
+      {
+        question: "The aftercooler is a __________ that cools the air with either water or another stream of air.",
+        options: [
+          "Type of heat exchanger",
+          "Type of separator",
+          "Type of air pressure accumulator",
+          "None of the above"
+        ],
+        answer: "Type of heat exchanger"
+      },
+      {
+        question: "To avoid water condensation in a pneumatic system, water is removed from the air so the __________.",
+        options: [
+          "air pressure drops",
+          "dew point drops",
+          "dew point rises",
+          "humidity rises"
+        ],
+        answer: "dew point drops"
+      },
+      {
+        question: "Many lubricators can be identified by __________.",
+        options: [
+          "Their large physical size",
+          "The small sight dome on top",
+          "The large sight bowl on the bottom",
+          "Their steel construction"
+        ],
+        answer: "The small sight dome on top"
+      },
+      {
+        question: "Which is not a type of filter element material?",
+        options: [
+          "Sintered Bronze",
+          "Aluminum Oxide",
+          "Synthetic Layered",
+          "Porous-Plastic"
+        ],
+        answer: "Aluminum Oxide"
+      },
+      {
+        question: "Which type of dryer uses chemicals such as silica gel or aluminum oxide?",
+        options: [
+          "Regenerative desiccant",
+          "Chemical",
+          "Refrigeration",
+          "None of the above"
+        ],
+        answer: "Regenerative desiccant"
+      },
+      {
+        question: "The biggest and most common maintenance issue affecting pneumatic systems is ___________.",
+        options: [
+          "Operator error",
+          "Incorrect components",
+          "Programming",
+          "System leaks",
+          "None of the above",
+          "All the above"
+        ],
+        answer: "System leaks"
+      },
+      {
+        question: "The most common location for system leaks are (is) ___________.",
+        options: [
+          "Flange connections",
+          "Fittings",
+          "Hoses",
+          "Operating valves",
+          "None of the above",
+          "All the above"
+        ],
+        answer: "All the above"
+      },
+      {
+        question: "The advantage of edge-type filters is that they can be cleaned and reused for longer service.",
+        options: [
+          "True",
+          "False"
+        ],
+        answer: "False"
+      }
+    ];
+
+    // Fisher-Yates Shuffle
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+    window.checkAnswer = function(btn, selected) {
+      const qObj = quizData[current];
+      const correct = qObj.answer;
+      const resultEl = document.getElementById('result');
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (selected === correct) {
+        btn.classList.add('correct');
+        resultEl.textContent = '✅ Correct!';
+        score++;
+        setTimeout(() => {
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }, 300);
+      } else {
+        btn.classList.add('incorrect');
+        wrongAnswers.push({
+          question: qObj.question,
+          options: qObj.options,
+          correct: correct,
+          selected: selected
+        });
+        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+        function nextQuestionHandler() {
+          document.body.removeEventListener('click', nextQuestionHandler);
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }
+        setTimeout(() => {
+          document.body.addEventListener('click', nextQuestionHandler);
+        }, 200);
+      }
+    };
+
+    loadQuestion();
+  </script>
+</body>
+</html>
