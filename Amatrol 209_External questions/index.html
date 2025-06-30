@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+    const quizData = [
+      {
+        question: "Which of the following is not an actuator?",
+        options: ["Cylinder", "Motor", "DCV", "All of the above"],
+        answer: "DCV"
+      },
+      {
+        question: '<img src="MeterOut.png" style="height:60px;"><br>What type of flow control is used in the schematic diagram below?<br><img src="9.png" class="symbol">',
+        options: ["Meter In Extend", "Meter In Retract", "Meter Out Extend", "Meter Out Retract"],
+        answer: "Meter Out Extend"
+      },
+      {
+        question: '<img src="MeterIn.png" style="height:60px;"><br>What type of flow control is used in the schematic diagram below?<br><img src="18.png" class="symbol">',
+        options: ["Meter In Extend", "Meter In Retract", "Meter Out Extend", "Meter Out Retract"],
+        answer: "Meter-In Extended"
+      },
+      {
+        question: "How many Pascals in a Kilopascal?",
+        options: ["10", "1000", ".001", ".1"],
+        answer: "1000"
+      },
+      {
+        question: '<img src="DCV.png" style="height:60px;"><br>What type of DCV is shown below?<br><img src="10.png" class="symbol">',
+        options: ["3 – 5 Manually operated DCV", "5 – 3 Manually operated DCV", "3 – 5 Spring loaded DCV", "5 – 3 Spring loaded DCV"],
+        answer: "5 – 3 Manually operated DCV"
+      },
+      {
+        question: "What is pressure?",
+        options: [
+          "The intensity of force",
+          "Weight",
+          "Inches per pound",
+          "Always measured in PSI"
+        ],
+        answer: "The intensity of force"
+      },
+      {
+        question: "Which of the following are units of pressure?",
+        options: [
+          "Newtons per Square Meter",
+          "Pounds per Square Inch",
+          "Pascals",
+          "All of the above"
+        ],
+        answer: "All of the above"
+      },
+      {
+        question: "Convert 848 kPa (123 psig) to absolute pressure",
+        options: [
+          "747 kPa (108.3 psia)",
+          "137 kPa (19.9 psia)",
+          "949 kPa (138 psia)"
+        ],
+        answer: "949 kPa (138 psia)"
+      },
+      {
+        question: "Convert 123 psia to a gauge pressure.",
+        options: [
+          "137.7",
+          "224",
+          "22",
+          "108.3"
+        ],
+        answer: "108.3"
+      },
+      {
+        question: "What is the dew point?",
+        options: [
+          "The pressure required to prevent condensation",
+          "The temperature where relative humidity is 100%",
+          "The physical location where water droplets will form"
+        ],
+        answer: "The temperature where relative humidity is 100%"
+      },
+      {
+        question: "What happens when the air temperature drops below the dew point?",
+        options: [
+          "Condensation occurs",
+          "Water evaporates",
+          "Pressure is stable at the dew point"
+        ],
+        answer: "Condensation occurs"
+      },
+      {
+        question: "What is Pascal’s Law?",
+        options: [
+          "Pressure inside a closed container is proportional to velocity",
+          "Pressure times volume is constant",
+          "Pressure inside a closed container is the same everywhere"
+        ],
+        answer: "Pressure inside a closed container is proportional to velocity"
+      },
+      {
+        question: "Symbols in pneumatic schematics are used to show what?",
+        options: [
+          "Size of Components",
+          "Function and Connection",
+          "Port Location",
+          "Pressure Settings"
+        ],
+        answer: "Function and Connection"
+      },
+      {
+        question: '<img src="PilotLine.png" style="height:60px;"><br>What does the dotted line represent?<br><img src="22.png" class="symbol">',
+        options: [
+          "Alternate path",
+          "Pilot Line",
+          "Pressure relief line",
+          "Virtual path"
+        ],
+        answer: "Pilot Line"
+      },
+      {
+        question: '<img src="Regulator.png" style="height:60px;"><br>What is the purpose of device shown?',
+        options: [
+          "Limit downstream pressure",
+          "Limit upstream pressure",
+          "Relieve system pressure",
+          "Provide sequencing of actuators"
+        ],
+        answer: "Limit downstream pressure"
+      },
+      {
+        question: '<img src="DoubleC.png" style="height:60px;"><br>When the valve is shifted to direct fluid into the cap end of cylinder A?<br><img src="18.png" class="symbol">',
+        options: [
+          "A would extend completely, then B would extend",
+          "A and B would extend at the same time",
+          "B would extend completely then A would extend",
+          "Neither A or B would extend"
+        ],
+        answer: "A and B would extend at the same time"
+      },
+      {
+        question: "Where should a filter be located in a pneumatic system?",
+        options: [
+          "Upstream of all components",
+          "After the compressor before the regulator",
+          "Immediately after a regulator",
+          "As close to the actuator as possible"
+        ],
+        answer: "Upstream of all components"
+      },
+      {
+        question: "Where should a lubricator be installed in a pneumatic system?",
+        options: [
+          "Before a compressor",
+          "After the compressor before the regulator",
+          "Immediately after a regulator",
+          "As close to the machine needing lubrication as possible"
+        ],
+        answer: "As close to the machine needing lubrication as possible"
+      },
+      {
+        question: "When will flow rate in a pneumatic system increase?",
+        options: [
+          "When the pressure difference between two points increases",
+          "When smaller pipes are used",
+          "When a larger reservoir is used",
+          "All of the above"
+        ],
+        answer: "When the pressure difference between two points increases"
+      },
+      {
+        question: "What is the difference in pressure between two points in a fluid power system called?",
+        options: [
+          "System pressure",
+          "Control pressure",
+          "Differential pressure",
+          "Dynamic pressure"
+        ],
+        answer: "Differential pressure"
+      },
+      {
+        question: "Shuttle valves are used in air logic circuits to",
+        options: [
+          "Provide an output when either of two input signals are applied",
+          "All of the above",
+          "Latch in spring offset externally piloted DCVs",
+          "Provide OR logic"
+        ],
+        answer: "All of the above"
+      },
+      {
+        question: "A shuttle valve exhausts an air pilot of a DCV when",
+        options: [
+          "One input is less than the other input",
+          "Both inputs are pressurized",
+          "Both inputs are vented",
+          "Someone breaks wind"
+        ],
+        answer: "Both inputs are vented"
+      },
+      {
+        question: "An advantage of air logic over electrical control is that it",
+        options: [
+          "Costs less when there are more than 4 connections",
+          "Has a faster signal",
+          "None of the above",
+          "Is safe in places where electrical systems could cause fire or explosion"
+        ],
+        answer: "Is safe in places where electrical systems could cause fire or explosion"
+      },
+      {
+        question: "This assembly moves inside the barrel-shaped body of a cylinder.",
+        options: [
+          "Vane",
+          "Poppet/Spring",
+          "Element",
+          "Piston/Rod"
+        ],
+        answer: "Piston/Rod"
+      },
+      {
+        question: "What pneumatic component provides straight-line motion?",
+        options: [
+          "Cylinder",
+          "Muffler",
+          "Motor",
+          "DCV"
+        ],
+        answer: "Cylinder"
+      },
+      {
+        question: "DCV stands for",
+        options: [
+          "Digital control variable",
+          "Directional control valve",
+          "Dynamic control valve",
+          "Directional control vane"
+        ],
+        answer: "Directional control valve"
+      },
+      {
+        question: "Pneumatics symbols have been standardized by the ISO which stands for",
+        options: [
+          "International Standards Organization",
+          "International Organization for Standardization",
+          "International Systems Organization",
+          "Information Superhighway Organization"
+        ],
+        answer: "International Organization for Standardization"
+      },
+      {
+        question: "Filters should be used on all pneumatic systems because atmospheric air contains",
+        options: [
+          "Carbon",
+          "Lead",
+          "Viton",
+          "Dust"
+        ],
+        answer: "Dust"
+      },
+      {
+        question: "The fitting is used to connect two branch circuits to a single supply line",
+        options: [
+          "Elbow",
+          "Tee",
+          "Plug",
+          "Male connector"
+        ],
+        answer: "Tee"
+      },
+      {
+        question: "Delta P is the difference in pressure between",
+        options: [
+          "Two points in a pneumatic system",
+          "Four points in a pneumatic system",
+          "Absolute and gauge pressure",
+          "The cylinder and the rod"
+        ],
+        answer: "Two points in a pneumatic system"
+      },
+      {
+        question: "Pneumatic leverage refers to the ability of a pneumatic system to develop a large force output with",
+        options: [
+          "A crowbar",
+          "A low force input",
+          "Hydraulic fluid",
+          "Absolute force input"
+        ],
+        answer: "A low force input"
+      },
+      {
+        question: "The body of a single-acting, spring-return cylinder has",
+        options: [
+          "Four connection ports",
+          "Two connection ports",
+          "No connection ports",
+          "One connection port"
+        ],
+        answer: "One connection port"
+      },
+      {
+        question: "Which pneumatic actuator converts compressed air flow into rotary motion",
+        options: [
+          "Double acting cylinder",
+          "Motor",
+          "Single acting cylinder",
+          "All of the above"
+        ],
+        answer: "Motor"
+      },
+      {
+        question: "A dashed line in a pneumatic schematic diagram represents a(n)",
+        options: [
+          "Enclosure line",
+          "Pilot line",
+          "Main Line",
+          "Exhaust line"
+        ],
+        answer: "Pilot line"
+      },
+      {
+        question: "Two of the most common design types of pneumatic motors are",
+        options: [
+          "Turbine and piston",
+          "Vane and V-type",
+          "Lobed rotor and vane",
+          "Vane and piston"
+        ],
+        answer: "Vane and piston"
+      }
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+    window.checkAnswer = function(btn, selected) {
+      const qObj = quizData[current];
+      const correct = qObj.answer;
+      const resultEl = document.getElementById('result');
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (selected === correct) {
+        btn.classList.add('correct');
+        resultEl.textContent = '✅ Correct!';
+        score++;
+        setTimeout(() => {
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }, 300);
+      } else {
+        btn.classList.add('incorrect');
+        wrongAnswers.push({
+          question: qObj.question,
+          options: qObj.options,
+          correct: correct,
+          selected: selected
+        });
+        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+        function nextQuestionHandler() {
+          document.body.removeEventListener('click', nextQuestionHandler);
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }
+        setTimeout(() => {
+          document.body.addEventListener('click', nextQuestionHandler);
+        }, 200);
+      }
+    };
+
+    loadQuestion();
+  </script>
+</body>
+</html>
