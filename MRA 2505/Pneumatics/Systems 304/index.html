@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+    const quizData = [
+      {
+  question: "When performing an electrical lockout/tagout, the last thing the worker should do is __________.",
+  options: [
+    "Put the lock on the disconnect",
+    "Put the tag on the disconnect",
+    "Test the locked out equipment for power",
+    "Leave the key in the lock for others"
+  ],
+  answer: "Test the locked out equipment for power"
+},
+{
+  question: "To perform an out-of-circuit test, a component can be placed on a __________ to provide a basic circuit to test the component.",
+  options: [
+    "Switch board",
+    "Calibration tester",
+    "Test bench",
+    "Work cell"
+  ],
+  answer: "Test bench"
+},
+{
+  question: "A __________ is the malfunction you observe in a pneumatic system caused by a fault.",
+  options: [
+    "Cause",
+    "Symptom",
+    "Remedy",
+    "Failure"
+  ],
+  answer: "Symptom"
+},
+{
+  question: "Flow rate measurements are taken using special devices like pitot tubes, orifice plates, and __________.",
+  options: [
+    "Test gauges",
+    "Rotameters",
+    "Barometers",
+    "Bourdon manometers"
+  ],
+  answer: "Rotameters"
+},
+{
+  question: "__________ level troubleshooting is the process of determining what failed inside a particular component.",
+  options: [
+    "System",
+    "First",
+    "Component",
+    "Final"
+  ],
+  answer: "Component"
+},
+{
+  question: "When working around pneumatic equipment you should __________.",
+  options: [
+    "Wear loose fitting clothes",
+    "Wear canvas shoes",
+    "Remove any rings",
+    "Wear long sleeves"
+  ],
+  answer: "Remove any rings"
+},
+{
+  question: "Before you remove pressure from the system, you should __________.",
+  options: [
+    "Check the compressor's pressure reading",
+    "Remove all safety shields",
+    "Support any overrunning loads",
+    "Check the compressor's CFM"
+  ],
+  answer: "Support any overrunning loads"
+},
+{
+  question: "A lockout valve is a two-position valve that in its closed position blocks the supply line and __________ downstream air pressure.",
+  options: [
+    "Increases",
+    "Vents",
+    "Maintains",
+    "Regulates"
+  ],
+  answer: "Vents"
+},
+{
+  question: "Inserting a pressure gauge into the pneumatic system using a tee creates a test station or __________.",
+  options: [
+    "Test zone",
+    "Bypass",
+    "Tap line",
+    "Test point"
+  ],
+  answer: "Test point"
+},
+{
+  question: "A complete lockout/tagout program requires that __________ be locked out for servicing or maintenance.",
+  options: [
+    "All power sources",
+    "Only electrical power",
+    "Only pneumatic power",
+    "Only mechanical components"
+  ],
+  answer: "All power sources"
+},
+{
+  question: "When you first approach a pneumatic system that requires troubleshooting, take the time to __________ the entire system.",
+  options: [
+    "Wipe down",
+    "Pressure test",
+    "Visually inspect",
+    "Manually operate"
+  ],
+  answer: "Visually inspect"
+},
+{
+  question: "A lubricator that is supplying too much oil to the system can be noticed by __________.",
+  options: [
+    "Overheating components",
+    "Crazed or broken bowls",
+    "A pinging sound from actuators",
+    "Oil drips at the exhaust ports of components"
+  ],
+  answer: "Oil drips at the exhaust ports of components"
+},
+{
+  question: "A noisy regulator may be caused by __________.",
+  options: [
+    "An oversized regulator",
+    "An undersized regulator",
+    "A blocked port",
+    "Air escaping from the vent port"
+  ],
+  answer: "Air escaping from the vent port"
+},
+{
+  question: "A sludge collector is used in a pneumatic system to __________.",
+  options: [
+    "Eliminate all water and contaminants from the system",
+    "Trap rust, dirt, and other contaminants",
+    "Lubricate the compressed air",
+    "To cool the compressed air"
+  ],
+  answer: "Trap rust, dirt, and other contaminants"
+},
+{
+  question: "A pressure drop measured across a filter indicates a __________.",
+  options: [
+    "Bad regulator",
+    "Oversized filter element",
+    "Dirty filter element",
+    "Filter element not installed horizontally"
+  ],
+  answer: "Dirty filter element"
+},
+{
+  question: "Delayed oil delivery from a lubricator is possibly the result of a __________.",
+  options: [
+    "Partially clogged pick-up tube",
+    "Clogged filtering element",
+    "Overfilled bowl",
+    "Incompatible chemicals in bowl"
+  ],
+  answer: "Partially clogged pick-up tube"
+},
+{
+  question: "The first step in troubleshooting a pneumatic system is to __________.",
+  options: [
+    "Look up possible faults",
+    "Identify the symptoms",
+    "Identify the possible causes",
+    "Identify possible test methods"
+  ],
+  answer: "Identify the symptoms"
+},
+{
+  question: "If a non-venting regulator is used to replace a venting regulator, the result may be __________.",
+  options: [
+    "Higher pressure",
+    "Lower pressure",
+    "A chattering poppet",
+    "Slower actuator movement"
+  ],
+  answer: "Higher pressure"
+},
+{
+  question: "A partially blocked air filter can cause an actuator to __________.",
+  options: [
+    "Move slowly",
+    "Move out of sequence",
+    "Move too fast",
+    "Overheat"
+  ],
+  answer: "Move slowly"
+},
+{
+  question: "Rotary actuator speed is determined by the __________ between the two ports.",
+  options: [
+    "Differential pressure",
+    "Air flow",
+    "Load change",
+    "Distance"
+  ],
+  answer: "Differential pressure"
+}
+
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+    window.checkAnswer = function(btn, selected) {
+      const qObj = quizData[current];
+      const correct = qObj.answer;
+      const resultEl = document.getElementById('result');
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (selected === correct) {
+        btn.classList.add('correct');
+        resultEl.textContent = '✅ Correct!';
+        score++;
+        setTimeout(() => {
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }, 300);
+      } else {
+        btn.classList.add('incorrect');
+        wrongAnswers.push({
+          question: qObj.question,
+          options: qObj.options,
+          correct: correct,
+          selected: selected
+        });
+        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+        function nextQuestionHandler() {
+          document.body.removeEventListener('click', nextQuestionHandler);
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }
+        setTimeout(() => {
+          document.body.addEventListener('click', nextQuestionHandler);
+        }, 200);
+      }
+    };
+
+    loadQuestion();
+  </script>
+</body>
+</html>
