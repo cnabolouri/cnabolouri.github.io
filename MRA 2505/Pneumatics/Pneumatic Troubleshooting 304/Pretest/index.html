@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+    const quizData = [
+{
+  question: "Which of these is not a symptom of a worn piston seal?",
+  options: ["Increased speed", "Erratic movement", "Decreased speed", "Drift"],
+  answer: "Decreased speed"
+},
+{
+  question: "When dealing with a double-acting (single-rod) cylinder featuring a meter-in to extend set-up, what would be the most likely symptom of a check valve stuck open?",
+  options: ["Increased retraction speed", "Increased speed during extension and retraction", "Increased extension speed", "No effect on actuator movement"],
+  answer: "Increased extension speed"
+},
+{
+  question: "What is the best test method to detect blockages within a component?",
+  options: ["Disassemble component", "Remove airline and listen for airflow", "Test pressure upstream and downstream of component", "Manually override the DCV"],
+  answer: "Test pressure upstream and downstream of component"
+},
+{
+  question: "Which of these faults can result in slow actuator speed?",
+  options: ["Worm pressure regulator poppet", "FCV check valve stuck open", "Undersize air filter", "Failed proximity sensor"],
+  answer: "Undersize air filter"
+},
+{
+  question: "If a PLC input indicator light is off when it should be on, what would be the next trouble shooting step?",
+  options: ["Cycle actuator using manual override", "Check the input device", "Check and verify PLC programming", "Power cycle the PLC"],
+  answer: "Check the input device"
+},
+{
+  question: "Which troubleshooting tool is most essential when servicing a PLC operated circuit?",
+  options: ["Troubleshooting flowchart", "Sequence chart", "Power diagram", "Machine maintenance log"],
+  answer: "Sequence chart"
+},
+{
+  question: "A double-acting cylinder is experiencing a sudden increase in speed, which fault would be the most likely cause?",
+  options: ["FCV check valve stuck closed", "Rod seal worn", "Decreased load", "Air compressor pressure set too high"],
+  answer: "Decreased load"
+},
+{
+  question: "What is the most likely cause of no actuator movement when using a solenoid-operated 4/3 DCV?",
+  options: ["Solenoid is shorted", "PLC programming error", "Partial blockage before the DCV", "Spool is stuck"],
+  answer: "Spool is stuck"
+},
+{
+  question: "What is the most common cause of speed changes at the actuator?",
+  options: ["Misadjusted regulator", "Load change", "Over size filter", "Pressure switch stuck open"],
+  answer: "Load change"
+},
+{
+  question: "What is the most likely reason to use the manual override on a DCV?",
+  options: ["System low pressure", "Erratic actuator movement", "No actuator movement", "Misadjusted pressure regulator"],
+  answer: "No actuator movement"
+},
+{
+  question: "What would be the most likely symptom of a vacuum switch stuck open on a vacuum lifter?",
+  options: ["No actuator movement", "Vacuum lifter unable to lift object", "Vacuum lifter unable to release object", "Vacuum pressure too low"],
+  answer: "Vacuum lifter unable to lift object"
+},
+{
+  question: "What is the most likely cause of an input device sending a constant signal to the PLC?",
+  options: ["No actuator movement", "Input device shorted", "Output device open", "PLC programming error"],
+  answer: "Input device shorted"
+},
+{
+  question: "In a 12v circuit using a normally open pressure switch, what would be the voltage difference between switch contacts when it is energized?",
+  options: [".3v", "0v", "12v", "6v"],
+  answer: "0v"
+},
+{
+  question: "What troubleshooting method is demonstrated by testing a point near the middle of a system to indicate if the issue lies upstream or downstream?",
+  options: ["Symptom and cause", "Half-split", "Output back", "Centerline test"],
+  answer: "Half-split"
+},
+{
+  question: "Which fault would most likely prevent a solenoid-operated 4/3 DCV from shifting?",
+  options: ["Shorted solenoid", "Blockage upstream", "Open in Solenoid", "Clogged lubricator"],
+  answer: "Open in Solenoid"
+}
+    ];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+    window.checkAnswer = function(btn, selected) {
+      const qObj = quizData[current];
+      const correct = qObj.answer;
+      const resultEl = document.getElementById('result');
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (selected === correct) {
+        btn.classList.add('correct');
+        resultEl.textContent = '✅ Correct!';
+        score++;
+        setTimeout(() => {
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }, 300);
+      } else {
+        btn.classList.add('incorrect');
+        wrongAnswers.push({
+          question: qObj.question,
+          options: qObj.options,
+          correct: correct,
+          selected: selected
+        });
+        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+        function nextQuestionHandler() {
+          document.body.removeEventListener('click', nextQuestionHandler);
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }
+        setTimeout(() => {
+          document.body.addEventListener('click', nextQuestionHandler);
+        }, 200);
+      }
+    };
+
+    loadQuestion();
+  </script>
+</body>
+</html>
