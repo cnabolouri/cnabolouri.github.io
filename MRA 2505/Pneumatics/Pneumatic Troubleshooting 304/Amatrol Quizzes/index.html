@@ -42,207 +42,566 @@
   <div id="quiz"></div>
   <script>
     const quizData = [
+         {
+        question: "When performing an electrical lockout/tagout, the last thing the worker should do is __________.",
+        options: [
+          "Put the lock on the disconnect",
+          "Put the tag on the disconnect",
+          "Test the locked out equipment for power",
+          "Leave the key in the lock for others"
+        ],
+        answer: "Test the locked out equipment for power"
+      },
       {
-  question: "When performing an electrical lockout/tagout, the last thing the worker should do is __________.",
-  options: [
-    "Put the lock on the disconnect",
-    "Put the tag on the disconnect",
-    "Test the locked out equipment for power",
-    "Leave the key in the lock for others"
-  ],
-  answer: "Test the locked out equipment for power"
-},
-{
-  question: "To perform an out-of-circuit test, a component can be placed on a __________ to provide a basic circuit to test the component.",
-  options: [
-    "Switch board",
-    "Calibration tester",
-    "Test bench",
-    "Work cell"
-  ],
-  answer: "Test bench"
-},
-{
-  question: "A __________ is the malfunction you observe in a pneumatic system caused by a fault.",
-  options: [
-    "Cause",
-    "Symptom",
-    "Remedy",
-    "Failure"
-  ],
-  answer: "Symptom"
-},
-{
-  question: "Flow rate measurements are taken using special devices like pitot tubes, orifice plates, and __________.",
-  options: [
-    "Test gauges",
-    "Rotameters",
-    "Barometers",
-    "Bourdon manometers"
-  ],
-  answer: "Rotameters"
-},
-{
-  question: "__________ level troubleshooting is the process of determining what failed inside a particular component.",
-  options: [
-    "System",
-    "First",
-    "Component",
-    "Final"
-  ],
-  answer: "Component"
-},
-{
-  question: "When working around pneumatic equipment you should __________.",
-  options: [
-    "Wear loose fitting clothes",
-    "Wear canvas shoes",
-    "Remove any rings",
-    "Wear long sleeves"
-  ],
-  answer: "Remove any rings"
-},
-{
-  question: "Before you remove pressure from the system, you should __________.",
-  options: [
-    "Check the compressor's pressure reading",
-    "Remove all safety shields",
-    "Support any overrunning loads",
-    "Check the compressor's CFM"
-  ],
-  answer: "Support any overrunning loads"
-},
-{
-  question: "A lockout valve is a two-position valve that in its closed position blocks the supply line and __________ downstream air pressure.",
-  options: [
-    "Increases",
-    "Vents",
-    "Maintains",
-    "Regulates"
-  ],
-  answer: "Vents"
-},
-{
-  question: "Inserting a pressure gauge into the pneumatic system using a tee creates a test station or __________.",
-  options: [
-    "Test zone",
-    "Bypass",
-    "Tap line",
-    "Test point"
-  ],
-  answer: "Test point"
-},
-{
-  question: "A complete lockout/tagout program requires that __________ be locked out for servicing or maintenance.",
-  options: [
-    "All power sources",
-    "Only electrical power",
-    "Only pneumatic power",
-    "Only mechanical components"
-  ],
-  answer: "All power sources"
-},
-{
-  question: "When you first approach a pneumatic system that requires troubleshooting, take the time to __________ the entire system.",
-  options: [
-    "Wipe down",
-    "Pressure test",
-    "Visually inspect",
-    "Manually operate"
-  ],
-  answer: "Visually inspect"
-},
-{
-  question: "A lubricator that is supplying too much oil to the system can be noticed by __________.",
-  options: [
-    "Overheating components",
-    "Crazed or broken bowls",
-    "A pinging sound from actuators",
-    "Oil drips at the exhaust ports of components"
-  ],
-  answer: "Oil drips at the exhaust ports of components"
-},
-{
-  question: "A noisy regulator may be caused by __________.",
-  options: [
-    "An oversized regulator",
-    "An undersized regulator",
-    "A blocked port",
-    "Air escaping from the vent port"
-  ],
-  answer: "Air escaping from the vent port"
-},
-{
-  question: "A sludge collector is used in a pneumatic system to __________.",
-  options: [
-    "Eliminate all water and contaminants from the system",
-    "Trap rust, dirt, and other contaminants",
-    "Lubricate the compressed air",
-    "To cool the compressed air"
-  ],
-  answer: "Trap rust, dirt, and other contaminants"
-},
-{
-  question: "A pressure drop measured across a filter indicates a __________.",
-  options: [
-    "Bad regulator",
-    "Oversized filter element",
-    "Dirty filter element",
-    "Filter element not installed horizontally"
-  ],
-  answer: "Dirty filter element"
-},
-{
-  question: "Delayed oil delivery from a lubricator is possibly the result of a __________.",
-  options: [
-    "Partially clogged pick-up tube",
-    "Clogged filtering element",
-    "Overfilled bowl",
-    "Incompatible chemicals in bowl"
-  ],
-  answer: "Partially clogged pick-up tube"
-},
-{
-  question: "The first step in troubleshooting a pneumatic system is to __________.",
-  options: [
-    "Look up possible faults",
-    "Identify the symptoms",
-    "Identify the possible causes",
-    "Identify possible test methods"
-  ],
-  answer: "Identify the symptoms"
-},
-{
-  question: "If a non-venting regulator is used to replace a venting regulator, the result may be __________.",
-  options: [
-    "Higher pressure",
-    "Lower pressure",
-    "A chattering poppet",
-    "Slower actuator movement"
-  ],
-  answer: "Higher pressure"
-},
-{
-  question: "A partially blocked air filter can cause an actuator to __________.",
-  options: [
-    "Move slowly",
-    "Move out of sequence",
-    "Move too fast",
-    "Overheat"
-  ],
-  answer: "Move slowly"
-},
-{
-  question: "Rotary actuator speed is determined by the __________ between the two ports.",
-  options: [
-    "Differential pressure",
-    "Air flow",
-    "Load change",
-    "Distance"
-  ],
-  answer: "Differential pressure"
-}
-
+        question: "To perform an out-of-circuit test, a component can be placed on a __________ to provide a basic circuit to test the component.",
+        options: [
+          "Switch board",
+          "Calibration tester",
+          "Test bench",
+          "Work cell"
+        ],
+        answer: "Test bench"
+      },
+      {
+        question: "A __________ is the malfunction you observe in a pneumatic system caused by a fault.",
+        options: [
+          "Cause",
+          "Symptom",
+          "Remedy",
+          "Failure"
+        ],
+        answer: "Symptom"
+      },
+      {
+        question: "Flow rate measurements are taken using special devices like pitot tubes, orifice plates, and __________.",
+        options: [
+          "Test gauges",
+          "Rotameters",
+          "Barometers",
+          "Bourdon manometers"
+        ],
+        answer: "Rotameters"
+      },
+      {
+        question: "__________ level troubleshooting is the process of determining what failed inside a particular component.",
+        options: [
+          "System",
+          "First",
+          "Component",
+          "Final"
+        ],
+        answer: "Component"
+      },
+      {
+        question: "When working around pneumatic equipment you should __________.",
+        options: [
+          "Wear loose fitting clothes",
+          "Wear canvas shoes",
+          "Remove any rings",
+          "Wear long sleeves"
+        ],
+        answer: "Remove any rings"
+      },
+      {
+        question: "Before you remove pressure from the system, you should __________.",
+        options: [
+          "Check the compressor's pressure reading",
+          "Remove all safety shields",
+          "Support any overrunning loads",
+          "Check the compressor's CFM"
+        ],
+        answer: "Support any overrunning loads"
+      },
+      {
+        question: "A lockout valve is a two-position valve that in its closed position blocks the supply line and __________ downstream air pressure.",
+        options: [
+          "Increases",
+          "Vents",
+          "Maintains",
+          "Regulates"
+        ],
+        answer: "Vents"
+      },
+      {
+        question: "Inserting a pressure gauge into the pneumatic system using a tee creates a test station or __________.",
+        options: [
+          "Test zone",
+          "Bypass",
+          "Tap line",
+          "Test point"
+        ],
+        answer: "Test point"
+      },
+      {
+        question: "A complete lockout/tagout program requires that __________ be locked out for servicing or maintenance.",
+        options: [
+          "All power sources",
+          "Only electrical power",
+          "Only pneumatic power",
+          "Only mechanical components"
+        ],
+        answer: "All power sources"
+      },
+      {
+        question: "When you first approach a pneumatic system that requires troubleshooting, take the time to __________ the entire system.",
+        options: [
+          "Wipe down",
+          "Pressure test",
+          "Visually inspect",
+          "Manually operate"
+        ],
+        answer: "Visually inspect"
+      },
+      {
+        question: "A lubricator that is supplying too much oil to the system can be noticed by __________.",
+        options: [
+          "Overheating components",
+          "Crazed or broken bowls",
+          "A pinging sound from actuators",
+          "Oil drips at the exhaust ports of components"
+        ],
+        answer: "Oil drips at the exhaust ports of components"
+      },
+      {
+        question: "A noisy regulator may be caused by __________.",
+        options: [
+          "An oversized regulator",
+          "An undersized regulator",
+          "A blocked port",
+          "Air escaping from the vent port"
+        ],
+        answer: "Air escaping from the vent port"
+      },
+      {
+        question: "A sludge collector is used in a pneumatic system to __________.",
+        options: [
+          "Eliminate all water and contaminants from the system",
+          "Trap rust, dirt, and other contaminants",
+          "Lubricate the compressed air",
+          "To cool the compressed air"
+        ],
+        answer: "Trap rust, dirt, and other contaminants"
+      },
+      {
+        question: "A pressure drop measured across a filter indicates a __________.",
+        options: [
+          "Bad regulator",
+          "Oversized filter element",
+          "Dirty filter element",
+          "Filter element not installed horizontally"
+        ],
+        answer: "Dirty filter element"
+      },
+      {
+        question: "Delayed oil delivery from a lubricator is possibly the result of a __________.",
+        options: [
+          "Partially clogged pick-up tube",
+          "Clogged filtering element",
+          "Overfilled bowl",
+          "Incompatible chemicals in bowl"
+        ],
+        answer: "Partially clogged pick-up tube"
+      },
+      {
+        question: "The first step in troubleshooting a pneumatic system is to __________.",
+        options: [
+          "Look up possible faults",
+          "Identify the symptoms",
+          "Identify the possible causes",
+          "Identify possible test methods"
+        ],
+        answer: "Identify the symptoms"
+      },
+      {
+        question: "If a non-venting regulator is used to replace a venting regulator, the result may be __________.",
+        options: [
+          "Higher pressure",
+          "Lower pressure",
+          "A chattering poppet",
+          "Slower actuator movement"
+        ],
+        answer: "Higher pressure"
+      },
+      {
+        question: "A partially blocked air filter can cause an actuator to __________.",
+        options: [
+          "Move slowly",
+          "Move out of sequence",
+          "Move too fast",
+          "Overheat"
+        ],
+        answer: "Move slowly"
+      },
+      {
+        question: "Rotary actuator speed is determined by the __________ between the two ports.",
+        options: [
+          "Differential pressure",
+          "Air flow",
+          "Load change",
+          "Distance"
+        ],
+        answer: "Differential pressure"
+      },
+      {
+        question: "A DCV spool that will not return to its neutral position may be the result of a broken __________.",
+        options: [
+          "Plunger",
+          "Check valve",
+          "Return spring",
+          "Seal"
+        ],
+        answer: "Return spring"
+      },
+      {
+        question: "Cylinder drift can be caused by __________.",
+        options: [
+          "Leakage",
+          "Pilot-operated check valves",
+          "Rod binding",
+          "Low pressure"
+        ],
+        answer: "Leakage"
+      },
+      {
+        question: "The __________ is used to control the pilot plunger's movement in a pilot-operated DCV.",
+        options: [
+          "Piston",
+          "Tap",
+          "Spool",
+          "Solenoid coil"
+        ],
+        answer: "Solenoid coil"
+      },
+      {
+        question: "Flow control valves are used to control actuator speed and __________.",
+        options: [
+          "Sequence timing",
+          "Downstream pressure",
+          "Outlet bore size",
+          "Apply force"
+        ],
+        answer: "Sequence timing"
+      },
+      {
+        question: "Actuator drift is a symptom that a QEV's __________.",
+        options: [
+          "Exhaust port is partially blocked",
+          "Poppet is stuck closed",
+          "Gasket is improperly sealed",
+          "Diaphragm is too rigid"
+        ],
+        answer: "Gasket is improperly sealed"
+      },
+      {
+        question: "The __________ of a rotary actuator contains the inlet and outlet ports.",
+        options: [
+          "Piston",
+          "Vane",
+          "Body",
+          "Head"
+        ],
+        answer: "Head"
+      },
+      {
+        question: "A cylinder that has fast speed may be the result of __________.",
+        options: [
+          "Air leaking internally",
+          "A partial blockage of its inlet port",
+          "A decrease in load",
+          "Contamination in lines"
+        ],
+        answer: "A decrease in load"
+      },
+      {
+        question: "Rotary actuators have a range of motion of __________ degrees or less.",
+        options: [
+          "90",
+          "180",
+          "280",
+          "360"
+        ],
+        answer: "280"
+      },
+      {
+        question: "The __________ can be used to determine if the DCV's spool is stuck or if the solenoid is not working.",
+        options: [
+          "Manual override",
+          "External pilot",
+          "Spring offset",
+          "Electrical wiring"
+        ],
+        answer: "Manual override"
+      },
+      {
+        question: "QEVs boost an actuator's cycle speed by __________.",
+        options: [
+          "Exhausting directly to atmosphere",
+          "Connecting outlet exhaust to the inlet",
+          "Always remaining open",
+          "Restricting the exhaust rate"
+        ],
+        answer: "Exhausting directly to atmosphere"
+      },
+      {
+        question: "__________ is a symptom of loose fittings on a rotary actuator's ports.",
+        options: [
+          "Slow actuator speed",
+          "External leakage",
+          "Shaft misalignment",
+          "Speed fluctuation"
+        ],
+        answer: "External leakage"
+      },
+      {
+        question: "A decrease in flow through a flow control valve can be caused by __________.",
+        options: [
+          "A worn valve seat",
+          "A worn poppet",
+          "A partial blockage",
+          "A broken spring"
+        ],
+        answer: "A partial blockage"
+      },
+      {
+        question: "A partial blockage in the vacuum generator will result in __________.",
+        options: [
+          "High vacuum pressure",
+          "Low vacuum pressure",
+          "Noisy operation",
+          "No vacuum pressure"
+        ],
+        answer: "Low vacuum pressure"
+      },
+      {
+        question: "To set the setpoint of a vacuum switch, the vacuum line leading to the vacuum cup must be __________.",
+        options: [
+          "Disconnected",
+          "Opened",
+          "Closed",
+          "Properly sized"
+        ],
+        answer: "Closed"
+      },
+      {
+        question: "A crack in the vacuum generator's muffler may result in __________.",
+        options: [
+          "Noisy operation",
+          "An increase in vacuum pressure",
+          "A decrease in vacuum pressure",
+          "Slower actuator speed"
+        ],
+        answer: "Noisy operation"
+      },
+      {
+        question: "A continuous input to the PLC from the vacuum switch may be the result of __________.",
+        options: [
+          "A short in the electrical wiring",
+          "Broken internal components",
+          "An open in the electrical wiring",
+          "Debris in the system"
+        ],
+        answer: "A short in the electrical wiring"
+      },
+      {
+        question: "An uneven part surface can cause a vacuum cup to lose its seal because __________.",
+        options: [
+          "There is not enough rubber in contact with the part to maintain its grip",
+          "It allows air to enter the cup reducing the amount of vacuum",
+          "It creates too large of an effective surface area",
+          "It reduces the amount of vacuum created by the vacuum generator"
+        ],
+        answer: "It allows air to enter the cup reducing the amount of vacuum"
+      },
+      {
+        question: "An oversized vacuum cup __________ a thin part.",
+        options: [
+          "Can more effectively lift",
+          "May damage",
+          "Cannot create sufficient vacuum to lift",
+          "Cannot create a seal on"
+        ],
+        answer: "May damage"
+      },
+      {
+        question: "A vacuum switch converts a sensed pressure into a(n) __________.",
+        options: [
+          "Vacuum reading",
+          "Corresponding vacuum pressure",
+          "Mechanical force",
+          "Electrical signal"
+        ],
+        answer: "Electrical signal"
+      },
+      {
+        question: "NPN switches should be used __________.",
+        options: [
+          "When the electrical circuit is grounded by the PLC",
+          "When switching speed is not a concern",
+          "When the PLC provides electrical current",
+          "For all vacuum applications"
+        ],
+        answer: "When the PLC provides electrical current"
+      },
+      {
+        question: "The __________ of a vacuum switch deforms based on the amount of pressure applied to it.",
+        options: [
+          "Gasket",
+          "Piston",
+          "Lead",
+          "Diaphragm"
+        ],
+        answer: "Diaphragm"
+      },
+      {
+        question: "A regulator can cause a low-pressure condition if __________.",
+        options: [
+          "It has been misadjusted",
+          "It is oversized",
+          "Its element is clogged",
+          "Its drain is open"
+        ],
+        answer: "It has been misadjusted"
+      },
+      {
+        question: "A(n) __________ element represented by a rectangle may cross-reference faults with a more descriptive table.",
+        options: [
+          "Start",
+          "Decision",
+          "Action",
+          "Linking"
+        ],
+        answer: "Action"
+      },
+      {
+        question: "A common cause of erratic actuator movement is __________.",
+        options: [
+          "Binding of actuator shafts or rods",
+          "Low pressure",
+          "High pressure",
+          "Misadjusted exhaust restrictor"
+        ],
+        answer: "Binding of actuator shafts or rods"
+      },
+      {
+        question: "An actuator that has erratic movement has a __________ related fault.",
+        options: [
+          "Machine sequence",
+          "Machine performance",
+          "System",
+          "Machine execution"
+        ],
+        answer: "Machine performance"
+      },
+      {
+        question: "Fast actuator speed is commonly caused by __________.",
+        options: [
+          "Excessive lubrication",
+          "Faulty proximity sensors",
+          "Flow control valves",
+          "Self-venting regulators"
+        ],
+        answer: "Flow control valves"
+      },
+      {
+        question: "A zero-pressure condition occurs due to problems with compressors, __________, filters, and air leaks.",
+        options: [
+          "Lubricators",
+          "Test gauges",
+          "Regulators",
+          "Quick exhaust valves"
+        ],
+        answer: "Regulators"
+      },
+      {
+        question: "The PLC's __________ can aid troubleshooting because they can be compared to the PLC's program for correct sequencing.",
+        options: [
+          "Terminals",
+          "Indicators",
+          "Relays",
+          "Dip switches"
+        ],
+        answer: "Indicators"
+      },
+      {
+        question: "Which of the following methods of system level troubleshooting is the least effective?",
+        options: [
+          "Symptom and cause",
+          "Half-split",
+          "Output-back",
+          "Shotgun"
+        ],
+        answer: "Shotgun"
+      },
+      {
+        question: "To test the operation of a magnetic reed sensor, a __________ must be held near the sensor.",
+        options: [
+          "Metallic object",
+          "Non-metallic object",
+          "Magnet",
+          "Reflective object"
+        ],
+        answer: "Magnet"
+      },
+      {
+        question: "A flowchart is based on the __________ method of troubleshooting.",
+        options: [
+          "Symptom and cause",
+          "Output-back",
+          "Shotgun",
+          "Input-forward"
+        ],
+        answer: "Symptom and cause"
+      },
+      {
+        question: "If the __________ of a regulator becomes blocked, pressure buildup downstream will not be relieved and can result in increased system pressure.",
+        options: [
+          "Spring",
+          "Vent",
+          "Inlet",
+          "Drain"
+        ],
+        answer: "Vent"
+      },
+      {
+        question: "The most common devices that govern actuator air flow are quick exhaust valves, flow control valves, and __________.",
+        options: [
+          "Vacuum generators",
+          "Exhaust restrictors",
+          "Regulators",
+          "Shuttle valves"
+        ],
+        answer: "Exhaust restrictors"
+      },
+      {
+        question: "Operating a DCV above its rated pressure range can result in __________.",
+        options: [
+          "Catastrophic pilot failure",
+          "Burned out solenoids",
+          "Broken return springs",
+          "A stuck spool"
+        ],
+        answer: "A stuck spool"
+      },
+      {
+        question: "Slow actuator speed is commonly caused by __________.",
+        options: [
+          "Flow control valves",
+          "An increase in the pressure differential across the actuator",
+          "Non-venting regulators",
+          "High pressure"
+        ],
+        answer: "Flow control valves"
+      },
+      {
+        question: "A(n) __________ shows the status of inputs and outputs for each step of a PLC's program sequence.",
+        options: [
+          "Sequence chart",
+          "I/O list",
+          "Electrical schematic",
+          "Diagnostic chart"
+        ],
+        answer: "Sequence chart"
+      }
     ];
 
     function shuffle(array) {
