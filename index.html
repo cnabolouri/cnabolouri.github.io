@@ -2,64 +2,123 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pneumatics Quiz Resources</title>
+  <title>Pneumatic Quiz Links</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      max-width: 600px;
-      margin: 2rem auto;
+      font-family: sans-serif;
+      max-width: 540px;
+      margin: 3rem auto;
       padding: 2rem;
-      border-radius: 18px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      background: #fafcff;
     }
     h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #22223b;
+      text-align: center;
+      margin-bottom: 2rem;
     }
-    ul {
-      list-style: none;
-      padding: 0;
+    .choose {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
     }
-    li {
-      margin-bottom: 1.2rem;
-    }
-    a {
-      text-decoration: none;
-      font-size: 1.1rem;
-      color: #0066cc;
-      background: #e3e9f1;
-      padding: 0.6rem 1rem;
+    .choose button {
+      width: 85%;
+      max-width: 350px;
+      font-size: 1.2rem;
+      padding: 1.1em;
+      border: none;
       border-radius: 12px;
-      transition: background 0.2s, color 0.2s;
-      display: inline-block;
+      background: #0066cc;
+      color: white;
+      cursor: pointer;
+      font-weight: 500;
+      box-shadow: 0 4px 16px #a5c8f744;
+      transition: background 0.18s;
     }
-    a:hover {
-      background: #b7c9e2;
-      color: #003366;
+    .choose button:hover {
+      background: #004c99;
+    }
+    .section {
+      display: none;
+      margin-top: 1.2em;
+    }
+    .links-list {
+      margin-top: 1.5rem;
+    }
+    .links-list a {
+      display: block;
+      font-size: 1.08em;
+      margin: 1.2em 0;
+      color: #036;
+      text-decoration: none;
+      padding: 0.7em 1em;
+      background: #e7f2fd;
+      border-radius: 7px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .links-list a:hover {
+      background: #cbe7ff;
+      color: #02457a;
+    }
+    .back-btn {
+      margin-top: 2.2rem;
+      background: #d6d6d6;
+      color: #222;
+      font-size: 1em;
+    }
+    @media (max-width: 600px) {
+      body { padding: 0.6rem; }
+      .choose button { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <h1>Pneumatics Quiz Resources</h1>
-  <ul>
-    <li>
-      <a href="https://cnabolouri.github.io/Amatrol%20209_External%20questions" target="_blank">
+  <h1>Pneumatic Quiz Links</h1>
+  <div class="choose" id="chooseSection">
+    <button onclick="showSection('ps209')">Pneumatic Systems 209</button>
+    <button onclick="showSection('pt304')">Pneumatic Troubleshooting 304</button>
+  </div>
+
+  <div class="section" id="ps209">
+    <h2>Pneumatic Systems 209</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Pneumatics/Pneumatic%20Systems%20209/Amatrol%20209_External%20questions" target="_blank">
         Amatrol 209 External Questions
       </a>
-    </li>
-    <li>
-      <a href="https://cnabolouri.github.io/Amatrol_209_Quizzes/index.html" target="_blank">
+      <a href="https://cnabolouri.github.io/MRA%202505/Pneumatics/Pneumatic%20Systems%20209/Amatrol_209_Quizzes" target="_blank">
         Amatrol 209 Quizzes
       </a>
-    </li>
-    <li>
-      <a href="https://cnabolouri.github.io/Pneumatics_pretest_209/index.html" target="_blank">
+      <a href="https://cnabolouri.github.io/MRA%202505/Pneumatics/Pneumatic%20Systems%20209/Pneumatics_pretest_209" target="_blank">
         Pneumatics Pretest 209
       </a>
-    </li>
-  </ul>
+    </div>
+    <button class="back-btn" onclick="goBack()">← Back</button>
+  </div>
+
+  <div class="section" id="pt304">
+    <h2>Pneumatic Troubleshooting 304</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Pneumatics/Pneumatic%20Troubleshooting%20304/Amatrol%20Quizzes/index.html" target="_blank">
+        Amatrol Quizzes 304
+      </a>
+    </div>
+    <button class="back-btn" onclick="goBack()">← Back</button>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.getElementById('chooseSection').style.display = 'none';
+      document.getElementById('ps209').style.display = 'none';
+      document.getElementById('pt304').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+    }
+    function goBack() {
+      document.getElementById('chooseSection').style.display = 'flex';
+      document.getElementById('ps209').style.display = 'none';
+      document.getElementById('pt304').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
