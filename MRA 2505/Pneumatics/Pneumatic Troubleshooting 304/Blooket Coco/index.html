@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+
+const quizData = [
+  {
+    question: "When a quick exhaust valve is used in a pneumatic circuit, at what point in the circuit is it usually connected?",
+    options: [
+      "Pilot lines",
+      "Output back",
+      "A blocked vent port",
+      "Actuator ports"
+    ],
+    answer: "Actuator ports"
+  },
+  {
+    question: "What would prevent a rotary from starting?",
+    options: [
+      "Safety glasses",
+      "Vane seals",
+      "Low inlet pressure",
+      "A blocked vent port"
+    ],
+    answer: "Vane seals"
+  },
+  {
+    question: "When removing a Lockout/Tagout from a machine, what is the last step that should be performed?",
+    options: [
+      "Test the machine/equipment",
+      "Decreased vacuum pressure",
+      "Worn pressure regulator poppet",
+      "A blocked vent port"
+    ],
+    answer: "Test the machine/equipment"
+  },
+  {
+    question: "Operating the manual override of a directional control valve is a test most commonly used to troubleshoot which symptoms?",
+    options: [
+      "Actuator will not move",
+      "Solenoid coil is open",
+      "Symptom and cause",
+      "Output back"
+    ],
+    answer: "Actuator will not move"
+  },
+  {
+    question: "What is a sign that a pneumatic lubricator is supplying too much oil to the system?",
+    options: [
+      "Frequent system shutdowns",
+      "Excessive noise from the pneumatic system",
+      "Increased pressure in the system",
+      "Oil mist exiting from directional control valve exhaust ports"
+    ],
+    answer: "Oil mist exiting from directional control valve exhaust ports"
+  },
+  {
+    question: "What is the first step you should perform to determine if a flow control internal check valve is stuck open?",
+    options: [
+      "Increase the flow rate to see if the valve responds to higher pressure.",
+      "Close the needle valve completely and check for the flow in the metered direction.",
+      "Open the needle valve halfway and observe the pressure gauge readings.",
+      "Inspect the valve for physical damage and replace it if necessary."
+    ],
+    answer: "Close the needle valve completely and check for the flow in the metered direction."
+  },
+  {
+    question: "Which of these components, when failed, is least likely to result in an actuator not moving?",
+    options: [
+      "Worn pressure regulator poppet",
+      "FCV",
+      "Bourdon tube pressure Gauge",
+      "solenoid"
+    ],
+    answer: "Bourdon tube pressure Gauge"
+  },
+  {
+    question: "Which of these is the most likely problem if a pilot operated directional control valve will shift when its manual override is operated but not when voltage is applied to the solenoid?",
+    options: [
+      "Spool is stuck",
+      "Solenoid Coil is open",
+      "Pilot passage in valve is blocked",
+      "Solenoid Spring is broken"
+    ],
+    answer: "Solenoid Coil is open"
+  },
+  {
+    question: "What should be your NEXT troubleshooting step be if one of three pneumatic cylinder of a PLC-Controlled Pneumatic-Powered machine is moving slowly? The Three Cylinder are controlled separate by three directional control valves mounted to the same subplate manifold?",
+    options: [
+      "adjust the flow control valve.",
+      "bleed system by cracking the line",
+      "check the pressure at the cylinder.",
+      "inspect the machine"
+    ],
+    answer: "check the pressure at the cylinder."
+  },
+  {
+    question: "What method is NOT typically used to relieve stored energy in a pneumatic system?",
+    options: [
+      "Inspect the machine",
+      "Bleed system by Cracking the line",
+      "Decreased vacuum pressure",
+      "Bourdon tube pressure Gauge measuring pressure"
+    ],
+    answer: "Bleed system by Cracking the line"
+  },
+  {
+    question: "If a vacuum switch with a range of 0-100kPa is adjusted to a set point of -50 and a deadband of 10% of set point, at what pressure level will the switch reset after tripping?",
+    options: [
+      "-45 kPa",
+      "-55kpa",
+      "-50 kpa",
+      "-60 kpa"
+    ],
+    answer: "-45 kPa"
+  },
+  {
+    question: "What number of pneumatic hoses are permitted to cross a walkway?",
+    options: [
+      "0",
+      "10",
+      "5",
+      "19"
+    ],
+    answer: "0"
+  },
+  {
+    question: "Which is considered the least efficient troubleshooting method?",
+    options: [
+      "Output-back",
+      "Rifle",
+      "Shotgun",
+      "Half-split"
+    ],
+    answer: "Shotgun"
+  },
+  {
+    question: "If a PLC controlled pneumatic-powered machine stops on step 3 of a 5 step sequence, what is the next check that should be made to troubleshoot the problem? You can assume that all general power indicators and display show normal?",
+    options: [
+      "Inspect the pneumatic hoses for any signs of wear or damage",
+      "Check PLC input indicator on/off status to determine if PLC inputs are correct",
+      "Replace the plc with a new unit to reset the system",
+      "Review the machine's user manual for troubleshooting tips"
+    ],
+    answer: "Check PLC input indicator on/off status to determine if PLC inputs are correct"
+  },
+  {
+    question: "What is the next troubleshooting check that should be made if the PLC input indicator that signals completion of a step a pneumatic-powered machine sequence is off when it should be on?",
+    options: [
+      "Check the output device for any signs of malfunction",
+      "Ensure that the plc is properly connected to the network",
+      "Verify that the input device has power",
+      "Inspect the pneumatic lines for blockages or leaks"
+    ],
+    answer: "Verify that the input device has power"
+  },
+  {
+    question: "Zero pressure on branch line can be caused by all except?",
+    options: [
+      "Partial blockage in branch line",
+      "closed regulator",
+      "closed main valve",
+      ""
+    ],
+    answer: "Partial blockage in branch line"
+  },
+  {
+    question: "What symptoms will likely appear if dirt partially blocks the inlet port of the flow control shown in the circuit?",
+    options: [
+      "Disconnect load and cycle cylinder manually",
+      "Speed decreases while retracting or extending",
+      "Check the pressure at the cylinder.",
+      ""
+    ],
+    answer: "Speed decreases while retracting or extending"
+  },
+  {
+    question: "What action does NOT need to be taken before performing maintenance on a molding machine that uses a computer controlled pneumatic actuator system?",
+    options: [
+      "Output back",
+      "Shutdown plant supply",
+      "Actuator ports",
+      "Decreased vacuum pressure"
+    ],
+    answer: "Shutdown plant supply"
+  },
+  {
+    question: "To troubleshoot a PLC controlled pneumatic machine sequence using PLC I/O indicators, what information is essential?",
+    options: [
+      "venn diagram",
+      "cluster diagram",
+      "flow chart",
+      "sequence chart"
+    ],
+    answer: "sequence chart"
+  },
+  {
+    question: "What is an indication of a worn Cylinder rod seal?",
+    options: [
+      "Audible back pressure",
+      "Inspect the machine",
+      "A blocked vent port",
+      "Air leakage around the cylinder rod"
+    ],
+    answer: "Air leakage around the cylinder rod"
+  },
+  {
+    question: "Which of these Faults is most likely to prevent a pilot operated pneumatic directional control valve from shifting?",
+    options: [
+      "Diaphragm",
+      "Decreased vacuum pressure",
+      "High inlet pressure",
+      "Low inlet pressure"
+    ],
+    answer: "Low inlet pressure"
+  },
+  {
+    question: "What indicates that a vacuum switch with normally open contacts is operating properly? The supply voltage is 24VDC?",
+    options: [
+      "The switch emits a clicking sound when it is activated by the pressure.",
+      "Voltage at output terminal of switch contacts with respect to is zero volts when switch is at setpoint pressure",
+      "Current flowing through the switch is at maximum capacity when pressure is low.",
+      "The supply voltage drops to 12vdc when the switch is functioning correctly."
+    ],
+    answer: "Voltage at output terminal of switch contacts with respect to is zero volts when switch is at setpoint pressure"
+  },
+  {
+    question: "If vacuum cups are not sealing when lifting an object and supply pressure to the vacuum generator is correct, what is the next step you should take to troubleshoot the problem.",
+    options: [
+      "replace the vacuum cups with a different model",
+      "adjust the height of the vacuum cups to improve sealing",
+      "visually inspect cups for damage or leaks",
+      "test the vacuum generator for proper operation"
+    ],
+    answer: "visually inspect cups for damage or leaks"
+  },
+  {
+    question: "What check would prove that a directional control valve solenoid coil is open?",
+    options: [
+      "Decreased Vacuum Pressure",
+      "Check The Compressor Or The Regulator. Adjusting Regulator",
+      "Measure Solenoid Continuity",
+      "Diaphragm"
+    ],
+    answer: "Measure Solenoid Continuity"
+  },
+  {
+    question: "What is the best test to use to determine if a pilot operated directional control valve is actually shifting if the cylinder/load it controls will not move?",
+    options: [
+      "Manually operate and LISTEN TO SHIFTING",
+      "To prevent the hose from whipping",
+      "Symptom and cause",
+      "Check the compressor or the regulator. adjusting regulator"
+    ],
+    answer: "Manually operate and LISTEN TO SHIFTING"
+  },
+  {
+    question: "Which of these steps should be performed first by a troubleshooter when troubleshooting a machine?",
+    options: [
+      "Output back",
+      "Talk to an operator",
+      "Check the pressure at the cylinder.",
+      "Inspect the machine"
+    ],
+    answer: "Inspect the machine"
+  },
+  {
+    question: "What troubleshooting method is demonstrated by first checking a pneumatic system cylinder, followed by the flow control valve and then the directional control valve?",
+    options: [
+      "Load misalignment",
+      "Symptom and cause",
+      "Actuator ports",
+      "Output back"
+    ],
+    answer: "Output back"
+  },
+  {
+    question: "What action is best taken to determine if a problem with a pneumatic cylinder not moving is caused by the load or the cylinder or some other pneumatic component in the system.",
+    options: [
+      "Test pressure upstream and downstream",
+      "Disconnect load and cycle cylinder manually",
+      "Check the pressure at the cylinder.",
+      "Manually operate and listen to shifting"
+    ],
+    answer: "Disconnect load and cycle cylinder manually"
+  },
+  {
+    question: "What troubleshooting method is demonstrated by starting the troubleshooting process with checking the voltage at a solenoid valve and then checking the inputs in the control circuit that control the solenoid one by one starting with the input connected directly to the solenoid?",
+    options: [
+      "Load Misalignment",
+      "Half-split",
+      "Symptom And Cause",
+      "Low Inlet Pressure"
+    ],
+    answer: "Half-split"
+  },
+  {
+    question: "What is the next troubleshooting step you should take if a branch line pneumatic pressure regulator shows zero system pressure and you find that the line shutoff valve is open?",
+    options: [
+      "Check the compressor or the regulator. Adjusting regulator",
+      "Calibrate the pressure gauge to ensure Accurate readings",
+      "Replace the branch line with a new one to ensure proper flow",
+      "Inspect the electrical connections to the Pressure regulator"
+    ],
+    answer: "Check the compressor or the regulator. Adjusting regulator"
+  },
+  {
+    question: "Which of these would NOT cause rotary actuator speed to decrease?",
+    options: [
+      "Partial blockage in branch line",
+      "Decreased vacuum pressure",
+      "Decrease in load",
+      "Worn pressure regulator poppet"
+    ],
+    answer: "Decrease in load"
+  },
+  {
+    question: "What is the main reason why pneumatic hoses connected to a machine should be properly secured?",
+    options: [
+      "Check the pressure at the cylinder.",
+      "Actuator will not move",
+      "To prevent the hose from whipping",
+      "Bleed system by cracking the line"
+    ],
+    answer: "To prevent the hose from whipping"
+  },
+  {
+    question: "Which of the following problem will result in higher downstream pressure?",
+    options: [
+      "Actuator ports",
+      "Worn pressure regulator poppet",
+      "Dcv spool stuck in position",
+      "Worn poppet and blocked vent port"
+    ],
+    answer: "Worn poppet and blocked vent port"
+  },
+  {
+    question: "Which of these problems can cause fast actuator speed assuming the actuator is mounted horizontally?",
+    options: [
+      "Worn cylinder seals",
+      "Inspect the machine",
+      "Worn poppet and blocked vent port",
+      "Worm pressure regulator poppet"
+    ],
+    answer: "Worm pressure regulator poppet"
+  },
+  {
+    question: "What is the most important PPE item to wear when troubleshooting a pneumatic system?",
+    options: [
+      "Welding Helmet",
+      "Goggles",
+      "Scba Facepieces",
+      "Safety Glasses"
+    ],
+    answer: "Safety Glasses"
+  },
+  {
+    question: "If one actuator of a PLC controlled pneumatic powered machine moves out of sequence and PLC output indicator for that actuator is on, what is the NEXT check that should be made to troubleshoot the problem? You can assume that all general power indicators and display status are normal?",
+    options: [
+      "Check PLC input indicator on/off status to determine if PLC inputs are correct",
+      "Check input sensor for the short in contacts.(Check the input lights)",
+      "Check the pressure at the cylinder.",
+      "Speed increases while extending"
+    ],
+    answer: "Check PLC input indicator on/off status to determine if PLC inputs are correct"
+  },
+  {
+    question: "What's the most common tool used to troubleshoot a pneumatic actuator circuit?",
+    options: [
+      "Bourdon tube pressure gauge measuring pressure",
+      "Oil mist exiting from directional control valve exhaust ports",
+      "Low inlet pressure",
+      "Decreased vacuum pressure"
+    ],
+    answer: "Bourdon tube pressure gauge measuring pressure"
+  },
+  {
+    question: "A worn poppet in a pressure regulator can result in what problem?",
+    options: [
+      "The pressure gauge is malfunctioning",
+      "The regulator is completely blocked",
+      "Downstream pressure is higher than regulator settings",
+      "Upstream pressure is lower than expected"
+    ],
+    answer: "Downstream pressure is higher than regulator settings"
+  },
+  {
+    question: "What is the likely cause of high system pressure at a branch line pressure regulator gauge?",
+    options: [
+      "A blocked vent port",
+      "Low inlet pressure",
+      "Output back",
+      "Actuator ports"
+    ],
+    answer: "A blocked vent port"
+  },
+  {
+    question: "If a machine pneumatic actuators are operating slowly and the pressure gauge mounted to the pressure regulators shows a low pressure, what is the first check you should make to troubleshoot it?",
+    options: [
+      "Replace all pneumatic actuators immediately",
+      "Change regulator setting to see if pressure changes. Adjust the pressure and see what happens.",
+      "Check for leaks in the pneumatic lines",
+      "Increase the size of the pressure regulator"
+    ],
+    answer: "Change regulator setting to see if pressure changes. Adjust the pressure and see what happens."
+  },
+  {
+    question: "What symptom is likely to occur if a vacuum generator pressure inlet becomes partially blocked?",
+    options: [
+      "Decrease in load",
+      "Decreased vacuum pressure",
+      "Noisy operation",
+      "Shutdown plant supply"
+    ],
+    answer: "Decreased vacuum pressure"
+  },
+  {
+    question: "What troubleshooting step should be performed first if a cylinder is moving erratically and a bent rod is suspected?",
+    options: [
+      "Measure rod straightness using a straight edge.",
+      "Replace the cylinder with a new one",
+      "Lubricate the rod to improve movement",
+      "Inspect the cylinder for external damage"
+    ],
+    answer: "Measure rod straightness using a straight edge."
+  },
+  {
+    question: "What troubleshooting method forms the primary structure of a troubleshooting flow chart?",
+    options: [
+      "Output-back",
+      "Symptom and cause",
+      "Actuator will not move",
+      "Load misalignment"
+    ],
+    answer: "Symptom and cause"
+  },
+  {
+    question: "If a rotary actuator does not move when pressure is applied to its inlet, what check indicates that the actuator has failed?",
+    options: [
+      "Manually operate and listen to shifting",
+      "Test pressure upstream and downstream",
+      "Check the pressure at the cylinder.",
+      "Disconnect load and cycle cylinder manually"
+    ],
+    answer: "Disconnect load and cycle cylinder manually"
+  },
+  {
+    question: "What objective are plant air distribution systems designed to achieve?",
+    options: [
+      "Minimize contamination in air",
+      "Decrease in load",
+      "Minimize condensed water in branch lines",
+      "Air leakage around the cylinder rod"
+    ],
+    answer: "Minimize condensed water in branch lines"
+  },
+  {
+    question: "What symptoms will likely appear in the circuit shown if the flow control internal check valves are stuck open?",
+    options: [
+      "Decreased vacuum pressure",
+      "Check the pressure at the cylinder.",
+      "Actuator will not move",
+      "Speed increases while extending"
+    ],
+    answer: "Speed increases while extending"
+  },
+  {
+    question: "Which of these problems would NOT be a cause of erratic actuator movement?",
+    options: [
+      "Decrease in load.",
+      "Worn pressure regulator poppet",
+      "Diaphragm",
+      "Load misalignment"
+    ],
+    answer: "Worn pressure regulator poppet"
+  },
+  {
+    question: "What is the best method of verifying that an air filter is clogged?",
+    options: [
+      "Symptom and cause",
+      "Test pressure upstream and downstream",
+      "Bourdon tube pressure gauge measuring pressure",
+      "Check the pressure at the cylinder."
+    ],
+    answer: "Test pressure upstream and downstream"
+  },
+  {
+    question: "What should be your next troubleshooting step if the pneumatic cylinder in this circuit is moving too fast when retracting?",
+    options: [
+      "Test pressure upstream and downstream",
+      "check the pressure at the cylinder.",
+      "check setting of flow control valve A",
+      "Disconnect load and cycle cylinder manually"
+    ],
+    answer: "check setting of flow control valve A"
+  },
+  {
+    question: "The Vacuum cups of a newly installed vacuum lift system are damaging the material being lifted, after making sure supply pressure is correct, what is the next step you should do?",
+    options: [
+      "Check the alignment of the vacuum lift system with the material",
+      "Inspect the vacuum generator for any electrical issues",
+      "Ensure that the lifting speed is appropriate for the material",
+      "Verify the cup size is not too large"
+    ],
+    answer: "Verify the cup size is not too large"
+  },
+  {
+    question: "What causes horizontal drift of a cylinder?",
+    options: [
+      "blocked inlet port",
+      "vain seals",
+      "worn seals",
+      "damaged bearings"
+    ],
+    answer: "worn seals"
+  },
+  {
+    question: "What is the most common method pressure switches use to sense fluid pressure?",
+    options: [
+      "Bellows",
+      "Diaphragm",
+      "Measure Solenoid Continuity",
+      "Centrifugal"
+    ],
+    answer: "Diaphragm"
+  },
+  {
+    question: "Speed increases while extending in this image, What is the cause?",
+    options: [
+      "check valve is stuck open",
+      "DVC will help the cylinder to move fast",
+      "Solenoid Coil is open",
+      "Partial blockage in branch line"
+    ],
+    answer: "check valve is stuck open"
+  }
+];
+
+
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
