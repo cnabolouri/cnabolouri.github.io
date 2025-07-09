@@ -45,12 +45,12 @@ const quizData = [
   {
     question: "Which troubleshooting method tests the cylinder 1st, the Filter 2nd, and the DCV 3rd, the Lubricator 4th, then the pneumatic motor 5th?",
     options: ["Symptom and Cause", "Output-back", "Shotgun", "Battleship"],
-    answer: "Output-back"
+    answer: "Shotgun"
   },
   {
     question: "What is the first step a technician must take when troubleshooting a machine?",
     options: ["Lock out power sources", "Document repairs", "Identify symptom(s)", "Cycle power"],
-    answer: "Lock out power sources"
+    answer: "Identify symptom(s)"
   },
   {
     question: "You are called over to a machine because the actuators are moving slow, you notice that the pressure regulator has low pressure, you don't see or hear anything else. What is the next thing you should check?",
@@ -64,18 +64,13 @@ const quizData = [
   },
   {
     question: "A technician recently worked on a vacuum lift system to replaced all the vacuum cups. Now the lift is damaging the parts. What is the most likely cause?",
-    options: [
-      "Vacuum pressure too low",
-      "Vacuum cup is too big",
-      "Supply pressure to low",
-      "All of these could cause a problem"
-    ],
+    options: ["Vacuum pressure too low", "Vacuum cup is too big", "Supply pressure to low", "All of these could cause a problem"],
     answer: "Vacuum cup is too big"
   },
   {
     question: "Over contamination in a pneumatic system is a sign of what?",
     options: ["Wrong Element size", "Damaged element", "No filter installed/ Filter bypassed", "All of the above"],
-    answer: "No filter installed/ Filter bypassed"
+    answer: "All of the above"
   },
   {
     question: "What is the last step in removing LOTO?",
@@ -95,7 +90,7 @@ const quizData = [
   {
     question: "What troubleshooting method checks the actuator 1st, FCV 2nd, and DCV 3rd?",
     options: ["Symptom and Cause", "Half-Split", "Output-Back", "Shotgun"],
-    answer: "Half-Split"
+    answer: "Output-Back"
   },
   {
     question: "A pneumatic motor will not start with pressure at the inlet port and exhaust at the outlet port, what test tells you the issue is with the actuator?",
@@ -182,7 +177,7 @@ const quizData = [
     ],
     answer: "A short in the electrical wiring"
   },
-  {
+   {
     question: "What fault is least likely to cause erratic actuator movement?",
     options: [
       "Worn bearings",
@@ -210,7 +205,7 @@ const quizData = [
       "Disconnect actuator pressure lines and check for air exhausting",
       "Disconnect exhaust line, apply pressure and check for actuator movement"
     ],
-    answer: "Press manual override and check for actuator movement"
+    answer: "Disconnect load and check for actuator movement"
   },
   {
     question: "A multistep PLC controlled machine stopped at the end of step 2 of 10. What would be the next step in troubleshooting? The general power and pressure indicators show normal",
@@ -230,7 +225,7 @@ const quizData = [
       "Worn regulator poppet",
       "Misadjusted regulator"
     ],
-    answer: "Worn regulator poppet"
+    answer: "Misadjusted regulator"
   },
   {
     question: "Pressure at a branch line pressure regulator shows 0, the shutoff valve for the branch is open. What is the next troubleshooting step?",
@@ -249,11 +244,16 @@ const quizData = [
       "Pull element and visually inspect",
       "Check regulator pressure"
     ],
-    answer: "Check pressure drop across filter"
+    answer: "Pull element and visually inspect"
   },
   {
     question: "Symptom and Cause method of troubleshooting is used to form what troubleshooting tool?",
-    options: ["Flow chart", "Output-back", "Shotgun", "None of these"],
+    options: [
+      "Flow chart",
+      "Output-back",
+      "Shotgun",
+      "None of these"
+    ],
     answer: "Flow chart"
   },
   {
@@ -274,7 +274,7 @@ const quizData = [
       "Completely open needle valve and check reverse flow",
       "Completely close needle valve and check reverse flow"
     ],
-    answer: "Completely open needle valve and check reverse flow"
+    answer: "Completely close needle valve and check metered flow"
   },
   {
     question: "Slow actuator movement is a symptom of ________?",
@@ -284,7 +284,7 @@ const quizData = [
       "Partially blocked FCV port",
       "Increased flow rate"
     ],
-    answer: "Completely clogged filter element"
+    answer: "Partially blocked FCV port"
   },
   {
     question: "What is the next step if an input PLC indicator light is off when it should be on?",
@@ -298,7 +298,12 @@ const quizData = [
   },
   {
     question: "What is the most important PPE when troubleshooting pneumatic circuits?",
-    options: ["Gloves", "Safety glasses", "Long sleeves", "Soft shoes"],
+    options: [
+      "Gloves",
+      "Safety glasses",
+      "Long sleeves",
+      "Soft shoes"
+    ],
     answer: "Safety glasses"
   },
   {
@@ -353,7 +358,12 @@ const quizData = [
   },
   {
     question: "What method is used to release stored pneumatic energy?",
-    options: ["Venting", "Blocking", "Crimping", "Stopping"],
+    options: [
+      "Venting",
+      "Blocking",
+      "Crimping",
+      "Stopping"
+    ],
     answer: "Venting"
   },
   {
@@ -366,7 +376,7 @@ const quizData = [
     ],
     answer: "Flexible diaphragm"
   },
-  {
+    {
     question: "A vacuum switch has a range of 0 to -100, the set point is -50 and Deadband 10% of set point, what pressure will the vacuum switch reset?",
     options: ["-35", "-45", "0", "-10"],
     answer: "-45"
@@ -439,7 +449,7 @@ const quizData = [
       "Wrong regulator adjustment spring",
       "Overly contaminated filter element"
     ],
-    answer: "Wrong regulator adjustment spring"
+    answer: "Worn regulator poppet"
   },
   {
     question: "What is the most likely cause of fast actuator speed?",
@@ -459,7 +469,7 @@ const quizData = [
       "No system pressure",
       "No symptoms"
     ],
-    answer: "Lower system pressure"
+    answer: "Higher system pressure"
   },
   {
     question: "A technician is called over to a machine because nothing is working. They look at the pressure regulator and notice that the pressure gauge reads 0 psi. The shutoff valve on the system is open. What is the next troubleshooting step?",
@@ -469,7 +479,7 @@ const quizData = [
       "Check filter pressure drop",
       "Check lubricator inlet port for block"
     ],
-    answer: "Check the regulator outlet pressure"
+    answer: "Check filter pressure drop"
   },
   {
     question: "What test should a technician perform to see if a vacuum pressure switch with N.O contacts is working correctly?",
@@ -481,7 +491,8 @@ const quizData = [
     ],
     answer: "Turn on vacuum, place object on cup and check PLC indicator for change"
   }
-];
+]
+
 
 
 
