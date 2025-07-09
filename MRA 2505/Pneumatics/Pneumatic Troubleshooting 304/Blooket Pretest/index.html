@@ -557,49 +557,50 @@ const quizData = [
       `;
     }
 
-    window.checkAnswer = function(btn, selected) {
-      const qObj = quizData[current];
-      const correct = qObj.answer;
-      const resultEl = document.getElementById('result');
-      const buttons = document.querySelectorAll('button');
-      buttons.forEach(b => b.disabled = true);
 
-      if (selected === correct) {
-        btn.classList.add('correct');
-        resultEl.textContent = '✅ Correct!';
-        score++;
-        setTimeout(() => {
-          current++;
-          if (current < quizData.length) {
-            loadQuestion();
-          } else {
-            showResults();
-          }
-        }, 300);
-      } else {
-        btn.classList.add('incorrect');
-        wrongAnswers.push({
-          question: qObj.question,
-          options: qObj.options,
-          correct: correct,
-          selected: selected
-        });
-        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
-        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
-        function nextQuestionHandler() {
-          document.body.removeEventListener('click', nextQuestionHandler);
-          current++;
-          if (current < quizData.length) {
-            loadQuestion();
-          } else {
-            showResults();
-          }
-        }
-        setTimeout(() => {
-          document.body.addEventListener('click', nextQuestionHandler);
-        }, 200);
-      }
-    };
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
 
     loadQuestion();
   </script>
