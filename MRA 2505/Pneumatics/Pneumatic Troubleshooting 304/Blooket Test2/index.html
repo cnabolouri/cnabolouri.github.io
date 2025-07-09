@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "You get called to a machine for an air motor going bad, you notice this is the 4th time this week it has failed, what is the most likely cause?",
+    options: [
+      "Air Pressure to High",
+      "Low Rate of Lubrication",
+      "Clogged Pick-Up Tube",
+      "No Oil In Lubricator Bowl"
+    ],
+    answer: "No Oil In Lubricator Bowl"
+  },
+  {
+    question: "What device is most commonly used to Sense Pressure in Fluid",
+    options: [
+      "Cylinder",
+      "Actuator",
+      "Diaphragm",
+      "Pressure Gauge"
+    ],
+    answer: "Diaphragm"
+  },
+  {
+    question: "Symptom and Cause troubleshooting method is used to form what troubleshooting tool?",
+    options: [
+      "Flow Chart",
+      "Shotgun",
+      "Output-Back",
+      "None of the Above"
+    ],
+    answer: "Flow Chart"
+  },
+  {
+    question: "You get called to a machine for an air motor going bad, you notice this is the 4th time this week it has failed, what is the least likely cause?",
+    options: [
+      "Low Rate of Lubrication",
+      "Clogged Pick-Up Tube",
+      "No Oil in Lubricator Bowl",
+      "Total Blockage"
+    ],
+    answer: "Clogged Pick-Up Tube"
+  },
+  {
+    question: "You get called to a machine because the vacuum system will not pick up the part, what is the most likely issue?",
+    options: [
+      "Vacuum Cup Undersized",
+      "Air Leak in Vacuum Cup",
+      "Load has Uneven Surface",
+      "Both A and C"
+    ],
+    answer: "Air Leak in Vacuum Cup"
+  },
+  {
+    question: "When getting to a line you notice the actuator is moving sluggishly, what is the most likely cause?",
+    options: [
+      "Rod Binding",
+      "Load Interference",
+      "Contamination",
+      "All of the Above"
+    ],
+    answer: "Contamination"
+  },
+  {
+    question: "You are called over to a machine because the actuator are moving slow, you notice that the pressure regulator has low pressure, you dont see or hear anything else. What is the next thing you should check?",
+    options: [
+      "Pressure Drops Across Lubricator",
+      "Pressure Regulator Settings",
+      "Shutoff Valve Closed",
+      "Actuator Load"
+    ],
+    answer: "Pressure Regulator Settings"
+  },
+  {
+    question: "If the checking element in a flow control valve is stuck open?",
+    options: [
+      "The flow through the valve will increase in the metered direction",
+      "The flow through the none metered direction will increase",
+      "No flow will pass through the valve",
+      "Valve will chatter"
+    ],
+    answer: "The flow through the valve will increase in the metered direction"
+  },
+  {
+    question: "What most likely causes a QEV to have a decrease in air supplied to actuator?",
+    options: [
+      "External Leakage",
+      "Internal Leakage to Exhaust Port",
+      "Total Blockage",
+      "Partial Blockage"
+    ],
+    answer: "Internal Leakage to Exhaust Port"
+  },
+  {
+    question: "What device is used to measure pressure",
+    options: [
+      "Bourdan Tube",
+      "Filter",
+      "Lubricator",
+      "Actuator"
+    ],
+    answer: "Bourdan Tube"
+  },
+  {
+    question: "What is the most likely cause of fast actuator speed?",
+    options: [
+      "Blocked Filter Port",
+      "Too much Lubrication",
+      "FCV Misadjusted",
+      "Low System Pressure"
+    ],
+    answer: "FCV Misadjusted"
+  },
+  {
+    question: "You get called to a machine for an air motor failing, you notice that in the system they are not lasting as long as they have in the past, you track the issue back to the lubricator. What could cause the problem?",
+    options: [
+      "Total Blockage",
+      "Low Rate of Lubrication",
+      "Partially Clogged Pick-Up Tube",
+      "Low Rate of Lubrication and Partially Clogged Pick-Up Tube"
+    ],
+    answer: "Low Rate of Lubrication and Partially Clogged Pick-Up Tube"
+  },
+  {
+    question: "You have erratic cylinder movement and notice its caused by a bent rod, what is the least likely cause of a bent rod in a cylinder?",
+    options: [
+      "Cylinder Mounts Broken or Loose",
+      "Load Excessive for Cylinder",
+      "Misalignment",
+      "External Abuse"
+    ],
+    answer: "Load Excessive for Cylinder"
+  },
+  {
+    question: "What causes a QEV to have a decrease in exhaust rate?",
+    options: [
+      "Total Blockage",
+      "External Leakage",
+      "Partial Blockage",
+      "Internal Leakage to Exhaust Port"
+    ],
+    answer: "Partial Blockage"
+  },
+  {
+    question: "How many air lines can go across a walkway?",
+    options: [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    answer: "0"
+  },
+  {
+    question: "If the ______ of a quick exhaust valve does not seal properly, less air will be supplied to an actuator?",
+    options: [
+      "Piston Seal",
+      "Rod Seal",
+      "Diaphragm",
+      "Back Pressure"
+    ],
+    answer: "Diaphragm"
+  },
+  {
+    question: "What troubleshooting method checks the actuator 1st, FCV 2nd, and DCV 3rd?",
+    options: [
+      "Symptom and Cause",
+      "Output-Back",
+      "Half-Split",
+      "Shotgun"
+    ],
+    answer: "Output-Back"
+  },
+  {
+    question: "An exhaust restrictor works by creating a _____ in the system?",
+    options: [
+      "Back Pressure",
+      "High ΔP",
+      "Low Pressure Area",
+      "Vacuum"
+    ],
+    answer: "Back Pressure"
+  },
+  {
+    question: "A DCV spool that will not return to its neutral position may be the result of a broken ______?",
+    options: [
+      "Pilot Plunger",
+      "Return Spring",
+      "Seal",
+      "Check Valve"
+    ],
+    answer: "Return Spring"
+  },
+  {
+    question: "What troubleshooting method performs test based on components known to cause the symptoms?",
+    options: [
+      "Half-Split",
+      "Output-Back",
+      "Symptom and Cause",
+      "Shotgun"
+    ],
+    answer: "Symptom and Cause"
+  },
+  {
+    question: "Most common cause of actuator issues, first thing to check?",
+    options: [
+      "FCV",
+      "DCV",
+      "QEV",
+      "All of the Above"
+    ],
+    answer: "FCV"
+  },
+  {
+    question: "While troubleshooting a cylinder for erratic movement you notice the rod is binding, what is the most likely issue?",
+    options: [
+      "Misalignment",
+      "Load Binding",
+      "Worn Bearings",
+      "All of the Above"
+    ],
+    answer: "Worn Bearings"
+  },
+  {
+    question: "What causes a QEV to have no air exhaust?",
+    options: [
+      "External Leakage",
+      "Partial Blockage",
+      "Internal Leakage to Exhaust Port",
+      "Total Blockage"
+    ],
+    answer: "Total Blockage"
+  },
+  {
+    question: "When doing PMM on a machine you notice oil dripping from a DCV exhaust port, what is the most common cause?",
+    options: [
+      "Misadjusted Flow Rate",
+      "Lubricator Bowl Overfilled",
+      "Incompatible Chemicals",
+      "Low Rate of Lubrication"
+    ],
+    answer: "Misadjusted Flow Rate"
+  },
+  {
+    question: "In a QEV, what is least likely issue to cause the air to exhaust at the wrong time?",
+    options: [
+      "Internal Leakage to Exhaust Port",
+      "Total Blockage",
+      "External Leakage",
+      "Partial Blockage"
+    ],
+    answer: "External Leakage"
+  },
+  {
+    question: "You are doing your PMM and notice the lubricator bowl is cracked, what is the most likely cause?",
+    options: [
+      "Lubricator Bowl Overfilled",
+      "Clogged Pick-Up Tube",
+      "Incompatible Chemicals",
+      "Pick-Up Tube not in oil"
+    ],
+    answer: "Incompatible Chemicals"
+  },
+  {
+    question: "What troubleshooting method is the least effective?",
+    options: [
+      "Symptom and Cause",
+      "Output-Back",
+      "Shotgun",
+      "Half-Split"
+    ],
+    answer: "Shotgun"
+  },
+  {
+    question: "You get to a machine that is running really slow, you know the pressure should be around 60 PSI and it is currently reading 30 PSI, what is the least likely cause?",
+    options: [
+      "Regulator too Small",
+      "Partially Blocked Ports",
+      "Misadjusted Regulator",
+      "Incorrect Control Spring"
+    ],
+    answer: "Regulator too Small"
+  },
+  {
+    question: "Machine will not run, while troubleshooting you notice the regulator has no pressure, you check the regulator and it is fine, what is the most likely cause?",
+    options: [
+      "Filter Blocked Port",
+      "Lubricator Blocked Port",
+      "Regulator Blocked Port",
+      "All of the Above"
+    ],
+    answer: "Filter Blocked Port"
+  },
+  {
+    question: "You get called to a machine for a regulator making abnormal sounds/chatter, what is the most likely issue?",
+    options: [
+      "Misadjusted Regulator",
+      "Clogged Filter",
+      "Bad Spring",
+      "To much oil in air lines"
+    ],
+    answer: "Bad Spring"
+  },
+  {
+    question: "A technician recently worked on a vacuum lift system and replaced all the vacuum cups. Now the lift is damaging the parts. What is the most likely cause?",
+    options: [
+      "Vacuum Pressure to Low",
+      "Vacuum Cup is too big",
+      "Supply Pressure to low",
+      "Both A and C"
+    ],
+    answer: "Vacuum Cup is too big"
+  }
+];
+
+
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+    window.checkAnswer = function(btn, selected) {
+      const qObj = quizData[current];
+      const correct = qObj.answer;
+      const resultEl = document.getElementById('result');
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (selected === correct) {
+        btn.classList.add('correct');
+        resultEl.textContent = '✅ Correct!';
+        score++;
+        setTimeout(() => {
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }, 300);
+      } else {
+        btn.classList.add('incorrect');
+        wrongAnswers.push({
+          question: qObj.question,
+          options: qObj.options,
+          correct: correct,
+          selected: selected
+        });
+        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+        function nextQuestionHandler() {
+          document.body.removeEventListener('click', nextQuestionHandler);
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }
+        setTimeout(() => {
+          document.body.addEventListener('click', nextQuestionHandler);
+        }, 200);
+      }
+    };
+
+    loadQuestion();
+  </script>
+</body>
+</html>
