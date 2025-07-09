@@ -419,49 +419,46 @@ const quizData = [
       `;
     }
 
-    window.checkAnswer = function(btn, selected) {
-      const qObj = quizData[current];
-      const correct = qObj.answer;
-      const resultEl = document.getElementById('result');
-      const buttons = document.querySelectorAll('button');
-      buttons.forEach(b => b.disabled = true);
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
 
-      if (selected === correct) {
-        btn.classList.add('correct');
-        resultEl.textContent = '✅ Correct!';
-        score++;
-        setTimeout(() => {
-          current++;
-          if (current < quizData.length) {
-            loadQuestion();
-          } else {
-            showResults();
-          }
-        }, 300);
-      } else {
-        btn.classList.add('incorrect');
-        wrongAnswers.push({
-          question: qObj.question,
-          options: qObj.options,
-          correct: correct,
-          selected: selected
-        });
-        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
-        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
-        function nextQuestionHandler() {
-          document.body.removeEventListener('click', nextQuestionHandler);
-          current++;
-          if (current < quizData.length) {
-            loadQuestion();
-          } else {
-            showResults();
-          }
-        }
-        setTimeout(() => {
-          document.body.addEventListener('click', nextQuestionHandler);
-        }, 200);
-      }
-    };
+  function nextQuestionHandler() {
+    document.body.removeEventListener('click', nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  }
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+    setTimeout(() => {
+      document.body.addEventListener('click', nextQuestionHandler);
+    }, 200);
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+    setTimeout(() => {
+      document.body.addEventListener('click', nextQuestionHandler);
+    }, 200);
+  }
+};
+
 
     loadQuestion();
   </script>
