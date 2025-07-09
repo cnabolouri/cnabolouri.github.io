@@ -64,13 +64,18 @@ const quizData = [
   },
   {
     question: "A technician recently worked on a vacuum lift system to replaced all the vacuum cups. Now the lift is damaging the parts. What is the most likely cause?",
-    options: ["Vacuum pressure too low", "Vacuum cup is too big", "Supply pressure to low", "All of these could cause a problem"],
-    answer: "All of these could cause a problem"
+    options: [
+      "Vacuum pressure too low",
+      "Vacuum cup is too big",
+      "Supply pressure to low",
+      "All of these could cause a problem"
+    ],
+    answer: "Vacuum cup is too big"
   },
   {
     question: "Over contamination in a pneumatic system is a sign of what?",
     options: ["Wrong Element size", "Damaged element", "No filter installed/ Filter bypassed", "All of the above"],
-    answer: "All of the above"
+    answer: "No filter installed/ Filter bypassed"
   },
   {
     question: "What is the last step in removing LOTO?",
@@ -205,7 +210,7 @@ const quizData = [
       "Disconnect actuator pressure lines and check for air exhausting",
       "Disconnect exhaust line, apply pressure and check for actuator movement"
     ],
-    answer: "Disconnect load and check for actuator movement"
+    answer: "Press manual override and check for actuator movement"
   },
   {
     question: "A multistep PLC controlled machine stopped at the end of step 2 of 10. What would be the next step in troubleshooting? The general power and pressure indicators show normal",
@@ -464,7 +469,7 @@ const quizData = [
       "Check filter pressure drop",
       "Check lubricator inlet port for block"
     ],
-    answer: "Check filter pressure drop"
+    answer: "Check the regulator outlet pressure"
   },
   {
     question: "What test should a technician perform to see if a vacuum pressure switch with N.O contacts is working correctly?",
@@ -477,6 +482,7 @@ const quizData = [
     answer: "Turn on vacuum, place object on cup and check PLC indicator for change"
   }
 ];
+
 
 
     function shuffle(array) {
