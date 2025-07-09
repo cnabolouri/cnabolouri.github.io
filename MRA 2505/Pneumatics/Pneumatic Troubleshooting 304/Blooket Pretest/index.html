@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "Which troubleshooting method tests the cylinder 1st, the Filter 2nd, and the DCV 3rd, the Lubricator 4th, then the pneumatic motor 5th?",
+    options: ["Symptom and Cause", "Output-back", "Shotgun", "Battleship"],
+    answer: "Output-back"
+  },
+  {
+    question: "What is the first step a technician must take when troubleshooting a machine?",
+    options: ["Lock out power sources", "Document repairs", "Identify symptom(s)", "Cycle power"],
+    answer: "Lock out power sources"
+  },
+  {
+    question: "You are called over to a machine because the actuators are moving slow, you notice that the pressure regulator has low pressure, you don't see or hear anything else. What is the next thing you should check?",
+    options: ["Pressure drops across lubricator", "Pressure regulator settings", "Shutoff valve closed", "Actuator load"],
+    answer: "Pressure regulator settings"
+  },
+  {
+    question: "What is the common instrument used to troubleshoot pneumatic circuits?",
+    options: ["DMM", "Pressure gauge", "Rotameter", "Hammer"],
+    answer: "Pressure gauge"
+  },
+  {
+    question: "A technician recently worked on a vacuum lift system to replaced all the vacuum cups. Now the lift is damaging the parts. What is the most likely cause?",
+    options: ["Vacuum pressure too low", "Vacuum cup is too big", "Supply pressure to low", "All of these could cause a problem"],
+    answer: "All of these could cause a problem"
+  },
+  {
+    question: "Over contamination in a pneumatic system is a sign of what?",
+    options: ["Wrong Element size", "Damaged element", "No filter installed/ Filter bypassed", "All of the above"],
+    answer: "All of the above"
+  },
+  {
+    question: "What is the last step in removing LOTO?",
+    options: ["Power on machine", "Put away tools", "Clean area", "Test machine"],
+    answer: "Test machine"
+  },
+  {
+    question: "A technician is testing a cylinder on a machine, the cap end port is opened, the cylinder is fully retracted being held and air is coming out the cap end port. This is a sign that?",
+    options: ["Piston seal worn", "Rod seal worn", "Bad bearings", "Nothing, this is normal"],
+    answer: "Piston seal worn"
+  },
+  {
+    question: "What troubleshooting method performs tests based on components known to cause the symptom(s)?",
+    options: ["Symptom and Cause", "Half-Split", "Output-Back", "Shotgun"],
+    answer: "Symptom and Cause"
+  },
+  {
+    question: "What troubleshooting method checks the actuator 1st, FCV 2nd, and DCV 3rd?",
+    options: ["Symptom and Cause", "Half-Split", "Output-Back", "Shotgun"],
+    answer: "Half-Split"
+  },
+  {
+    question: "A pneumatic motor will not start with pressure at the inlet port and exhaust at the outlet port, what test tells you the issue is with the actuator?",
+    options: [
+      "Adjust the pressure regulator and check if the motor starts",
+      "Adjust FCV and check if motor starts",
+      "Disconnect load and check if motor starts",
+      "Change filter element and check if motor starts"
+    ],
+    answer: "Disconnect load and check if motor starts"
+  },
+  {
+    question: "What test should be performed to check if a cylinder has a bent rod?",
+    options: ["Disconnet the load", "Check with straight edge", "Measure length", "No way to test"],
+    answer: "Check with straight edge"
+  },
+  {
+    question: "An actuator stopped moving, what is not a likely cause?",
+    options: [
+      "FCV check valve stuck open",
+      "Worn seals",
+      "Load increase",
+      "Blocked inlet port"
+    ],
+    answer: "FCV check valve stuck open"
+  },
+  {
+    question: "What test will tell you if a pilot operated DCV spool is shifting, if an actuator is not moving?",
+    options: [
+      "Activate pilot pressure and check to see if actuator moves",
+      "Disconnect actuator lines, activate valve and check for air out of ports",
+      "Disconnect load and activate DCV to check is actuator moves",
+      "Disconnect solenoid and test is open coil"
+    ],
+    answer: "Disconnect actuator lines, activate valve and check for air out of ports"
+  },
+  {
+    question: "A sign that the lubricator is misadjusted is?",
+    options: [
+      "Actuator port blocked",
+      "Oil mist from exhaust",
+      "Fast actuator movement",
+      "Erratic actuator movement"
+    ],
+    answer: "Oil mist from exhaust"
+  },
+  {
+    question: "When troubleshooting a PLC controlled pneumatic system using I/O indicators, what information is needed?",
+    options: [
+      "Sequence chart",
+      "Number of outputs",
+      "Number of inputs",
+      "Power type"
+    ],
+    answer: "Sequence chart"
+  },
+  {
+    question: "How would a technician check if a limit switch was working correctly?",
+    options: [
+      "Pass a metal object in front of sensor",
+      "Press the activation lever of sensor and check indicator light",
+      "Place a magnet on sensor body",
+      "Apply high enough pressure"
+    ],
+    answer: "Press the activation lever of sensor and check indicator light"
+  },
+  {
+    question: "A __________ solution can be used around the threads of a fitting to check for leakage",
+    options: ["Dykem", "Hydrocortisone", "Saline", "Soap"],
+    answer: "Soap"
+  },
+  {
+    question: "A DCV spool that will not return to its neutral position may be the result of a broken _________",
+    options: ["Pilot plunger", "Return spring", "Rod cone", "Check valve"],
+    answer: "Return spring"
+  },
+  {
+    question: "A continuous input to the PLC from the vacuum switch may be the result of __________.",
+    options: [
+      "A short in the electrical wiring",
+      "Broken internal components",
+      "An open in the electrical wiring",
+      "Debris in the system"
+    ],
+    answer: "A short in the electrical wiring"
+  },
+  {
+    question: "What fault is least likely to cause erratic actuator movement?",
+    options: [
+      "Worn bearings",
+      "Lubricator pickup tube blocked",
+      "Bent rod",
+      "Shaft binding"
+    ],
+    answer: "Lubricator pickup tube blocked"
+  },
+  {
+    question: "Which troubleshooting technique tests for a worn cylinder rod seal?",
+    options: [
+      "Watch for erratic movement",
+      "Check pressure at DCV",
+      "Listen for air leak",
+      "Disconnect load and operate cylinder"
+    ],
+    answer: "Listen for air leak"
+  },
+  {
+    question: "A pneumatic rotary actuator is not moving, you have verified that there is pressure at the actuator inlet. What test can you perform to determine if the actuator has failed?",
+    options: [
+      "Disconnect load and check for actuator movement",
+      "Press manual override and check for actuator movement",
+      "Disconnect actuator pressure lines and check for air exhausting",
+      "Disconnect exhaust line, apply pressure and check for actuator movement"
+    ],
+    answer: "Disconnect load and check for actuator movement"
+  },
+  {
+    question: "A multistep PLC controlled machine stopped at the end of step 2 of 10. What would be the next step in troubleshooting? The general power and pressure indicators show normal",
+    options: [
+      "Check incoming power to PLC",
+      "Check the status of the input indicators",
+      "Check main line pressure",
+      "Adjust regulator pressure"
+    ],
+    answer: "Check the status of the input indicators"
+  },
+  {
+    question: "What fault causes low pressure at a branch line pressure regulator?",
+    options: [
+      "Lockout valve open",
+      "Vent port blocked",
+      "Worn regulator poppet",
+      "Misadjusted regulator"
+    ],
+    answer: "Worn regulator poppet"
+  },
+  {
+    question: "Pressure at a branch line pressure regulator shows 0, the shutoff valve for the branch is open. What is the next troubleshooting step?",
+    options: [
+      "Check lubricator for blocked port",
+      "Check regulator outlet port for blockage",
+      "Check filter for clogged element",
+      "Check if other machines in the area have pressure"
+    ],
+    answer: "Check filter for clogged element"
+  },
+  {
+    question: "How would a technician verify that the filter element is clogged?",
+    options: [
+      "Check pressure drop across filter",
+      "Pull element and visually inspect",
+      "Check regulator pressure"
+    ],
+    answer: "Check pressure drop across filter"
+  },
+  {
+    question: "Symptom and Cause method of troubleshooting is used to form what troubleshooting tool?",
+    options: ["Flow chart", "Output-back", "Shotgun", "None of these"],
+    answer: "Flow chart"
+  },
+  {
+    question: "What is the most likely cause of a DCV shifting normally with overrides, but not with electric power?",
+    options: [
+      "No pilot pressure",
+      "Open solenoid",
+      "Broken spring",
+      "Spool stuck"
+    ],
+    answer: "Open solenoid"
+  },
+  {
+    question: "What check should a technician perform to determine if the check valve of a FCV is stuck open?",
+    options: [
+      "Completely open needle valve and check metered flow",
+      "Completely close needle valve and check metered flow",
+      "Completely open needle valve and check reverse flow",
+      "Completely close needle valve and check reverse flow"
+    ],
+    answer: "Completely open needle valve and check reverse flow"
+  },
+  {
+    question: "Slow actuator movement is a symptom of ________?",
+    options: [
+      "Worn regulator poppet",
+      "Completely clogged filter element",
+      "Partially blocked FCV port",
+      "Increased flow rate"
+    ],
+    answer: "Completely clogged filter element"
+  },
+  {
+    question: "What is the next step if an input PLC indicator light is off when it should be on?",
+    options: [
+      "Turn off power and activate input device",
+      "Manually activate output device with overrides",
+      "Replace input device",
+      "Check wires for open"
+    ],
+    answer: "Check wires for open"
+  },
+  {
+    question: "What is the most important PPE when troubleshooting pneumatic circuits?",
+    options: ["Gloves", "Safety glasses", "Long sleeves", "Soft shoes"],
+    answer: "Safety glasses"
+  },
+  {
+    question: "A Vacuum generator has a partially blocked port. What symptom would be present?",
+    options: [
+      "Low vacuum pressure",
+      "High vacuum pressure",
+      "No vacuum pressure",
+      "No exhaust pressure"
+    ],
+    answer: "Low vacuum pressure"
+  },
+  {
+    question: "A cylinder on a PLC controlled machine is moving out of sequence, what step should a technician take next in troubleshooting?",
+    options: [
+      "Manually operate the cylinder and check movement",
+      "Check regulator for correct pressure",
+      "Check PLC indicators for correct sequence",
+      "Close FCV to prevent unwanted movement"
+    ],
+    answer: "Check PLC indicators for correct sequence"
+  },
+  {
+    question: "A technician is working on a machine that has multiple cylinders hooked to the same manifold, all cylinders but one are moving, what is the most likely cause?",
+    options: [
+      "Block manifold supply port",
+      "Blocked manifold exhaust port",
+      "Low regulator pressure",
+      "Stuck DCV spool"
+    ],
+    answer: "Stuck DCV spool"
+  },
+  {
+    question: "What is the most likely cause for no spool shift on a solenoid-controlled pilot operated DCV?",
+    options: [
+      "No electric signal",
+      "Blocked exhaust port",
+      "Broken spring operator",
+      "High actuator pressure"
+    ],
+    answer: "No electric signal"
+  },
+  {
+    question: "What test proves that a solenoid coil is open?",
+    options: [
+      "Check continuity with DMM",
+      "Apply power to solenoid",
+      "Use manual override",
+      "None of these"
+    ],
+    answer: "Check continuity with DMM"
+  },
+  {
+    question: "What method is used to release stored pneumatic energy?",
+    options: ["Venting", "Blocking", "Crimping", "Stopping"],
+    answer: "Venting"
+  },
+  {
+    question: "What is the most common method pressure switches use to sense pressure?",
+    options: [
+      "Spring and piston",
+      "Spring steel",
+      "Flexible diaphragm",
+      "Electromagnetic coil"
+    ],
+    answer: "Flexible diaphragm"
+  },
+  {
+    question: "A vacuum switch has a range of 0 to -100, the set point is -50 and Deadband 10% of set point, what pressure will the vacuum switch reset?",
+    options: ["-35", "-45", "0", "-10"],
+    answer: "-45"
+  },
+  {
+    question: "What symptom would a technician observe if the check valve on a FCV was stuck open?",
+    options: [
+      "Slow actuator speed",
+      "Fast actuator speed in both directions",
+      "Low branch system pressure",
+      "Erratic movement"
+    ],
+    answer: "Fast actuator speed in both directions"
+  },
+  {
+    question: "What is the most likely cause of cylinder drift?",
+    options: [
+      "Worn bearing",
+      "FCV check stuck open",
+      "DCV partial block on exhuast port",
+      "Worn piston seals"
+    ],
+    answer: "Worn piston seals"
+  },
+  {
+    question: "What is the purpose of a plant air distribution system?",
+    options: [
+      "Provide a central location to shut off air to a specific",
+      "Provide a central location to perform preventative maintenance on machines",
+      "Provide clean and consistent air pressure to various machines",
+      "None of the above"
+    ],
+    answer: "Provide clean and consistent air pressure to various machines"
+  },
+  {
+    question: "Operating the manual override is a test to troubleshoot what symptom?",
+    options: [
+      "Spool not shifting",
+      "Spool not returning to neutral",
+      "Solenoid failure",
+      "Blocked supply port"
+    ],
+    answer: "Spool not shifting"
+  },
+  {
+    question: "Zero branch line pressure at the pressure regulator is caused by all except ________?",
+    options: [
+      "Completely clogged filter element",
+      "Blocked regulator inlet port",
+      "Blocked filter outlet port",
+      "Blocked lubricator outlet port"
+    ],
+    answer: "Blocked lubricator outlet port"
+  },
+  {
+    question: "If a vacuum cup is not sealing, supply pressure is OK, what is the next step in troubleshooting?",
+    options: [
+      "Check regulator pressure",
+      "Check vacuum cup for cracks",
+      "Check vacuum switch",
+      "Check DCV supply presure"
+    ],
+    answer: "Check vacuum cup for cracks"
+  },
+  {
+    question: "What is not a cause for rotary actuator speed decrease?",
+    options: [
+      "Load increase",
+      "Worn regulator poppet",
+      "Wrong regulator adjustment spring",
+      "Overly contaminated filter element"
+    ],
+    answer: "Wrong regulator adjustment spring"
+  },
+  {
+    question: "What is the most likely cause of fast actuator speed?",
+    options: [
+      "Blocked filter port",
+      "Too much lubrication",
+      "FCV misadjusted",
+      "Low system pressure"
+    ],
+    answer: "FCV misadjusted"
+  },
+  {
+    question: "A worn regulator poppet shows what symptom?",
+    options: [
+      "Lower system pressure",
+      "Higher system pressure",
+      "No system pressure",
+      "No symptoms"
+    ],
+    answer: "Lower system pressure"
+  },
+  {
+    question: "A technician is called over to a machine because nothing is working. They look at the pressure regulator and notice that the pressure gauge reads 0 psi. The shutoff valve on the system is open. What is the next troubleshooting step?",
+    options: [
+      "Operate the shutoff valve",
+      "Check the regulator outlet pressure",
+      "Check filter pressure drop",
+      "Check lubricator inlet port for block"
+    ],
+    answer: "Check filter pressure drop"
+  },
+  {
+    question: "What test should a technician perform to see if a vacuum pressure switch with N.O contacts is working correctly?",
+    options: [
+      "Turn on vacuum",
+      "Check switch adjustment",
+      "Turn on vacuum, place object on cup and check PLC indicator for change",
+      "Turn off vacuum and inspect cup for cracks"
+    ],
+    answer: "Turn on vacuum, place object on cup and check PLC indicator for change"
+  }
+];
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+    window.checkAnswer = function(btn, selected) {
+      const qObj = quizData[current];
+      const correct = qObj.answer;
+      const resultEl = document.getElementById('result');
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+
+      if (selected === correct) {
+        btn.classList.add('correct');
+        resultEl.textContent = '✅ Correct!';
+        score++;
+        setTimeout(() => {
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }, 300);
+      } else {
+        btn.classList.add('incorrect');
+        wrongAnswers.push({
+          question: qObj.question,
+          options: qObj.options,
+          correct: correct,
+          selected: selected
+        });
+        resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+        <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+        function nextQuestionHandler() {
+          document.body.removeEventListener('click', nextQuestionHandler);
+          current++;
+          if (current < quizData.length) {
+            loadQuestion();
+          } else {
+            showResults();
+          }
+        }
+        setTimeout(() => {
+          document.body.addEventListener('click', nextQuestionHandler);
+        }, 200);
+      }
+    };
+
+    loadQuestion();
+  </script>
+</body>
+</html>
