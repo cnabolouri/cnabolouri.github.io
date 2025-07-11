@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electrical Systems Blooket ScrappyCoCo 201</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Electrical Systems Blooket ScrappyCoCo 201</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "What part does this schematic symbol represent?",
+    options: ["capacitor", "buzzer", "lid", "hinge"],
+    answer: "buzzer"
+  },
+  {
+    question: "When you want to measure resistance of a resistor in a circuit you must first __________ the resistor",
+    options: ["charge", "discharge", "disconnect", "short circuit"],
+    answer: "disconnect"
+  },
+  {
+    question: "If Resistance total increased to 15 Ohms and source voltage stayed the same, what would be the problem with this circuit?",
+    options: ["R1 opened", "R1 shorted", "Power surge", "R3 opened"],
+    answer: "R1 opened"
+  },
+  {
+    question: "If R3 were too short, what would be the voltage value at R1?",
+    options: ["Stay the same.", "Increase", "Jump to R1", "Zero"],
+    answer: "Zero"
+  },
+  {
+    question: "If a conveyor system is down and one electrician, mechanic, and a robotic tech each came down to fix their separate problems and a supervisor was coming too, how many lock out tags with lock sets would there be?",
+    options: ["1 set", "2 sets", "3 sets", "4 sets"],
+    answer: "3 sets"
+  },
+  {
+    question: "If capacitors C1=2F, C2=5F, and C3=.75 were connected in parallel what would be Ct?",
+    options: ["6F", "7.75F", "5F", "0F"],
+    answer: "7.75F"
+  },
+  {
+    question: "If the switch shown was in a circuit as it is shown now and there was a source voltage of 16V. What would the voltage drop be at the switch?",
+    options: ["0V", "Static voltage", "16V", "32V"],
+    answer: "16V"
+  },
+  {
+    question: "A thermal fuse requires __________ before it breaks continuity.",
+    options: ["energy", "space", "vibration", "time"],
+    answer: "time"
+  },
+  {
+    question: "If a 5mH inductor is being used in a circuit with an applied frequency of 2KHz what would be the inductor's inductive reactance?",
+    options: ["628 Ohms", "62.8 Ohms", "62.8 Amps", "6280 Ohms"],
+    answer: "62.8 Ohms"
+  },
+  {
+    question: "If a 4µF capacitor was operating in a circuit with a 2KHz frequency being applied to it, what would be the capacitor's capacitive reactance?",
+    options: ["199 Ohms", "199 Amps", "19.9 Ohms", "19.9 Amps"],
+    answer: "19.9 Ohms"
+  },
+  {
+    question: "If three inductors L1=6mH, L2=6mH, and L3=6mH were connected in parallel what would be their total inductance?",
+    options: ["6mH", "18MH", "18mH", "2mH"],
+    answer: "2mH"
+  },
+  {
+    question: "The reason AC is used in power transmission lines instead of DC is because AC _______________.",
+    options: [
+      "Eddison was bad at marketing",
+      "AC is cheaper to produce",
+      "losses less power over long distance",
+      "DC sparks over long distance"
+    ],
+    answer: "losses less power over long distance"
+  },
+  {
+    question: "If a transformer has a primary coil of 600 turns and the secondary coil has 100 turns with 240VAC input, what would be the output voltage?",
+    options: ["40VAC", "50VAC", "12VDC", "60VAC"],
+    answer: "40VAC"
+  },
+  {
+    question: "When should a technician replace fuses being used in a circuit?",
+    options: [
+      "When the fuse no longer has continuity.",
+      "Every year from the date they were installed.",
+      "Whenever the systems tech-manual tells you.",
+      "Whenever the system bumped."
+    ],
+    answer: "When the fuse no longer has continuity."
+  },
+  {
+    question: "Inductors and conductors take __________ to either fully charge or discharge.",
+    options: [
+      "3 time constants",
+      "5 time constants",
+      "within a few seconds after you turn on the system",
+      "additional stress"
+    ],
+    answer: "5 time constants"
+  },
+  {
+    question: "What is resistance total for this circuit?",
+    options: ["15 Ohms", "23 Ohms", "27 Ohms", "30 Ohms"],
+    answer: "15 Ohms"
+  },
+  {
+    question: "A capacitor opposes ______________?",
+    options: ["power", "resistance", "a change in voltage", "a change in current"],
+    answer: "a change in voltage"
+  },
+  {
+    question: "An inductor opposes a ________________.",
+    options: ["power", "resistance", "change in voltage", "a change in current"],
+    answer: "a change in current"
+  },
+  {
+    question: "To make sure that your electrical equipment is safe to use ____________________.",
+    options: [
+      "yank on the cord to see if it's loose",
+      "only need to check to see if there are any cracks in chassis",
+      "measure the resistance between equipment ground terminal and main ground lug to ensure it is low",
+      "measure resistance between the two prongs in the plug"
+    ],
+    answer: "measure the resistance between equipment ground terminal and main ground lug to ensure it is low"
+  },
+  {
+    question: "What is the resistance total for this circuit?",
+    options: ["5KOhms", "1.67KOhms", "5.0KOhms", "16.7KOhms"],
+    answer: "1.67KOhms"
+  },
+  {
+    question: "What type of input devices are PB1 & PB2?",
+    options: ["SPST", "Normally open push button", "DPDT", "Normally closed push button"],
+    answer: "Normally closed push button"
+  },
+  {
+    question: "What is the resistance total for this circuit?",
+    options: ["2 Ohms", "60 Ohms", "15 Ohms", "5.5 Ohms"],
+    answer: "5.5 Ohms"
+  },
+  {
+    question: "Any circuit or part of a circuit that has more than one path for current to follow then all paths combine into just one path combining the different current flows into one is called __________?",
+    options: ["series", "fiber optic", "short", "parallel"],
+    answer: "parallel"
+  },
+  {
+    question: "A basic digital multimeter cannot measure ONE of the following values.",
+    options: ["voltage", "current", "inductance", "resistance"],
+    answer: "inductance"
+  },
+  {
+    question: "In order for a DMM to measure current in a circuit the test leads must be connected in __________ to where current is wanted to be measured.",
+    options: ["series", "parallel", "opposed", "reverse polarity"],
+    answer: "series"
+  },
+  {
+    question: "The Power Law basic formula is __________.",
+    options: [
+      "Current x voltage",
+      "current squared x resistance",
+      "current x resistance",
+      "voltage x resistance"
+    ],
+    answer: "Current x voltage"
+  },
+  {
+    question: "30W ÷ 5V =",
+    options: ["150W", ".17A", "6A", "60W"],
+    answer: "6A"
+  },
+  {
+    question: "Cables, tool kits, and a power supply on the ground or most likely to cause what problem for workers?",
+    options: [
+      "lost time at work for being disorganized",
+      "electrical shock because of un plugged power supply",
+      "loss in pay",
+      "falling on the ground by tripping over these items and hurting yourself or others"
+    ],
+    answer: "falling on the ground by tripping over these items and hurting yourself or others"
+  },
+  {
+    question: "In the attached diagram the primary has 10 coils and top coil secondary 1 and bottom coil secondary 2 have 5 coils each. If you had an incoming voltage of 12VAC at the primary what would be the combined voltage outputs for this transformer?",
+    options: ["6VAC", "12VAC", "24VAC", "2.4VDC"],
+    answer: "12VAC"
+  },
+  {
+    question: "In a combined capacitor/resistor series circuit what, if anything, is wrong with the capacitor if a DMM measured 0 resistance across the capacitor?",
+    options: [
+      "capacitor is fine",
+      "it is open",
+      "capacitor has zero energy stored in it",
+      "it is shorted"
+    ],
+    answer: "it is shorted"
+  },
+  {
+    question: "Which resistor in this circuit is the load resistor?",
+    options: ["R1", "RL", "R4"],
+    answer: "RL"
+  },
+  {
+    question: "How are resistors R3 & R4 connected together electrically?",
+    options: ["series", "parallel", "series-parallel", "flux"],
+    answer: "series"
+  },
+  {
+    question: "Before starting actual work on your electrical equipment make sure you ____________________ .",
+    options: [
+      "receive permission from your boss",
+      "get the technical manuals you need as a reference",
+      "schedule break time",
+      "use the lock out/tag out process"
+    ],
+    answer: "use the lock out/tag out process"
+  },
+  {
+    question: "What is the voltage drop for R3?",
+    options: ["9V", "8V", "3V", "2V"],
+    answer: "3V"
+  },
+  {
+    question: "In a parallel system if you were to add one more parallel branch what would happen to resistance and current total?",
+    options: [
+      "resistance total would decrease, and current total would increase",
+      "resistance total would increase, and current total would decrease",
+      "resistance and current total would both increase",
+      "resistance and current totall would both decrease"
+    ],
+    answer: "resistance total would decrease, and current total would increase"
+  },
+  {
+    question: "In order for an earth ground to work it must provide for a ________________ .",
+    options: [
+      "path of high resistance to stop current surges",
+      "path of least resistance to ground or chassis or ground for current surges to follow",
+      "shift current flow to other sub-circuits that are not an urgent priority to work",
+      "burns up excess power as it passes through ground"
+    ],
+    answer: "path of least resistance to ground or chassis or ground for current surges to follow"
+  },
+  {
+    question: "When a capacitor is in a DC circuit, and it reaches full charge ________________.",
+    options: [
+      "the capacitor destroys it self",
+      "it starts flux capacitance",
+      "it stops AC current",
+      "it stops DC current"
+    ],
+    answer: "it stops DC current"
+  },
+  {
+    question: "In order to reset a circuit breaker you must __________.",
+    options: [
+      "flip a switch",
+      "use a fuse",
+      "flip the circuit breaker fully off then on",
+      "flip the circuit breaker twice to make sure it resets"
+    ],
+    answer: "flip the circuit breaker fully off then on"
+  },
+  {
+    question: "In a parallel circuit if current total is 5A and current through R2 is 1.5A and current through R3 is 2A then current through R1 is __________.",
+    options: ["1.5A", ".5A", "5A", "1A"],
+    answer: "1.5A"
+  },
+  {
+    question: "In order to discharge a capacitor, you must __________.",
+    options: [
+      "touch it first to see if a charge is still there",
+      "leave the capacitor alone it will discharge by itself after 5 time constants",
+      "leave the capacitor alone it will discharge by itself after 4 time constants",
+      "touch the two leads of a capacitor with a discharge probe"
+    ],
+    answer: "touch the two leads of a capacitor with a discharge probe"
+  },
+  {
+    question: "In a series resistive circuit if there is 3mA of current at R1 and R2 what would be current total?",
+    options: ["6mA", "6A", "3mA", "9mA"],
+    answer: "3mA"
+  }
+];
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
