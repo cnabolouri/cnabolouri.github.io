@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "How to get two 120s out of a 480v transformer?",
+    options: [
+      "Electrical schematics do not show physical comp",
+      "2:1 With a Center Tap",
+      "2:5 Center Tap",
+      "4:1 Center Tap"
+    ],
+    answer: "2:1 With a Center Tap"
+  },
+  {
+    question: "600VAC Primary, how do you get 400VAC output?",
+    options: [
+      "Terminal 2 and 4",
+      "Terminal 1 and 4",
+      "Terminal 3 and 4",
+      "Terminal 2"
+    ],
+    answer: "Terminal 2 and 4"
+  },
+  {
+    question: "What happens when you add another capacitor in series?",
+    options: [
+      "Capacitance current decreases",
+      "Capacitance decreases",
+      "Capacitance increases",
+      "Capacitance decreases and current decreases"
+    ],
+    answer: "Capacitance decreases and current decreases"
+  },
+  {
+    question: "What does it mean when a capacitor has near zero resistance continuously?",
+    options: [
+      "Capacitor",
+      "FRN",
+      "Charging capacitor",
+      "0.25"
+    ],
+    answer: "Charging capacitor"
+  },
+  {
+    question: "What is the total charge time of a RC circuit with a time constant of 0.05?",
+    options: [
+      "0.01",
+      "0.50",
+      "0.75",
+      "0.25"
+    ],
+    answer: "0.25"
+  },
+  {
+    question: "What type of voltage divider is needed for a very low-resistance load?",
+    options: [
+      "Loaded",
+      "Unloaded",
+      "Reloaded",
+      "Decrease load"
+    ],
+    answer: "Loaded"
+  },
+  {
+    question: "Fuse question",
+    options: [
+      "FRN-4",
+      "FRN",
+      "Fuse",
+      "Henrys"
+    ],
+    answer: "FRN-4"
+  },
+  {
+    question: "When do you replace a fuse?",
+    options: [
+      "Blown",
+      "Lights up",
+      "When the fuse has no continuity",
+      "Due for a change"
+    ],
+    answer: "When the fuse has no continuity"
+  },
+  {
+    question: "What is the total inductance of a circuit with a 60Hz AC power supply and three inductors in series with 0.1 henry values?",
+    options: [
+      "0.4 henrys",
+      "0.2 henrys",
+      "0.3 henrys",
+      "0.9 henry"
+    ],
+    answer: "0.3 henrys"
+  },
+  {
+    question: "Total inductive reactance question",
+    options: [
+      "113 Ohms",
+      "120 Ohms",
+      "150 Ohms",
+      "75 Ohms"
+    ],
+    answer: "113 Ohms"
+  },
+  {
+    question: "How do you test a ground connection?",
+    options: [
+      "Connect the frame to the lug of the positive",
+      "Connect the frame to the lug of the negative",
+      "Connect the fuse",
+      "Connect the frame to the lug of the ground"
+    ],
+    answer: "Connect the frame to the lug of the ground"
+  },
+  {
+    question: "What does a good ground provide to a circuit?",
+    options: [
+      "Low resistance to Earth",
+      "High resistance to Earth",
+      "High resistance to ground",
+      "Low resistance to ground"
+    ],
+    answer: "Low resistance to Earth"
+  },
+  {
+    question: "What hazards do unsecured wires cause?",
+    options: [
+      "Arc flash",
+      "Trip hazard",
+      "Wires tangled",
+      "Shock"
+    ],
+    answer: "Trip hazard"
+  },
+  {
+    question: "What happens to a circuit powered by a battery as you add a parallel branch?",
+    options: [
+      "Resistance increases",
+      "Resistance decreases",
+      "Resistance negative",
+      "Resistance decreases & increases"
+    ],
+    answer: "Resistance decreases"
+  },
+  {
+    question: "Resistor color code value question?",
+    options: [
+      "2k Ohms",
+      "2 Ohms",
+      "1k Ohms",
+      "2.0 Ohms"
+    ],
+    answer: "2k Ohms"
+  },
+  {
+    question: "What is the relationship between R5 and R7?",
+    options: [
+      "In series",
+      "In ohms",
+      "In RT",
+      "In CT"
+    ],
+    answer: "In series"
+  },
+  {
+    question: "Which resistor is the load resistor in this voltage divider question?",
+    options: [
+      "R4 is the loaded",
+      "R2 is the loaded",
+      "R1 is the loaded",
+      "R3 is the loaded"
+    ],
+    answer: "R3 is the loaded"
+  },
+  {
+    question: "What input device is used in this circuit? <img src='5026832f-982d-4031-ab78-55aa4dc2d959.png' alt='circuit image' class='inline-image'/>",
+    options: [
+      "Normally- open push button",
+      "Closed push button",
+      "Normally- closed push button",
+      "Open push button"
+    ],
+    answer: "Normally- closed push button"
+  },
+  {
+    question: "What happens to the circuit when the push button is held? (Relay question)",
+    options: [
+      "Green off Red Off",
+      "Red OFF, Green ON",
+      "Green On",
+      "Red Off"
+    ],
+    answer: "Red OFF, Green ON"
+  },
+  {
+    question: "What is the total resistance in this circuit? (40, 20, 40, 20)",
+    options: [
+      "10.9 Ohms",
+      "6.66 Ohms",
+      "6.9 Ohms",
+      "6.0 Ohms"
+    ],
+    answer: "6.66 Ohms"
+  },
+  {
+    question: "What is the first thing you should do when you work on a circuit?",
+    options: [
+      "Perform LOTO",
+      "Inspect machine",
+      "Check PLC",
+      "Check if it on"
+    ],
+    answer: "Perform LOTO"
+  },
+  {
+    question: "How do you measure current in a one-component circuit?",
+    options: [
+      "Measure current in series",
+      "Measure current in ohms",
+      "Measure current in RT",
+      "Measure current in DC"
+    ],
+    answer: "Measure current in series"
+  },
+  {
+    question: "What happens when you remove R1 branch of a circuit and the resistance go up by 200 ohms?",
+    options: [
+      "There is a decrease short in that branch",
+      "Main Branch is blocked",
+      "There is a increase in that branch",
+      "There is a short in that branch"
+    ],
+    answer: "There is a short in that branch"
+  },
+  {
+    question: "What happens when you remove R1 branch of a circuit and no resistance change happens?",
+    options: [
+      "There is an open in that branch",
+      "There is closed in that branch",
+      "There is an short in that branch",
+      "There is an open/closed in that branch"
+    ],
+    answer: "There is an open in that branch"
+  },
+  {
+    question: "What are not shown in a schematic diagram?",
+    options: [
+      "Power",
+      "Branch connections",
+      "Physical connections",
+      "Main line"
+    ],
+    answer: "Physical connections"
+  },
+  {
+    question: "What type of circuit breaker has a delay before it pops?",
+    options: [
+      "Thermal-open",
+      "Thermal-operated",
+      "Thermal-closed",
+      "Delay Breaker"
+    ],
+    answer: "Thermal-operated"
+  },
+  {
+    question: "Why don't they use DC in power transformers?",
+    options: [
+      "Ac is easier to read",
+      "AC is the main use for power transformer",
+      "AC is easier to transmit over long distances",
+      "Ac has increase in distance"
+    ],
+    answer: "AC is easier to transmit over long distances"
+  },
+  {
+    question: "What does an inductor do in an AC circuit?",
+    options: [
+      "Opposes current changes",
+      "Current changes",
+      "Increases current changes",
+      "Decrease current changes"
+    ],
+    answer: "Opposes current changes"
+  },
+  {
+    question: "How do you calculate the power of a circuit?",
+    options: [
+      "Voltage added by current",
+      "Voltage multiplied by current",
+      "Voltage subtracted by current",
+      "Voltage divided by current"
+    ],
+    answer: "Voltage multiplied by current"
+  },
+  {
+    question: "Which is a step in properly measuring resistance in a circuit?",
+    options: [
+      "Check circuit points",
+      "Check power",
+      "Disconnect one lead of the component"
+    ],
+    answer: "Disconnect one lead of the component"
+  },
+  {
+    question: "Combination circuit question with series and parallel?",
+    options: [
+      "200 Ohms",
+      "100 Ohms",
+      "300 Ohms",
+      "50 Ohms"
+    ],
+    answer: "300 Ohms"
+  },
+  {
+    question: "Capacitive reactance question with 3 capacitors in parallel? (10μF, 15μF, 125μF)",
+    options: [
+      "150 μF",
+      "5.72 μF(20 ohms)",
+      "7.66 μF",
+      "14 μF"
+    ],
+    answer: "5.72 μF(20 ohms)"
+  },
+  {
+    question: "Which side of the transformer do you connect to the voltage source?",
+    options: [
+      "Primary coil",
+      "Coil",
+      "Direct input",
+      "Secondary coil"
+    ],
+    answer: "Primary coil"
+  },
+  {
+    question: "What is the highest potential in the circuit with the common lead on the negative terminal of the battery?",
+    options: [
+      "Point B, Closest to the positive",
+      "Point A, Closest to the positive",
+      "Point C, Closest to the positive",
+      "Point D, Closest to the positive"
+    ],
+    answer: "Point A, Closest to the positive"
+  },
+  {
+    question: "What is the relationship for voltage across components connected in parallel?",
+    options: [
+      "The voltage is the decrease across each branch",
+      "The voltage is the same across each branch",
+      "The voltage is the increase across each branch",
+      "The voltage is 0 across each branch"
+    ],
+    answer: "The voltage is the same across each branch"
+  },
+  {
+    question: "What happens to current as it passes through branches of a parallel circuit and connects back to the ground?",
+    options: [
+      "Parallel circuit",
+      "Current splits",
+      "Current splits a parallel circuit across the branches"
+    ],
+    answer: "Current splits a parallel circuit across the branches"
+  },
+  {
+    question: "What is the condition of the switch if the lead of a voltmeter read voltage across this switch?",
+    options: [
+      "(Closed switch) The switch is open",
+      "Closed switch",
+      "Switch is open"
+    ],
+    answer: "(Closed switch) The switch is open"
+  },
+  {
+    question: "What is the power in this Circuit? (V – 75v, I – 5mA)",
+    options: [
+      "1.8 Watts",
+      "375 Watts",
+      "75 Watts",
+      "5.0 Watts"
+    ],
+    answer: "375 Watts"
+  },
+  {
+    question: "Formula to power?",
+    options: [
+      "P = I x E",
+      "I = P x E",
+      "E = I x P"
+    ],
+    answer: "P = I x E"
+  },
+  {
+    question: "ALTERNATING CURRENT AC MOST ELECTRICAL POWER PRODUCED IN THE WORLD IS?",
+    options: [
+      "AC EASIER TO TRANSMIT OVER LONG DISTANCE US (AC) 60 TIMES PER SECOND",
+      "!"
+    ],
+    answer: "AC EASIER TO TRANSMIT OVER LONG DISTANCE US (AC) 60 TIMES PER SECOND"
+  },
+  {
+    question: "DIRECT CURRENT FLOW IS CALLED?",
+    options: [
+      "DC 12VDC",
+      "!"
+    ],
+    answer: "DC 12VDC"
+  },
+  {
+    question: "ALTERNATING CURRENT FLOW IS?",
+    options: [
+      "AC US 12 VAC",
+      "!"
+    ],
+    answer: "AC US 12 VAC"
+  },
+  {
+    question: "WHEN ONLY THE \"V\" IS UNDERSTOOD TO BE",
+    options: [
+      "DC",
+      "!"
+    ],
+    answer: "DC"
+  },
+  {
+    question: "IN A SERIES CIRCUIT THE TOTAL VOLTAGE IS ?",
+    options: [
+      "DIVIDED AMONG THE LOADS",
+      "!"
+    ],
+    answer: "DIVIDED AMONG THE LOADS"
+  }
+];
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
