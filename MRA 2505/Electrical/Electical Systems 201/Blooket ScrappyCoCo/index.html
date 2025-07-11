@@ -41,29 +41,30 @@
   <h1>Electrical Systems Blooket ScrappyCoCo 201</h1>
   <div id="quiz"></div>
   <script>
+
 const quizData = [
   {
-    question: 'What part does this schematic symbol represent?<img src="1.png" style="height:200px;"><br>',
+    question: '<img src="1.png" style="height:200px;"><br>What part does this schematic symbol represent?',
     options: ["capacitor", "buzzer", "lid", "hinge"],
     answer: "buzzer"
   },
   {
-    question: 'When you want to measure resistance of a resistor in a circuit you must first __________ the resistor<img src="2.png" style="height:200px;"><br>',
+    question: '<img src="2.png" style="height:200px;"><br>When you want to measure resistance of a resistor in a circuit you must first __________ the resistor',
     options: ["charge", "discharge", "disconnect", "short circuit"],
     answer: "disconnect"
   },
   {
-    question: 'If Resistance total increased to 15 Ohms and source voltage stayed the same, what would be the problem with this circuit?<img src="3.png" style="height:200px;"><br>',
+    question: '<img src="3.png" style="height:200px;"><br>If Resistance total increased to 15 Ohms and source voltage stayed the same, what would be the problem with this circuit?',
     options: ["R1 opened", "R1 shorted", "Power surge", "R3 opened"],
     answer: "R1 opened"
   },
   {
-    question: 'If R3 were too short, what would be the voltage value at R1?<img src="4.png" style="height:200px;"><br>',
+    question: '<img src="4.png" style="height:200px;"><br>If R3 were too short, what would be the voltage value at R1?',
     options: ["Stay the same.", "Increase", "Jump to R1", "Zero"],
     answer: "Zero"
   },
   {
-    question: 'If a conveyor system is down and one electrician, mechanic, and a robotic tech each came down to fix their separate problems and a supervisor was coming too, how many lock out tags with lock sets would there be?<img src="5.png" style="height:200px;"><br>',
+    question: '<img src="5.png" style="height:200px;"><br>If a conveyor system is down and one electrician, mechanic, and a robotic tech each came down to fix their separate problems and a supervisor was coming too, how many lock out tags with lock sets would there be?',
     options: ["1 set", "2 sets", "3 sets", "4 sets"],
     answer: "3 sets"
   },
@@ -73,7 +74,7 @@ const quizData = [
     answer: "7.75F"
   },
   {
-    question: 'If the switch shown was in a circuit as it is shown now and there was a source voltage of 16V. What would the voltage drop be at the switch?<img src="7.png" style="height:200px;"><br>',
+    question: '<img src="7.png" style="height:200px;"><br>If the switch shown was in a circuit as it is shown now and there was a source voltage of 16V. What would the voltage drop be at the switch?',
     options: ["0V", "Static voltage", "16V", "32V"],
     answer: "16V"
   },
@@ -98,7 +99,7 @@ const quizData = [
     answer: "2mH"
   },
   {
-    question: 'The reason AC is used in power transmission lines instead of DC is because AC _______________.<img src="12.png" style="height:200px;"><br>',
+    question: '<img src="12.png" style="height:200px;"><br>The reason AC is used in power transmission lines instead of DC is because AC _______________.',
     options: [
       "Eddison was bad at marketing",
       "AC is cheaper to produce",
@@ -108,12 +109,12 @@ const quizData = [
     answer: "losses less power over long distance"
   },
   {
-    question: 'If a transformer has a primary coil of 600 turns and the secondary coil has 100 turns with 240VAC input, what would be the output voltage?<img src="13.png" style="height:200px;"><br>',
+    question: '<img src="13.png" style="height:200px;"><br>If a transformer has a primary coil of 600 turns and the secondary coil has 100 turns with 240VAC input, what would be the output voltage?',
     options: ["40VAC", "50VAC", "12VDC", "60VAC"],
     answer: "40VAC"
   },
   {
-    question: 'When should a technician replace fuses being used in a circuit?<img src="14.png" style="height:200px;"><br>',
+    question: '<img src="14.png" style="height:200px;"><br>When should a technician replace fuses being used in a circuit?',
     options: [
       "When the fuse no longer has continuity.",
       "Every year from the date they were installed.",
@@ -123,7 +124,7 @@ const quizData = [
     answer: "When the fuse no longer has continuity."
   },
   {
-    question: 'What is resistance total for this circuit?<img src="16.png" style="height:200px;"><br>',
+    question: '<img src="16.png" style="height:200px;"><br>What is resistance total for this circuit?',
     options: ["15 Ohms", "23 Ohms", "27 Ohms", "30 Ohms"],
     answer: "15 Ohms"
   },
@@ -138,7 +139,7 @@ const quizData = [
     answer: "a change in current"
   },
   {
-    question: 'To make sure that your electrical equipment is safe to use ____________________.<img src="19.png" style="height:200px;"><br>',
+    question: '<img src="19.png" style="height:200px;"><br>To make sure that your electrical equipment is safe to use ____________________.',
     options: [
       "yank on the cord to see if it's loose",
       "only need to check to see if there are any cracks in chassis",
@@ -148,17 +149,17 @@ const quizData = [
     answer: "measure the resistance between equipment ground terminal and main ground lug to ensure it is low"
   },
   {
-    question: 'What is the resistance total for this circuit?<img src="20.png" style="height:200px;"><br>',
+    question: '<img src="20.png" style="height:200px;"><br>What is the resistance total for this circuit?',
     options: ["5KOhms", "1.67KOhms", "5.0KOhms", "16.7KOhms"],
     answer: "1.67KOhms"
   },
   {
-    question: 'What type of input devices are PB1 & PB2?<img src="21.png" style="height:200px;"><br>',
+    question: '<img src="21.png" style="height:200px;"><br>What type of input devices are PB1 & PB2?',
     options: ["SPST", "Normally open push button", "DPDT", "Normally closed push button"],
     answer: "Normally closed push button"
   },
   {
-    question: 'What is the resistance total for this circuit?<img src="22.png" style="height:200px;"><br>',
+    question: '<img src="22.png" style="height:200px;"><br>What is the resistance total for this circuit?',
     options: ["2 Ohms", "60 Ohms", "15 Ohms", "5.5 Ohms"],
     answer: "5.5 Ohms"
   },
@@ -203,7 +204,7 @@ const quizData = [
     answer: "falling on the ground by tripping over these items and hurting yourself or others"
   },
   {
-    question: 'In the attached diagram the primary has 10 coils and top coil secondary 1 and bottom coil secondary 2 have 5 coils each. If you had an incoming voltage of 12VAC at the primary what would be the combined voltage outputs for this transformer?<img src="29.png" style="height:200px;"><br>',
+    question: '<img src="29.png" style="height:200px;"><br>In the attached diagram the primary has 10 coils and top coil secondary 1 and bottom coil secondary 2 have 5 coils each. If you had an incoming voltage of 12VAC at the primary what would be the combined voltage outputs for this transformer?',
     options: ["6VAC", "12VAC", "24VAC", "2.4VDC"],
     answer: "12VAC"
   },
@@ -218,12 +219,12 @@ const quizData = [
     answer: "it is shorted"
   },
   {
-    question: 'Which resistor in this circuit is the load resistor?<img src="31.png" style="height:200px;"><br>',
+    question: '<img src="31.png" style="height:200px;"><br>Which resistor in this circuit is the load resistor?',
     options: ["R1", "RL", "R4"],
     answer: "RL"
   },
   {
-    question: 'How are resistors R3 & R4 connected together electrically?<img src="32.png" style="height:200px;"><br>',
+    question: '<img src="32.png" style="height:200px;"><br>How are resistors R3 & R4 connected together electrically?',
     options: ["series", "parallel", "series-parallel", "flux"],
     answer: "series"
   },
@@ -238,7 +239,7 @@ const quizData = [
     answer: "use the lock out/tag out process"
   },
   {
-    question: 'What is the voltage drop for R3?<img src="34.png" style="height:200px;"><br>',
+    question: '<img src="34.png" style="height:200px;"><br>What is the voltage drop for R3?',
     options: ["9V", "8V", "3V", "2V"],
     answer: "3V"
   },
