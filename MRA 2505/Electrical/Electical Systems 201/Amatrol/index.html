@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumatic Systems Quiz Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pneumatic Systems Quiz Game</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+ {
+  question: "Which of the following is a manually operated switch?",
+  options: ["Pushbutton switch", "Selector switch", "Knife switch", "All of the above"],
+  answer: "All of the above"
+},
+{
+  question: "A(n) __________ determines if electricity is present in a circuit.",
+  options: ["Ohmmeter", "Circuit tester", "Ammeter", "Solenoid"],
+  answer: "Circuit tester"
+},
+{
+  question: "Which of the following is not a component of a basic electrical circuit?",
+  options: ["Input device", "Output device", "Insulator", "Power supply"],
+  answer: "Insulator"
+},
+{
+  question: "Electricity is the flow of __________ in a conductor.",
+  options: ["Protons", "Neutrons", "Electrons", "Photons"],
+  answer: "Electrons"
+},
+{
+  question: "Rotary motion is the output of which electrical output device?",
+  options: ["Buzzer", "Resistor", "Motor", "Solenoid"],
+  answer: "Motor"
+},
+{
+  question: "Which of the following is true of an electrical schematic diagram?",
+  options: ["Represents components with standard symbols.", "Shows how the components are interconnected.", "Is helpful in troubleshooting a circuit.", "All of the above"],
+  answer: "All of the above"
+},
+{
+  question: "A knife switch consists of a lever and one or more sets of __________.",
+  options: ["Conductors", "Operators", "Knives", "Contacts"],
+  answer: "Contacts"
+},
+{
+  question: "The contacts of a(n) __________ switch are open until acted on by the operator.",
+  options: ["Normally closed", "Adjacent", "Normally open", "Normally simulated"],
+  answer: "Normally open"
+},
+{
+  question: "Constant voltage power supplies will maintain a constant voltage output under varying __________.",
+  options: ["Loads", "Weather conditions", "Levels of light", "Chemical reactions"],
+  answer: "Loads"
+},
+{
+  question: "Alternating current is one type of electrical current; what is the other type?",
+  options: ["In-rush current", "River current", "Direct current", "Unaltered current"],
+  answer: "Direct current"
+},
+{
+  question: "Which of the following is an electrical output device?",
+  options: ["Motor", "Lamp", "Resistor", "All of the above"],
+  answer: "All of the above"
+},
+{
+  question: "A simple method for opening or closing a circuit is to use a __________.",
+  options: ["Switch", "Knife", "Screwdriver", "None of the above"],
+  answer: "Switch"
+},
+{
+  question: "The electrical wall outlets at home are a source of __________ current.",
+  options: ["Direct", "Alternating", "Both direct and alternating", "None of the above"],
+  answer: "Alternating"
+},
+{
+  question: "A(n) __________ is used to measure resistance.",
+  options: ["Ohmmeter", "Ammeter", "Voltmeter", "Flow meter"],
+  answer: "Ohmmeter"
+},
+{
+  question: "The potential difference between two points in a circuit is called __________.",
+  options: ["Current", "Voltage", "Resistance", "None of the above"],
+  answer: "Voltage"
+},
+{
+  question: "In a(n) __________ circuit, the voltage available to each branch is equal to the source voltage.",
+  options: ["Parallel", "Series", "Short", "Open"],
+  answer: "Parallel"
+},
+{
+  question: "A __________ circuit is one in which there is only one path for current to travel.",
+  options: ["Complex", "Series", "Parallel", "Closed"],
+  answer: "Series"
+},
+{
+  question: "If a wire has continuity, it __________.",
+  options: ["Cannot conduct current", "Will have almost no resistance", "Cannot be used in a circuit", "Has an open"],
+  answer: "Will have almost no resistance"
+},
+{
+  question: "When loads are connected in series, their individual resistances are __________.",
+  options: ["Multiplied", "Divided", "Subtracted", "Added"],
+  answer: "Added"
+},
+{
+  question: "A multimeter is a multipurpose device that can measure __________.",
+  options: ["Only voltage", "Only current", "Only resistance", "Voltage, current, and resistance"],
+  answer: "Voltage, current, and resistance"
+},
+{
+  question: "A known reference point in an electrical circuit is called a __________.",
+  options: ["Common", "Zero Reference", "Negative", "Positive"],
+  answer: "Common"
+},
+{
+  question: "Resistance is measured in units of __________.",
+  options: ["Volts", "Watts", "Ohms", "Amps"],
+  answer: "Ohms"
+},
+{
+  question: "Current is measured in units of __________.",
+  options: ["Amps", "Volts", "Ohms", "Pascals"],
+  answer: "Amps"
+},
+{
+  question: "Current in a(n) __________ circuit is divided among the branches of the circuit.",
+  options: ["Series", "Parallel", "Open", "Short"],
+  answer: "Parallel"
+},
+{
+  question: "Which of the following statements is not true about measuring the resistance of a component that is connected in a circuit?",
+  options: ["Turn off the power supply.", "Disconnect one of the component leads from the circuit.", "Make sure the power supply is on.", "Connect the leads across the component."],
+  answer: "Make sure the power supply is on."
+},
+{
+  question: "An ammeter is used to measure __________.",
+  options: ["Current", "Resistance", "Voltage", "Temperature"],
+  answer: "Current"
+},
+{
+  question: "A(n) __________ is a measurement device specifically used to measure only voltage.",
+  options: ["Ohmmeter", "Multimeter", "Voltmeter", "Ammeter"],
+  answer: "Voltmeter"
+},
+{
+  question: "To measure current through a component, the ammeter must be connected __________ the component.",
+  options: ["Across", "In parallel with", "In series with", "Without"],
+  answer: "In series with"
+},
+{
+  question: "A known reference point in an electrical circuit is called a __________.",
+  options: ["Common", "Zero Reference", "Negative", "Positive"],
+  answer: "Common"
+},
+{
+  question: "Which of the following is a type of circuit protection device?",
+  options: ["Fuse", "Resistor", "Rheostat", "Capacitor"],
+  answer: "Fuse"
+},
+{
+  question: "When the wire or foil strip inside a fuse melts, the fuse is said to be __________.",
+  options: ["Shot", "Done", "Blown", "Tripped"],
+  answer: "Blown"
+},
+{
+  question: "Which of the following is a formula for calculating power?",
+  options: ["P = I × E", "P = I × R", "P = E / R", "All of the above", "None of the above"],
+  answer: "P = I × E"
+},
+{
+  question: "The difference between a fuse and a circuit breaker is __________.",
+  options: ["Circuit breakers are cheaper", "Circuit breakers can be reset and used again", "Fuses are re-usable", "All of the above", "None of the above"],
+  answer: "Circuit breakers can be reset and used again"
+},
+{
+  question: "The Ohm's Law formula for calculating voltage is __________.",
+  options: ["E = I × R", "E = P × R", "E = P × I × R", "All of the above", "None of the above"],
+  answer: "E = I × R"
+},
+{
+  question: "Kirchoff's Voltage Law for a series circuit says that the total voltage is equal to __________.",
+  options: ["The smallest voltage drop", "The sum of the voltage drops", "The product of the voltage drops", "The largest voltage drop"],
+  answer: "The sum of the voltage drops"
+},
+{
+  question: "Which of the following is a formula for calculating total resistance in a parallel circuit?",
+  options: ["RT = ET × IT", "RT = R1 + R2 + R3", "RT = 1/(1/R1 + 1/R2 + 1/R3)", "All of the above", "None of the above"],
+  answer: "RT = 1/(1/R1 + 1/R2 + 1/R3)"
+},
+{
+  question: "The current that flows from and back to the power supply in a parallel circuit is called __________ current.",
+  options: ["Maximum", "Main line", "Kirchoff's", "Minimum"],
+  answer: "Main line"
+},
+{
+  question: "The measure of energy consumed by a circuit is called __________.",
+  options: ["Usage", "Power", "Dissipation", "Consumption"],
+  answer: "Power"
+},
+{
+  question: "To find the total resistance in a series circuit, __________.",
+  options: ["Multiply the individual resistances", "Average the resistances", "Add the individual resistances", "Subtract the individual resistances"],
+  answer: "Add the individual resistances"
+},
+{
+  question: "A common inductor found in fluorescent light fixtures is a __________.",
+  options: ["Starter", "Cathode", "Ballast", "Switcher"],
+  answer: "Ballast"
+},
+{
+  question: "A coil that opposes any change in current flow is called a(n) __________.",
+  options: ["Inductor", "Capacitor", "Transducer", "Oscillator"],
+  answer: "Inductor"
+},
+{
+  question: "Which of the following is the correct formula for calculating total series inductance?",
+  options: ["LT = L1 + L2 + L3...", "LT = L1 × L2 × L3...", "LT = (1/L1) + (1/L2) + (1/L3)...", "All of the above", "None of the above"],
+  answer: "LT = L1 + L2 + L3..."
+},
+{
+  question: "A time-delay relay that uses an RC timing circuit is called a(n) __________.",
+  options: ["Solid-state, time-delay relay", "Adjustable relay", "Dashpot time-delay relay", "Motor-driven, time-delay relay"],
+  answer: "Solid-state, time-delay relay"
+},
+{
+  question: "In a power supply that converts an AC input to generate a DC output, a capacitor is commonly used to __________.",
+  options: ["Block the current flow", "Increase the current flow", "Filter the rectifier's pulsating DC output", "Decrease the voltage"],
+  answer: "Filter the rectifier's pulsating DC output"
+},
+{
+  question: "The resistance provided by an inductor in an AC circuit is called __________.",
+  options: ["Induced resistance", "Inductive reactance", "Electromotive force", "All of the above", "None of the above"],
+  answer: "Inductive reactance"
+},
+{
+  question: "The apparent resistance to AC by a capacitor is called __________.",
+  options: ["Frequency displacement", "Capacitive reactance", "Passive capacitance", "Filtering"],
+  answer: "Capacitive reactance"
+},
+{
+  question: "The formula for calculating total parallel capacitance is __________.",
+  options: ["CT = C1 + C2 + C3...", "1/CT = (1/C1) + (1/C2) + (1/C3)...", "CT = C1 × C2 × C3...", "CT = C1 - C2 - C3..."],
+  answer: "CT = C1 + C2 + C3..."
+},
+{
+  question: "The concept of a magnetic field being formed around a conductor when current flows through it is called __________.",
+  options: ["Capacitance", "Electromagnetism", "Flux", "All of the above", "None of the above"],
+  answer: "Electromagnetism"
+},
+{
+  question: "Which of the following is not an example of an electromagnetic device?",
+  options: ["Solenoid", "Relay", "Resistor", "Motor"],
+  answer: "Resistor"
+},
+{
+  question: "Capacitance is measured in __________.",
+  options: ["Farads", "Henrys", "Ohms", "Volts"],
+  answer: "Farads"
+},
+{
+  question: "Inductance is measured in __________.",
+  options: ["Ohms", "Farads", "Henrys", "RPMs"],
+  answer: "Henrys"
+},
+{
+  question: "__________ affects a DC circuit only when the current is first turned on, turned off, or when there is a change in the load resistance.",
+  options: ["Capacitance", "Inductance", "A time delay", "A relay"],
+  answer: "Inductance"
+},
+{
+  question: "Which of the following is the total series capacitive reactance formula?",
+  options: ["XCT = XC1 × XC2 × XC3...", "XCT = XC1 - XC2 - XC3...", "XCT = XC1 + XC2 + XC3...", "XCT = 1/[(1/XC1) + (1/XC2) + (1/XC3)...]"],
+  answer: "XCT = XC1 + XC2 + XC3..."
+},
+{
+  question: "Which of the following is a type of capacitor?",
+  options: ["Electrolytic", "Nonpolarized", "Variable", "All of the above", "None of the above"],
+  answer: "All of the above"
+},
+{
+  question: "The energy stored by a capacitor is called a(n) __________.",
+  options: ["Induced voltage", "Electrostatic charge", "Voltage spike", "All of the above", "None of the above"],
+  answer: "Electrostatic charge"
+},
+{
+  question: "One of the effects a capacitor has in a DC circuit is that it will __________.",
+  options: ["Charge to a voltage equal to the source voltage", "Continue to charge until the source is completely drained", "Act like an open until it is fully charged", "All of the above", "None of the above"],
+  answer: "Charge to a voltage equal to the source voltage"
+},
+{
+  question: "Which of the following is the correct formula for calculating total parallel inductive reactance in a parallel circuit?",
+  options: ["XLT = XL1 + XL2 + XL3...", "XLT = XL1 × XL2 × XL3...", "XLT = 1/[(1/XL1) + (1/XL2) + (1/XL3)...]", "XLT = (1/XL1) + (1/XL2) + (1/XL3)..."],
+  answer: "XLT = 1/[(1/XL1) + (1/XL2) + (1/XL3)...]"
+},
+{
+  question: "A variable resistor is different from a fixed resistor because it __________.",
+  options: ["Doesn't have to be connected in a circuit to work", "Can be adjusted", "Can be used only in AC circuits", "All of the above", "None of the above"],
+  answer: "Can be adjusted"
+},
+{
+  question: "A short circuit in the branch of a parallel circuit will __________.",
+  options: ["Cause an excessive amount of current to flow", "Damage or destroy the power supply", "Cause a short circuit across the power supply", "All of the above", "None of the above"],
+  answer: "All of the above"
+},
+{
+  question: "In a series-parallel circuit, components that are connected in parallel will display characteristics of a(n) __________.",
+  options: ["Series circuit", "Parallel circuit", "Open circuit", "Short circuit"],
+  answer: "Parallel circuit"
+},
+{
+  question: "Which of the following is an application of a combination circuit?",
+  options: ["Commercial building's lights", "Electrical outlets controlled by a switch", "Ceiling fan control", "All of the above", "None of the above"],
+  answer: "All of the above"
+},
+{
+  question: "A circuit that uses resistors to produce a voltage that is lower than the source voltage is called a __________.",
+  options: ["Step-down transformer", "Reduction circuit", "Voltage divider", "Voltage converter"],
+  answer: "Voltage divider"
+},
+{
+  question: "In order for a firm voltage divider to operate properly, the load resistance value should be at least __________ times greater than resistance value of the voltage divider bleeder resistor.",
+  options: ["10", "2", "5", "8"],
+  answer: "10"
+},
+{
+  question: "What is the result when a branch of a parallel circuit has an open?",
+  options: ["It has no effect on the circuit.", "The circuit will not operate.", "The rest of the circuit will operate but with a reduced total current.", "It will cause a short to develop."],
+  answer: "The rest of the circuit will operate but with a reduced total current."
+},
+{
+  question: "In order to identify the series and parallel sections of a combination circuit, __________.",
+  options: ["Eliminate the parallel section", "Use a DMM", "Trace the current path", "All of the above", "None of the above"],
+  answer: "Trace the current path"
+},
+{
+  question: "Which of the following is NOT a step for troubleshooting a parallel circuit to find a short?",
+  options: ["Disconnect the power supply.", "Look for visible signs of damage.", "Connect an ohmmeter across the main line.", "All of the above", "None of the above"],
+  answer: "None of the above"
+},
+{
+  question: "Which of the following is not one of the seven general steps for solving a combination circuit?",
+  options: ["Calculate the equivalent resistance for all parallel sections.", "Calculate the total resistance of the circuit.", "Calculate the total current", "Calculate the RC time constant."],
+  answer: "Calculate the RC time constant."
+},
+{
+  question: "Transformers are usually rated in units called __________.",
+  options: ["Amperes", "Hertz", "Volt Amperes", "Ohms"],
+  answer: "Volt Amperes"
+},
+{
+  question: "A common application of mutual inductance is found in a device called a __________.",
+  options: ["Buzzer", "Motor", "Relay", "Transformer"],
+  answer: "Transformer"
+},
+{
+  question: "The current load of a transformer is the current drawn by the __________.",
+  options: ["Load connected to the transformer", "Secondary with no load connected", "Load connected to the primary", "Primary winding itself"],
+  answer: "Primary winding itself"
+},
+{
+  question: "Which type of transformer is commonly used to reduce line voltages of 240 VAC or 480 VAC to 120 VAC?",
+  options: ["Isolation transformer", "Control transformer", "Autotransformer", "Distribution transformer"],
+  answer: "Control transformer"
+},
+{
+  question: "In order to calculate the output voltage of a transformer, divide the input voltage by the __________.",
+  options: ["Frequency", "Turns ratio", "Input current", "Resistance"],
+  answer: "Turns ratio"
+},
+{
+  question: "Which of the following is a method to troubleshoot a transformer?",
+  options: ["Measuring the temperature", "Measuring the weight of the transformer", "Measuring the continuity of the coils", "All of the above", "None of the above"],
+  answer: "Measuring the continuity of the coils"
+},
+{
+  question: "A __________ is an electrical device that converts AC electricity from one voltage level to another.",
+  options: ["Transformer", "Primary coil", "Secondary coil", "Center tap"],
+  answer: "Transformer"
+},
+{
+  question: "Which of the categories of transformers uses only one coil for the primary and secondary?",
+  options: ["Distribution transformer", "Autotransformer", "Isolation transformer", "Control transformer"],
+  answer: "Autotransformer"
+},
+{
+  question: "The power relationship on a transformer states that __________.",
+  options: ["Power in = power out + loss", "Power in = 1/2 power out", "Power in = 2 × power out", "All of the above", "None of the above"],
+  answer: "Power in = power out + loss"
+},
+{
+  question: "A common application of a center tap on the secondary of a transformer is a(n) __________.",
+  options: ["Autotransformer", "Step-up transformer", "Distribution transformer", "All of the above", "None of the above"],
+  answer: "Distribution transformer"
+}
+
+];
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
