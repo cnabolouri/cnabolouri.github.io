@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electrical Systems Blooket CoCohort 201</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Electrical Systems Blooket CoCohort 201</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "Primary purpose of an equipment ground is __________.",
+    options: [
+      "to protect equipment",
+      "to ensure the equipment does not burn out",
+      "to protect buildings",
+      "to protect people"
+    ],
+    answer: "to protect people"
+  },
+  {
+    question: "A __________ circuit is device that is used to keep a temporary input device closed to keep the system running.",
+    options: ["close control", "seal in", "open control", "peeled in"],
+    answer: "seal in"
+  },
+  {
+    question: "What type of overload uses a coil to sense level of motor current?",
+    options: ["electro-static", "coil", "power", "magnetic"],
+    answer: "magnetic"
+  },
+  {
+    question: "What term determines the ability of a machine to provide more power than what it is rated for?",
+    options: ["service factor", "overload factor", "Working Voltage Direct Current", "Fail Safe Device"],
+    answer: "service factor"
+  },
+  {
+    question: '<img src="5.png" style="height:200px;"><br>What is the name of this schematic symbol?',
+    options: ["toggle switch", "time relay normally open", "limit switch", "pressure switch"],
+    answer: "time relay normally open"
+  },
+  {
+    question: "A metal chassis that is not connected by a ground is touched by a current carrying conductor the metal chassis will become __________",
+    options: ["cold", "hot", "cherry red", "reverse biased"],
+    answer: "hot"
+  },
+  {
+    question: "Never remove the grounding prong from an __________.",
+    options: ["DC plug", "electrical switch", "earth ground", "AC plug"],
+    answer: "AC plug"
+  },
+  {
+    question: "When blocking energy flow from a power source __________ that source is the safest choice.",
+    options: ["tagging out", "locking out", "turning off", "asking your supervisor about"],
+    answer: "locking out"
+  },
+  {
+    question: "The person who removes the LOTO is __________.",
+    options: ["the supervisor", "whoever will work on it in the next shift", "the person who put it in place", "the operator"],
+    answer: "the person who put it in place"
+  },
+  {
+    question: "What conductor provides a common return path to the source for the conductors that carry current for the system?",
+    options: ["ground", "hot lead", "red wire", "neutral"],
+    answer: "neutral"
+  },
+  {
+    question: "The output wave forms for a three-phase motor are __________.",
+    options: ["360 out of phase", "180 out of phase", "120 out of phase", "90 out of phase"],
+    answer: "120 out of phase"
+  },
+  {
+    question: "On an electrical device if __________ occurred, an electrical hazard can occur.",
+    options: [
+      "the safety prong was removed from an AC cord",
+      "extension cord",
+      "an AC power cord was used",
+      "a DC cord"
+    ],
+    answer: "the safety prong was removed from an AC cord"
+  },
+  {
+    question: '<img src="13.png" style="height:200px;"><br>Which of these items are an input device?',
+    options: ["lights", "buzzer", "motors", "push buttons"],
+    answer: "push buttons"
+  },
+  {
+    question: "When taking a measurement with a digital multi-meter one must always __________.",
+    options: [
+      "be careful",
+      "be careful when power in circuit is turned on and off",
+      "use one hand rule",
+      "ask supervisor first"
+    ],
+    answer: "use one hand rule"
+  },
+  {
+    question: "An air compressor often uses a/an __________ sensor to control the system.",
+    options: ["pressure", "air", "limit", "light"],
+    answer: "pressure"
+  },
+  {
+    question: "Which switch is mostly used for operators to change from manual to automatic operations?",
+    options: ["push button", "selector switch", "knife blade switch", "voice switch"],
+    answer: "selector switch"
+  },
+  {
+    question: "What value/term is used to determine the output of a transformer?",
+    options: ["primary coil", "secondary coil", "primary voltage", "turns ratio"],
+    answer: "turns ratio"
+  },
+  {
+    question: "Which of the following is NOT part of the Ladder Diagram Rules?",
+    options: [
+      "All components must be labeled.",
+      "Only show control devices.",
+      "Output devices are located on the left.",
+      "Input devices located on the left."
+    ],
+    answer: "Output devices are located on the left."
+  },
+  {
+    question: "The purpose of a clutch in a motor control system is to __________.",
+    options: ["increase speed", "clutch down", "choke gas flow", "unload the motor and safety device"],
+    answer: "unload the motor and safety device"
+  },
+  {
+    question: '<img src="20.png" style="height:200px;"><br>The part labeled 10 PSI is what type of switch?',
+    options: [
+      "Pressure switch normally open",
+      "Pressure switch normaly closed",
+      "Air gauge normally open",
+      "Air gauge normally closed"
+    ],
+    answer: "Pressure switch normaly closed"
+  },
+  {
+    question: '<img src="21.png" style="height:200px;"><br>In the given circuit what would occur if the pressure was to drop below a predetermined level?',
+    options: [
+      "Light would turn on.",
+      "light would act as a fuse and pop noy allowing the current to flow.",
+      "Light would change color.",
+      "Switch would vibrate"
+    ],
+    answer: "Light would turn on."
+  },
+  {
+    question: '<img src="22.png" style="height:200px;"><br>The component connected parallel to the start button is a __________.',
+    options: ["counter device", "divider device", "seal out device", "seal in device"],
+    answer: "seal in device"
+  },
+  {
+    question: "What is a manual method an operator can use to reverse direction of a 3 phase motor?",
+    options: ["H-O-A", "Bridge switch", "Drum switch", "Magnetic control"],
+    answer: "Drum switch"
+  },
+  {
+    question: '<img src="24.png" style="height:200px;"><br>What type of interlock system is being used in the given circuit?',
+    options: [
+      "Normally open relays",
+      "push buttons",
+      "seal in circuits",
+      "flux capacitor"
+    ],
+    answer: "push buttons"
+  },
+  {
+    question: '<img src="25.png" style="height:200px;"><br>This schematic symbol represents what part?',
+    options: [
+      "dire switch normally open",
+      "line switch normally open",
+      "phase switch normally open",
+      "normally closed held open"
+    ],
+    answer: "normally closed held open"
+  },
+  {
+    question: '<img src="26.png" style="height:200px;"><br>What is the part called for this schematic symbol?',
+    options: [
+      "Knife switch normally closed",
+      "normall open held closed",
+      "pressure switch normally closed",
+      "phaser switch normally closed"
+    ],
+    answer: "normall open held closed"
+  },
+  {
+    question: '<img src="27.png" style="height:200px;"><br>If the primary coil had 450 coils with a 60 Hz signal at 90VAC and the secondary coil had 150 coils, what would be the secondary voltage?',
+    options: ["180VAC", "20VAC", "30VAC", "270VAC"],
+    answer: "30VAC"
+  },
+  {
+    question: "If you have two normally open push button switches connected in parallel what type of gate would that be?",
+    options: ["AND", "NAND", "NOR", "OR"],
+    answer: "OR"
+  },
+  {
+    question: "In a magnetic motor's starter auxiliary control there is an extra set of normally open contacts provided that can be used as a __________.",
+    options: ["seal in circuit", "phaser relay", "emergency reverse", "emergency stop"],
+    answer: "seal in circuit"
+  },
+  {
+    question: "Which parts of an electrical system are normally connected to equipment ground?",
+    options: [
+      "Every part that carry's current.",
+      "Metal parts that do not normally carry current.",
+      "Insulated metal parts.",
+      "Any conductor in an electrical syste."
+    ],
+    answer: "Metal parts that do not normally carry current."
+  },
+  {
+    question: '<img src="31.png" style="height:200px;"><br>What position do you need to put the selector switch in order for the system to automatically run?',
+    options: ["straight up", "straight down", "left", "right"],
+    answer: "left"
+  },
+  {
+    question: "What purpose is there for having both electrical and mechanical interlocks in place for reverse motor control circuits?",
+    options: [
+      "Keeping blocked coils from burning out if energized.",
+      "Blocking negative current flow from burning our parts.",
+      "Negative voltage will freeze all coils.",
+      "Keeps system from spinning wildly."
+    ],
+    answer: "Keeping blocked coils from burning out if energized."
+  }
+];
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
