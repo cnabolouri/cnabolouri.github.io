@@ -80,6 +80,7 @@
     <button onclick="showSection('ps209')">Pneumatic Systems 209</button>
     <button onclick="showSection('pt304')">Pneumatic Troubleshooting 304</button>
     <button onclick="showSection('es201')">Electrical Systems 201</button>
+    <button onclick="showSection('emcs202')">Electrical Motor Control Systems 202</button>
   </div>
 
   <div class="section" id="ps209">
@@ -135,15 +136,34 @@
       </a>
     </div>
 
+    <button class="back-btn" onclick="goBack()">← Back</button>
+  </div>
+
+  
+  <div class="section" id="es201">
+    <h2>Electrical Motor Control Systems 202</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA 2505/Electrical/Electrical Motor Control Systems 202/Amatrol" target="_blank">
+        Amatrol Quizzes 202
+      </a>
+      <a href="https://cnabolouri.github.io/MRA 2505/Electrical/Electrical Motor Control Systems 202/Blooket ScrappyCoCo" target="_blank">
+        Blooket ScrappyCoCo 202
+      </a>
+    </div>
 
     <button class="back-btn" onclick="goBack()">← Back</button>
   </div>
+
+
+
+ 
   <script>
     function showSection(id) {
       document.getElementById('chooseSection').style.display = 'none';
       document.getElementById('ps209').style.display = 'none';
       document.getElementById('pt304').style.display = 'none';
       document.getElementById('es201').style.display = 'none';
+      document.getElementById('emcs202').style.display = 'none';
       document.getElementById(id).style.display = 'block';
     }
     function goBack() {
@@ -151,6 +171,7 @@
       document.getElementById('ps209').style.display = 'none';
       document.getElementById('pt304').style.display = 'none';
       document.getElementById('es201').style.display = 'none';
+      document.getElementById('emcs202').style.display = 'none';
     }
   </script>
 </body>
