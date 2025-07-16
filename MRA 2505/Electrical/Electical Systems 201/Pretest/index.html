@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electrical Systems Pretest 201</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Electrical Systems Pretest 201</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "Another term for voltage is _________.",
+    options: ["current", "electromotive force", "resistance", "power"],
+    answer: "electromotive force"
+  },
+  {
+    question: "The four basic components of an electrical circuit are _________.",
+    options: [
+      "Power Supply, Input Devices, Conductors, Insulators",
+      "Power Supply, Input Devices, Output Devices, Insulators",
+      "Power Supply, Input Devices, Output Devices, Conductors",
+      "Power Supply, Output Devices, Conductors, Insulators"
+    ],
+    answer: "Power Supply, Input Devices, Output Devices, Conductors"
+  },
+  {
+    question: "The flow of electrons in an electrical circuit is also called _________.",
+    options: ["resistance", "voltage", "frequency", "current"],
+    answer: "current"
+  },
+  {
+    question: "The unit for resistance is _________.",
+    options: ["ohm", "volt", "amp", "watt"],
+    answer: "ohm"
+  },
+  {
+    question: "Pictorial diagrams use pictures. Schematic diagrams use _________.",
+    options: ["schemas", "materials", "symbols", "words"],
+    answer: "symbols"
+  },
+  {
+    question: "A(n) _________ determines if electricity is present in a circuit.",
+    options: ["ohmmeter", "circuit tester", "gauge", "tap"],
+    answer: "circuit tester"
+  },
+  {
+    question: "Equipment grounding provides a _________.",
+    options: [
+      "low resistance path to earth",
+      "second neutral",
+      "faultless conductor",
+      "way to energize the circuit"
+    ],
+    answer: "low resistance path to earth"
+  },
+  {
+    question: "The same _________ flows through every component in a series circuit.",
+    options: ["voltage", "inductance", "current", "capacitance"],
+    answer: "current"
+  },
+  {
+    question: "When measuring current through a component, the ammeter should be placed in _________ with the component.",
+    options: ["parallel", "series", "order", "combination"],
+    answer: "series"
+  },
+  {
+    question: "In a parallel circuit, the total resistance _________ as more resistors are added in parallel.",
+    options: ["decreases", "spikes", "increases", "dissipates"],
+    answer: "decreases"
+  },
+  {
+    question: "_________ means a continuous or complete path for current to flow.",
+    options: ["Circuitry", "Electricity", "Continuity", "Elasticity"],
+    answer: "Continuity"
+  },
+  {
+    question: "A battery is an example of a _________ current device.",
+    options: ["alternating", "direct", "electrolytic", "rotary"],
+    answer: "direct"
+  },
+  {
+    question: "A blown fuse has no _________.",
+    options: ["voltage", "current", "continuity", "resistance"],
+    answer: "continuity"
+  },
+  {
+    question: "A _________ circuit breaker trips due to heat caused by excessive current.",
+    options: ["thermally triggered", "magnetically triggered", "optically triggered", "resistively triggered"],
+    answer: "thermally triggered"
+  },
+  {
+    question: "_________ contacts open when the switch is activated.",
+    options: ["Normally-Open", "Normally-Closed", "Normally-Direct", "Normally-Indirect"],
+    answer: "Normally-Closed"
+  },
+  {
+    question: "A decrease in resistance causes a(n) _________ in current.",
+    options: ["decrease", "increase", "reduction", "slip"],
+    answer: "increase"
+  },
+  {
+    question: "<img src='17.png' style='height:200px;'><br>What is the total resistance in this circuit?",
+    options: ["8 ohms", "17 ohms", "85 ohms", "170 ohms"],
+    answer: "170 ohms"
+  },
+  {
+    question: "<img src='18.png' style='height:200px;'><br>What is the total voltage of this circuit?",
+    options: ["200 volts", "18 volts", "60 volts", "3.6 volts"],
+    answer: "18 volts"
+  },
+  {
+    question: "<img src='19.png' style='height:200px;'><br>What is the total inductance in this circuit?",
+    options: ["56H", "6.5H", "0.56H", "5.6H"],
+    answer: "0.56H"
+  },
+  {
+    question: "<img src='20.png' style='height:200px;'><br>What is the total current in this circuit?",
+    options: ["8190 amps", "0.819 amps", "1.011 amps", "10.89 amps"],
+    answer: "1.011 amps"
+  },
+  {
+    question: "<img src='21.png' style='height:200px;'><br>What is the total resistance in this circuit?",
+    options: ["138 ohms", "1.38 ohms", "35 ohms", "3.5 ohms"],
+    answer: "138 ohms"
+  },
+  {
+    question: "Lower frequency results in _________ capacitive reactance.",
+    options: ["lower", "higher", "reduced", "alternating"],
+    answer: "higher"
+  },
+  {
+    question: "<img src='23.png' style='height:200px;'><br>What is the total power in this circuit?",
+    options: ["11.6 watts", "116 watts", "2.9 watts", "29 watts"],
+    answer: "29 watts"
+  },
+  {
+    question: "<img src='24.png' style='height:200px;'><br>What is the total discharge time of this circuit?",
+    options: ["0.1 seconds", "10 seconds", "0.5 seconds", "5 seconds"],
+    answer: "0.5 seconds"
+  },
+  {
+    question: "_________ is the measure of the energy consumed by a circuit.",
+    options: ["Voltage", "Power", "Current", "Resistance"],
+    answer: "Power"
+  },
+  {
+    question: "<img src='26.png' style='height:200px;'><br>What is the total resistance in this circuit?",
+    options: ["140 ohms", "15 ohms", "100 ohms", "10 ohms"],
+    answer: "15 ohms"
+  },
+  {
+    question: "<img src='27.png' style='height:200px;'><br>What is the total capacitance of this circuit?",
+    options: ["40 μF", "4 μF", "3 μF", "30 μF"],
+    answer: "40 μF"
+  },
+  {
+    question: "<img src='28.png' style='height:200px;'><br>What is the total power used in this circuit?",
+    options: ["24 watts", "960 watts", "9.6 watts", "2.4 watts"],
+    answer: "2.4 watts"
+  },
+  {
+    question: "A capacitor _________.",
+    options: [
+      "opposes voltage changes",
+      "assists voltage changes",
+      "opposes current changes",
+      "assists current changes"
+    ],
+    answer: "opposes voltage changes"
+  },
+  {
+    question: "<img src='30.png' style='height:200px;'><br>What are the states of the lamps when the pushbutton is pressed and held?",
+    options: [
+      "LAMP 1 ON, LAMP 2 ON",
+      "LAMP 1 ON, LAMP 2 OFF",
+      "LAMP 1 OFF, LAMP 2 ON",
+      "LAMP 1 OFF, LAMP 2 OFF"
+    ],
+    answer: "LAMP 1 ON, LAMP 2 ON"
+  },
+  {
+    question: "A(n) _________ has infinite resistance.",
+    options: ["open", "short", "switch", "lamp"],
+    answer: "open"
+  },
+  {
+    question: "<img src='32.png' style='height:200px;'><br>What is the total resistance in this circuit?",
+    options: ["115 Ω", "29 Ω", "11.5 Ω", "14.5 Ω"],
+    answer: "29 Ω"
+  },
+  {
+    question: "A(n) _________ is a type of variable resistor.",
+    options: ["selector switch", "capacitor", "potentiometer", "inductor"],
+    answer: "potentiometer"
+  },
+  {
+    question: "<img src='34.png' style='height:200px;'><br>What type of voltage divider network is this if the bleeder resistance is 100,000 Ω?",
+    options: ["Firm", "Stiff", "Loaded", "Saturated"],
+    answer: "Firm"
+  },
+  {
+    question: "A _________ is a device that converts AC electricity from one voltage level to another and consists of a primary coil, a secondary coil, and a core.",
+    options: ["voltage divider", "power supply", "transformer", "stepper"],
+    answer: "transformer"
+  },
+  {
+    question: "In a loaded voltage divider network, the bleeder resistance is ____ the load resistance.",
+    options: ["1/10", "1/100", "10X", "100X"],
+    answer: "10X"
+  },
+  {
+    question: "<img src='37.png' style='height:200px;'><br>What is the total load in ohms (inductive reactance) of this circuit?",
+    options: ["15 ohms", "5652 ohms", "1.6 ohms", "611 ohms"],
+    answer: "5652 ohms"
+  },
+  {
+    question: "In a firm voltage divider network, the bleeder resistance is ____ the load resistance.",
+    options: ["1/10", "1/100", "10X", "100X"],
+    answer: "1/10"
+  },
+  {
+    question: "With an ohmmeter attached across the main line of a parallel circuit, if removing a branch has no effect on the total resistance, what does this indicate?",
+    options: [
+      "There is a short in that branch",
+      "There is an open that branch",
+      "That branch is operating normally",
+      "There is a resistor in that branch"
+    ],
+    answer: "There is an open that branch"
+  },
+  {
+    question: "<img src='40.png' style='height:200px;'><br>What is the secondary voltage of this transformer?",
+    options: ["60 VAC", "120 VAC", "240 VAC", "360 VAC"],
+    answer: "360 VAC"
+  },
+  {
+    question: "A transformer's steady state VA Rating is calculated using _________.",
+    options: [
+      "primary voltage and primary current",
+      "secondary voltage and secondary current",
+      "primary voltage and secondary current",
+      "primary current and secondary voltage"
+    ],
+    answer: "secondary voltage and secondary current"
+  },
+  {
+    question: "<img src='42.png' style='height:200px;'><br>How should the primary coils be connected to obtain a 120 VAC secondary voltage?",
+    options: ["in parallel", "in series", "in combination", "in front"],
+    answer: "in series"
+  },
+  {
+    question: "A _________ transformer reduces voltage from the main power line to a lower voltage that operates a machine's electrical control system.",
+    options: ["auto", "control", "stepper", "alligator"],
+    answer: "control"
+  },
+  {
+    question: "Machines with motors or other high in-rush devices draw maximum current when _________.",
+    options: ["they are unloaded", "they first start", "they are running fully loaded", "they stop"],
+    answer: "they first start"
+  },
+  {
+    question: "<img src='45.png' style='height:200px;'><br>Using the resistor color code, what is the resistance of the below resistor according to the color bands?",
+    options: ["22 ohms", "220 ohms", "2200 ohms", "22,000 ohms"],
+    answer: "220 ohms"
+  }
+];
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
