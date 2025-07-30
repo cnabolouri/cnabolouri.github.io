@@ -43,26 +43,6 @@
   <script>
 const quizData = [
   {
-    question: "A ground fault occurs when __________.",
-    options: [
-      "The ground conductor is opened",
-      "One of the phases is opened",
-      "One of the phases becomes grounded",
-      "The system becomes unbalanced"
-    ],
-    answer: "One of the phases becomes grounded"
-  },
-  {
-    question: "Three-phase power is transmitted in phases that are __________ degrees apart.",
-    options: ["60", "120", "90", "100"],
-    answer: "120"
-  },
-  {
-    question: "A time-delay fuse only has one element.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
     question: "Parts of an electrical system that should be connected to earth ground include __________.",
     options: [
       "Metal raceways",
@@ -72,74 +52,6 @@ const quizData = [
       "None of the above"
     ],
     answer: "All of the above"
-  },
-  {
-    question: "Which of the following is not a result of connecting a dual-voltage motor to operate on the higher voltage?",
-    options: [
-      "Increased current draw",
-      "Reduced line losses",
-      "Better efficiency",
-      "Reduced operating costs"
-    ],
-    answer: "Increased current draw"
-  },
-  {
-    question: "A grounded neutral wire can be used as an equipment ground.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "Which of the following is not a common voltage supplied by a wye-configured system?",
-    options: ["240 VAC", "480 VAC", "208 VAC", "600 VAC"],
-    answer: "240 VAC"
-  },
-  {
-    question: "Which of the following is a component of a typical three-phase squirrel-cage motor?",
-    options: [
-      "Copper bars",
-      "End rings",
-      "Iron core",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "If the service factor for a motor is not given on the nameplate, what should you assume the service factor to be?",
-    options: ["1.5", "1", "1.25", "1.35"],
-    answer: "1"
-  },
-  {
-    question: "Which of the following items on a motor's nameplate is used to determine how much output power a motor can safely produce above its rated output power?",
-    options: ["Frame", "Ambient temperature", "Service Factor", "Insulation Class"],
-    answer: "Service Factor"
-  },
-  {
-    question: "<img src='11.png' style='height:200px;'><br>The __________ is the accepted standard in the United States for safely installing and maintaining electrical systems and equipment.",
-    options: ["NEMA", "IEC", "OSHA", "NEC"],
-    answer: "NEC"
-  },
-  {
-    question: "Which of the following is not a part of a fusible disconnect?",
-    options: [
-      "Fuses",
-      "Manually-operated switch",
-      "Enclosure",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "None of the above"
-  },
-  {
-    question: "Which of the following is a factor that must be considered when selecting overcurrent protection devices for a motor control circuit?",
-    options: [
-      "Type of enclosure used",
-      "Length of wire used",
-      "Rated full-load current of the motor",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "Rated full-load current of the motor"
   },
   {
     question: "Which of the following is not a basic rule of electrical safety?",
@@ -156,123 +68,40 @@ const quizData = [
     options: [
       "Only the person(s) who installed it",
       "Anyone who needs to use the equipment",
-      "Only the manufacturer of the equipment",
+      "Only the manufacturer of the machine",
       "Any supervisor or management personnel"
     ],
     answer: "Only the person(s) who installed it"
   },
   {
-    question: "The contacts of a manual starter will remain in the actuated position when power is lost.",
-    options: ["True", "False"],
-    answer: "True"
+    question: "Three-phase power is transmitted in phases that are __________ degrees apart.",
+    options: ["60", "120", "90", "100"],
+    answer: "120"
   },
   {
-    question: "Which of the following is a function of motor control?",
-    options: ["Speed control", "Short circuit", "Disconnect", "Motor starter", "None of the above"],
-    answer: "Speed control"
+    question: "Which of the following items on a motor's nameplate is used to determine how much output power a motor can safely produce above its rated output power?",
+    options: ["Frame", "Ambient temperature", "Service Factor", "Insulation Class"],
+    answer: "Service Factor"
   },
   {
-    question: "The type of manual starter used for three-phase motors is a __________.",
-    options: [
-      "Fractional horsepower starter",
-      "Integral horsepower starter",
-      "Single-pole starter",
-      "Two-pole starter"
-    ],
-    answer: "Integral horsepower starter"
+    question: "Which of the following is not a result of connecting a dual-voltage motor to operate on the higher voltage?",
+    options: ["Increased current draw", "Reduced line losses", "Better efficiency", "Reduced operating costs"],
+    answer: "Increased current draw"
   },
   {
     question: "Which type of overload uses a coil to sense the level of motor current?",
-    options: [
-      "Solid-state overload",
-      "Magnetic overload",
-      "Manual overload",
-      "All of the above",
-      "None of the above"
-    ],
+    options: ["Solid-state overload", "Magnetic overload", "Thermal overload", "None of the above"],
     answer: "Magnetic overload"
   },
   {
-    question: "A magnetic overload includes a dashpot which allows adjustments to the response time of the overload.",
-    options: ["True", "False"],
-    answer: "True"
+    question: "Which type of overload has a time delay?",
+    options: ["Solid-state overload", "Magnetic overload", "Thermal overload", "None of the above"],
+    answer: "Thermal overload"
   },
   {
-    question: "Magnetic contactors open and close their contacts through the use of a magnetic coil.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Some manual motor starters use a special sensing coil that verifies the presence of incoming voltage to open the starter contacts when the voltage is below a preset level.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "NEMA overloads often use melting alloy thermal overloads.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "__________ protection on a manual starter will prevent the automatic restart of a motor when recovering from a power loss.",
-    options: [
-      "Undervoltage",
-      "Overvoltage",
-      "Overcurrent",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "Undervoltage"
-  },
-  {
-    question: "Which of the following is a basic requirement for a typical motor installation?",
-    options: [
-      "Controller",
-      "Short circuit protection",
-      "Disconnect",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "A motor starter is the same as a motor controller.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "Transformers are rated in units called Volt-Amperes (VA).",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "When checking a transformer with an ohmmeter, which of the following can you check for?",
-    options: [
-      "Coils shorted to the core",
-      "Opens in coils",
-      "Shorts between coils",
-      "All of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "Which of the following statements is not true of an electrical schematic?",
-    options: [
-      "An electrical schematic is a form of visual shorthand where each component is represented by a standard symbol.",
-      "Electrical schematics are helpful in troubleshooting a circuit.",
-      "An electrical schematic never shows electrical parameters such as voltage, current, or resistance.",
-      "An electrical schematic shows all components in a circuit and how they are connected."
-    ],
-    answer: "An electrical schematic never shows electrical parameters such as voltage, current, or resistance."
-  },
-  {
-    question: "When a control transformer is used, NEC requires that both sides of the secondary must be connected to earth ground.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "To avoid running separate lines to a machine for power devices and control devices, the higher voltage required by the power devices can be produced by using a control transformer to step up the control voltage.",
-    options: ["True", "False"],
-    answer: "False"
+    question: "The relationship between the input voltage and output voltage of a transformer is based on the __________.",
+    options: ["Turns ratio", "Core resistance", "Wire resistance", "Type of wire used"],
+    answer: "Turns ratio"
   },
   {
     question: "Which of the following allows you to control when the current will flow in a circuit?",
@@ -280,39 +109,9 @@ const quizData = [
     answer: "Input device"
   },
   {
-    question: "The output voltage of a transformer can be determined if you know the input voltage and the turns ratio.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "The contacts of a manual starter will remain in the actuated position when power is lost.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "Which of the following is a function of motor control?",
-    options: ["Speed control", "Short circuit", "Disconnect", "Motor starter", "None of the above"],
-    answer: "Speed control"
-  },
-  {
-    question: "The type of manual starter used for three-phase motors is a __________.",
-    options: [
-      "Fractional horsepower starter",
-      "Integral horsepower starter",
-      "Single-pole starter",
-      "Two-pole starter"
-    ],
-    answer: "Integral horsepower starter"
-  },
-  {
-    question: "A transformer uses the principle of __________.",
-    options: [
-      "Mutual impedance",
-      "Mutual inductance",
-      "Shared inductance",
-      "Alternating impedance"
-    ],
-    answer: "Mutual inductance"
+    question: "<img src='11.png' style='height:200px;'><br>Which of the limit switch symbols shown indicates a normally open switch in the unoperated condition?",
+    options: ["A", "B", "C", "D"],
+    answer: "A"
   },
   {
     question: "To get a control voltage of 120 VAC from a control transformer if the line voltage is 240 VAC, the primaries must be connected in series.",
@@ -320,88 +119,19 @@ const quizData = [
     answer: "False"
   },
   {
-    question: "A ladder diagram arranges the conductors in straight horizontal lines, like rungs on a ladder, with only outputs on each rung.",
+    question: "To get a control voltage of 120 VAC from a dual-voltage control transformer if the line voltage is 480 VAC, the primaries must be connected in series.",
     options: ["True", "False"],
-    answer: "False"
+    answer: "True"
   },
   {
-    question: "NOR logic is formed by 2 or more N.C. switches in parallel.",
-    options: ["True", "False"],
-    answer: "False"
+    question: "Which of the following specifically protects the motor in a motor control circuit?",
+    options: ["Disconnect", "Short Circuit Protection", "Controller", "Overload Protection"],
+    answer: "Overload Protection"
   },
   {
     question: "The series of moves a machine has to make in order to perform a task is called a(n) __________.",
-    options: [
-      "Sequence of operation",
-      "Control process",
-      "Automated sequence",
-      "Logical progression"
-    ],
+    options: ["Sequence of operation", "Control process", "Automated sequence", "Logical progression"],
     answer: "Sequence of operation"
-  },
-  {
-    question: "When a pushbutton switch with N.O. contacts is activated, the switch will produce a(n) __________.",
-    options: [
-      "Open circuit",
-      "Closed circuit",
-      "Short circuit",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "Closed circuit"
-  },
-  {
-    question: "Which of the following is a use of an indicator lamp?",
-    options: [
-      "Indicate that the power is on.",
-      "Indicate that a cycle has begun.",
-      "Indicate that a dangerous condition is occurring.",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "Which of the following is not a rule of drawing a ladder diagram?",
-    options: [
-      "Label all components",
-      "Each rung (line) can have more than one output device (load)",
-      "Number each rung",
-      "Show control devices only"
-    ],
-    answer: "Each rung (line) can have more than one output device (load)"
-  },
-  {
-    question: "Which of the following is a component of a ladder diagram?",
-    options: [
-      "Conductors",
-      "Power supply",
-      "Output devices",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "The best method for reading ladder diagrams is to start at the upper left (first input on the first rung) and work your way across the rung before moving to the first input of the next rung and work across.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Which of the following statements is true of NOT logic?",
-    options: [
-      "NOT logic requires that a single input not be activated for an output to be energized.",
-      "NOT logic can be formed by a single N.C. switch.",
-      "A common use of NOT logic is an emergency stop pushbutton.",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "NAND logic is formed by 2 or more N.C. switches in parallel.",
-    options: ["True", "False"],
-    answer: "True"
   },
   {
     question: "Selector switches are often used to change the operating mode of a machine.",
@@ -409,162 +139,12 @@ const quizData = [
     answer: "True"
   },
   {
-    question: "Manual control systems require a pilot device to control the operation.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "Which of the following is one of the six elements of control logic?",
-    options: ["NAND", "OR", "NOT", "All of the above", "None of the above"],
-    answer: "All of the above"
-  },
-  {
-    question: "Which of the following statements is not true of AND logic?",
-    options: [
-      "All input devices on a rung must be activated.",
-      "An AND logic circuit is made of 2 or more N.O. switches in series.",
-      "In an AND logic circuit, only one of the inputs must be activated to energize the output.",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "In an AND logic circuit, only one of the inputs must be activated to energize the output."
-  },
-  {
-    question: "An OR logic circuit is formed by 2 or more N.O. switches in parallel.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Which of the following is a step in a control process?",
-    options: [
-      "Logic",
-      "Output",
-      "Input",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "Control relays are not capable of performing memory logic by themselves.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Machine control relays are designed for light-duty industrial applications.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "A push-to-test pilot light allows the operator to test the indicator bulb to make sure it works.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "The minimum number of sets of contacts a motor starter has depends on the number of power leads the motor requires.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Which of the following is not a typical input device used for two-wire control circuits?",
-    options: ["Pressure switch", "Float Switch", "Pushbutton switch", "Proximity switch"],
-    answer: "Pushbutton switch"
-  },
-  {
-    question: "Three-wire control circuits are commonly used for start/stop pushbutton stations.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
     question: "When a relay is connected so that it continues to energize itself after a momentary input is removed, the circuit is called a __________.",
-    options: [
-      "Seal-in circuit",
-      "Repeating circuit",
-      "Lock-out circuit",
-      "Continuous circuit"
-    ],
+    options: ["Seal-in circuit", "Repeating circuit", "Lock-out circuit", "Continuous circuit"],
     answer: "Seal-in circuit"
   },
   {
-    question: "Which of the following is an application of a control relay?",
-    options: [
-      "Energizing larger output devices",
-      "Performing control logic",
-      "Performing memory logic",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "__________ is a method of representing one component with several symbols in various locations on a ladder diagram.",
-    options: [
-      "Pictorial symbology",
-      "Detached symbology",
-      "Random symbology",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "Detached symbology"
-  },
-  {
-    question: "A push-to-test light is exactly the same as a regular indicator lamp, except it has a special color lens.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "Two-wire control circuits provide low-voltage protection.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "Which of the following is a component of a magnetic motor starter?",
-    options: [
-      "Coil",
-      "Overload",
-      "Auxiliary contacts",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
-  },
-  {
-    question: "A control relay is designed to switch components on and off only when it receives a manual input.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "<img src='18.png' style='height:200px;'><br>Based on the circuit diagram shown, what will happen to the motor if the JOG pushbutton is pressed?",
-    options: [
-      "The motor will not run.",
-      "The motor will start and continue to run even after the JOG button is released.",
-      "The motor will run until the JOG button is released.",
-      "The motor will not run until the JOG button is released."
-    ],
-    answer: "The motor will run until the JOG button is released."
-  },
-  {
-    question: "A __________ is often used to allow an operator or technician to change a machine from the automatic mode to the manual mode.",
-    options: [
-      "Pushbutton switch",
-      "Selector switch",
-      "Drum switch",
-      "Relay"
-    ],
-    answer: "Selector switch"
-  },
-  {
-    question: "A reversing magnetic motor starter provides a magnetic method of changing a motor's direction of rotation.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "You can reverse the rotation of any three-phase motor by interchanging any two of the three power supply lines.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "<img src='20.png' style='height:200px;'><br>Based on the wiring diagram shown, which of the following statements is true of the drum switch if the switch is placed in the reverse position?",
+    question: "<img src='18.png' style='height:200px;'><br>Based on the wiring diagram shown, which of the following statements is true of the drum switch if the switch is placed in the reverse position?",
     options: [
       "L1 is connected to T1, L2 is connected to T2, and L3 is connected to T3.",
       "L1 is connected to T3, L2 is connected to T2, and L3 is connected to T1.",
@@ -574,15 +154,14 @@ const quizData = [
     answer: "L1 is connected to T2, L2 is connected to T1, and L3 is connected to T3."
   },
   {
-    question: "Which of the following is a component of a reversing magnetic motor starter?",
-    options: [
-      "Forward contactor",
-      "Reverse contactor",
-      "Overload Protection",
-      "All of the above",
-      "None of the above"
-    ],
-    answer: "All of the above"
+    question: "One application of interlocking is to cause both the forward and reverse coils of a reversing contactor to be energized at the same time.",
+    options: ["True", "False"],
+    answer: "False"
+  },
+  {
+    question: "<img src='20.png' style='height:200px;'><br>Which of the limit switch symbols shown indicates a normally open switch in the operated condition?",
+    options: ["A", "B", "C", "D"],
+    answer: "B"
   },
   {
     question: "<img src='21.png' style='height:200px;'><br>Examine the circuit shown and determine which type(s) of interlocking is/are shown.",
@@ -596,14 +175,9 @@ const quizData = [
     answer: "Auxiliary contact and mechanical interlocking"
   },
   {
-    question: "A Hand-Off-Automatic (H-O-A) circuit requires a selector switch with __________ positions.",
-    options: ["3", "1", "2", "More than 4"],
-    answer: "3"
-  },
-  {
-    question: "One application of interlocking is to cause both the forward and reverse coils of a reversing contactor to be energized at the same time.",
-    options: ["True", "False"],
-    answer: "False"
+    question: "A __________ is often used to allow an operator or technician to change a machine from the automatic mode to the manual mode.",
+    options: ["Pushbutton switch", "Selector switch", "Drum switch", "Relay"],
+    answer: "Selector switch"
   },
   {
     question: "Mechanical interlocking should be used in combination with one of the electrical methods so that the blocked coil cannot be energized.",
@@ -611,34 +185,24 @@ const quizData = [
     answer: "True"
   },
   {
-    question: "A limit switch cannot be used as a safety interlock.",
+    question: "<img src='24.png' style='height:200px;'><br>Based on the circuit diagram shown, what will happen to the motor if the JOG pushbutton is pressed?",
+    options: [
+      "The motor will not run.",
+      "The motor will start and continue to run even after the JOG button is released.",
+      "The motor will run until the JOG button is released.",
+      "The motor will not run until the JOG button is released."
+    ],
+    answer: "The motor will run until the JOG button is released."
+  },
+  {
+    question: "<img src='25.png' style='height:200px;'><br>Which of the limit switch symbols shown indicates a normally closed switch in the unoperated condition?",
+    options: ["Symbol A", "Symbol B", "Symbol C", "Symbol D"],
+    answer: "Symbol C"
+  },
+  {
+    question: "<img src='26.png' style='height:200px;'><br>Based on the circuit diagram shown, motor 2 must be started before motor 1.",
     options: ["True", "False"],
     answer: "False"
-  },
-  {
-    question: "A normally open float switch is needed for a sump pump circuit.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "The difference between the set point pressure and reset pressure is called the __________.",
-    options: ["Differential", "Cut-in band", "Reset band", "All of the above", "None of the above"],
-    answer: "Differential"
-  },
-  {
-    question: "Automatic switches can have the same potential problems as manual switches.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "The upward or downward movement of the float device on a float switch controls the switch.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Which of the following is not an automatic input device?",
-    options: ["Pressure switch", "Pushbutton switch", "Float Switch", "Electronic sensor", "Limit switch"],
-    answer: "Pushbutton switch"
   },
   {
     question: "Which of the following is an application of a motor sequence control circuit?",
@@ -652,113 +216,157 @@ const quizData = [
     answer: "All of the above"
   },
   {
-    question: "A normally closed float switch is needed for a sump pump circuit.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "<img src='24.png' style='height:200px;'><br>The limit switch symbol that indicates a normally closed switch in the unoperated condition is:",
-    options: ["Symbol A", "Symbol B", "Symbol C", "Symbol D"],
-    answer: "Symbol C"
-  },
-  {
-    question: "<img src='25.png' style='height:200px;'><br>Based on the circuit diagram shown, motor 2 must be started before motor 1.",
-    options: ["True", "False"],
-    answer: "False"
-  },
-  {
-    question: "An on-delay timer's contacts change to their energized state after the delay.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "<img src='26.png' style='height:200px;'><br>The contact shown in the figure is a(n) __________.",
+    question: "<img src='28.png' style='height:200px;'><br>Which Wiring Diagram and Schematic Connection Diagram is shown?",
     options: [
-      "N.C. off-delay relay contact",
-      "N.O. off-delay relay contact",
-      "N.O. on-delay relay contact",
-      "N.C. on-delay relay contact"
+      "Dual-Voltage Wye Motor for Low Voltage",
+      "Dual-Voltage Wye Motor for High Voltage",
+      "Dual-Voltage Delta Motor for Low Voltage",
+      "Dual-Voltage Delta Motor for High Voltage"
     ],
-    answer: "N.C. off-delay relay contact"
+    answer: "Dual-Voltage Wye Motor for High Voltage"
   },
   {
-    question: "Which of the following is not a common timing mechanism used on timer relays?",
+    question: "<img src='29.png' style='height:200px;'><br>Which Wiring Diagram and Schematic Connection Diagram is shown?",
     options: [
-      "Solid-state timers",
-      "Pneumatic timers",
-      "Hydraulic timers",
-      "Motor-driven timers"
+      "Dual-Voltage Wye Motor for Low Voltage",
+      "Dual-Voltage Wye Motor for High Voltage",
+      "Dual-Voltage Delta Motor for Low Voltage",
+      "Dual-Voltage Delta Motor for High Voltage"
     ],
-    answer: "Hydraulic timers"
+    answer: "Dual-Voltage Wye Motor for High Voltage"
   },
   {
-    question: "<img src='28.png' style='height:200px;'><br>The diagram shown is for an off-first, repeat cycle timer.",
-    options: ["True", "False"],
-    answer: "True"
+    question: "<img src='30.png' style='height:200px;'><br>What is the secondary voltage of the transformer shown?",
+    options: ["240 VAC", "120 VAC", "60 VAC", "30 VAC"],
+    answer: "60 VAC"
   },
   {
-    question: "A one-shot timer is one which energizes its timed contacts immediately and starts timing as soon as the coil is energized.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Using timers to sequence the operation of a machine is called __________.",
+    question: "<img src='31.png' style='height:200px;'><br>What happens when PB1 is pressed?",
     options: [
-      "Event-driven sequencing",
-      "Time-driven sequencing",
-      "Delay sequencing",
-      "All of the above",
-      "None of the above"
+      "LAMP 1 turns ON, LAMP 2 turns ON",
+      "LAMP 1 turns ON, LAMP 2 turns OFF",
+      "LAMP 1 turns OFF, LAMP 2 turns ON",
+      "LAMP 1 turns OFF, LAMP 2 turns OFF"
     ],
-    answer: "Time-driven sequencing"
+    answer: "LAMP 1 turns ON, LAMP 2 turns ON"
   },
   {
-    question: "One common method of unloading a compressor motor during startup is to use a control circuit with a timer relay.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "<img src='29.png' style='height:200px;'><br>The contact shown in the figure is a(n) __________.",
+    question: "<img src='32.png' style='height:200px;'><br>What happens when PB1 is pressed?",
     options: [
-      "N.O. on-delay relay contact",
-      "N.C. on-delay relay contact",
-      "N.O. off-delay relay contact",
-      "N.C. off-delay relay contact"
+      "RED LAMP turns ON",
+      "GREEN LAMP turns ON",
+      "Both LAMPS turn ON",
+      "Both LAMPS turn off"
     ],
-    answer: "N.C. on-delay relay contact"
+    answer: "Both LAMPS turn ON"
   },
   {
-    question: "<img src='30.png' style='height:200px;'><br>The figure shown is an example of a __________.",
+    question: "<img src='33.png' style='height:200px;'><br>What are the initial states of the indicator lamps?",
     options: [
-      "Bar chart",
-      "Truth table",
-      "Timing diagram",
-      "Flow diagram"
+      "Red ON, Green ON",
+      "Red ON, Green OFF",
+      "Red OFF, Green ON",
+      "Red OFF, Green OFF"
     ],
-    answer: "Timing diagram"
+    answer: "Red OFF, Green ON"
   },
   {
-    question: "A one-shot timer is one which energizes its timed contacts immediately and starts timing as soon as the coil is energized.",
-    options: ["True", "False"],
-    answer: "True"
-  },
-  {
-    question: "Using timers to sequence the operation of a machine is called __________.",
+    question: "<img src='34.png' style='height:200px;'><br>What are the states of the indicator lamps if PB1 is pressed and held?",
     options: [
-      "Event-driven sequencing",
-      "Time-driven sequencing",
-      "Delay sequencing",
-      "All of the above",
-      "None of the above"
+      "Red ON, Green OFF",
+      "Red ON, Green ON",
+      "Red OFF, Green ON",
+      "Red OFF, Green OFF"
     ],
-    answer: "Time-driven sequencing"
+    answer: "Red ON, Green OFF"
   },
   {
-    question: "<img src='31.png' style='height:200px;'><br>The diagram shown is for an off-first, repeat cycle timer.",
-    options: ["True", "False"],
-    answer: "False"
+    question: "<img src='35.png' style='height:200px;'><br>What are the initial states of the indicator lamps?",
+    options: [
+      "Red OFF, Green ON",
+      "Red OFF, Green OFF",
+      "Red ON, Green ON",
+      "Red ON, Green OFF"
+    ],
+    answer: "Red OFF, Green ON"
+  },
+  {
+    question: "<img src='36.png' style='height:200px;'><br>What are the states of the indicator lamps if PB1 is pressed momentarily?",
+    options: [
+      "Red ON, Green ON",
+      "Red ON, Green OFF",
+      "Red OFF, Green ON",
+      "Red OFF, Green OFF"
+    ],
+    answer: "Red ON, Green OFF"
+  },
+  {
+    question: "<img src='37.png' style='height:200px;'><br>Which of the limit switch symbols shown indicates a normally closed switch in the operated condition?",
+    options: ["A", "B", "C", "D"],
+    answer: "D"
+  },
+  {
+    question: "<img src='38.png' style='height:200px;'><br>What is the effect of turning SS1 to the right position?",
+    options: [
+      "Nothing",
+      "Motor runs in forward direction",
+      "Motor runs in reverse direction",
+      "Motor stops"
+    ],
+    answer: "Nothing"
+  },
+  {
+    question: "<img src='39.png' style='height:200px;'><br>What is the effect of turning SS1 to the left position?",
+    options: [
+      "Nothing",
+      "Motor runs in forward direction",
+      "Motor runs in reverse direction",
+      "Motor Stops"
+    ],
+    answer: "Motor runs in forward direction"
+  },
+  {
+    question: "<img src='40.png' style='height:200px;'><br>What is the effect of pushing PB1 momentarily when the selector switch is in the right position?",
+    options: [
+      "Motor runs in forward direction momentarily",
+      "Motor runs in forward direction continuously",
+      "Motor runs in reverse direction momentarily",
+      "Motor runs in reverse direction continuously"
+    ],
+    answer: "Motor runs in forward direction momentarily"
+  },
+  {
+    question: "<img src='41.png' style='height:200px;'><br>What is the effect of pushing PB2 while the selector switch is in the left position?",
+    options: [
+      "Motor runs in forward direction momentarily",
+      "Motor runs in forward direction continuously",
+      "Motor runs in reverse direction momentarily",
+      "Motor runs in reverse direction continuously"
+    ],
+    answer: "Motor runs in reverse direction continuously"
+  },
+  {
+    question: "<img src='42.png' style='height:200px;'><br>What position should the selector switch be placed in order to run continuously?",
+    options: ["Automatic", "Left", "Right", "Center"],
+    answer: "Left"
+  },
+  {
+    question: "<img src='43.png' style='height:200px;'><br>Which device controls whether the Main Motor is on or off?",
+    options: ["PB1", "CR1", "CR1-B", "PS-1"],
+    answer: "PS-1"
+  },
+  {
+    question: "<img src='44.png' style='height:200px;'><br>The contact shown in the figure is a(n) __________.",
+    options: ["N.O. On Delay", "N.C. On Delay", "N.O. Off Delay", "N.C. Off Delay"],
+    answer: "N.C. Off Delay"
+  },
+  {
+    question: "<img src='45.png' style='height:200px;'><br>The contact shown in the figure is a(n) __________.",
+    options: ["N.O. On Delay", "N.C. On Delay", "N.O. Off Delay", "N.C. Off Delay"],
+    answer: "N.C. On Delay"
   }
 ];
+
 
 
 
