@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoCohort 207</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>CoCort 207</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "Which of the following is a quick method to verify that the programmable controller itself is operating correctly?",
+    options: [
+      "Solid Green Light",
+      "Blinking Green Light",
+      "Solid Yellow Light",
+      "Blinking Yellow Light"
+    ],
+    answer: "Solid Green Light"
+  },
+  {
+    question: "What does an operator interact with on a HMI panel to monitor process and make adjustments to keep the process running?",
+    options: [
+      "Switch",
+      "Object",
+      "Joystick",
+      "Light"
+    ],
+    answer: "Object"
+  },
+  {
+    question: "What device is used to configure an HMI panel IP address?",
+    options: [
+      "USB",
+      "Keyboard",
+      "Scanner",
+      "Camera"
+    ],
+    answer: "USB"
+  },
+  {
+    question: "Pressing the E-Stop button on a PLC master control relay circuit causes power to be removed from what components?",
+    options: [
+      "Input Module",
+      "Rungs",
+      "Output Module",
+      "Branches"
+    ],
+    answer: "Output Module"
+  },
+  {
+    question: "Which IP address?",
+    options: [
+      "192...15",
+      "193...15",
+      "194...15",
+      "195...15"
+    ],
+    answer: "192...15"
+  },
+  {
+    question: "<img src='6.png' style='height:200px;'><br>What is the value contained in the RESULTS tag?",
+    options: [
+      "2",
+      "5",
+      "6",
+      "1"
+    ],
+    answer: "2"
+  },
+  {
+    question: "What trigger for a time driven sequencing process to move to the next?",
+    options: [
+      ".TT",
+      ".PRE",
+      ".EN",
+      ".DN"
+    ],
+    answer: ".DN"
+  },
+  {
+    question: "What type of instructions are used to make decisions and control operations based on the values of data in PLC program?",
+    options: [
+      "Differential instructions",
+      "Adding instructions",
+      "Comparison instructions",
+      "Subtracting instructions"
+    ],
+    answer: "Comparison instructions"
+  },
+  {
+    question: "What software configuration element identifies the actual physical location of an input terminal of a PLC input module?",
+    options: [
+      "absolute address",
+      "locations",
+      "modifications",
+      "documentation"
+    ],
+    answer: "absolute address"
+  },
+  {
+    question: "If a 24 VDC PLC input module uses sinking type (active high) inputs, what applied voltage level would cause the input to turn on?",
+    options: [
+      "+0V",
+      "+12V",
+      "+48V",
+      "+24V"
+    ],
+    answer: "+24V"
+  },
+  {
+    question: "A PLC and a PC are connected in this type of network if a single Ethernet cable is used to connect their Ethernet parts",
+    options: [
+      "IP addresses are similar",
+      "IP addresses are made identical",
+      "LAN",
+      "PAN"
+    ],
+    answer: "IP addresses are similar"
+  },
+  {
+    question: "What term is used to describe these functions in PLC programming: adding and removing instructions, changing logic of change addresses?",
+    options: [
+      "Edit",
+      "Change",
+      "Mutate",
+      "Transfer"
+    ],
+    answer: "Edit"
+  },
+  {
+    question: "What is a collection of files that includes a PLC ladder logic program, hardware configuration and settings?",
+    options: [
+      "Subject",
+      "Multiple files",
+      "Program",
+      "Project"
+    ],
+    answer: "Project"
+  },
+  {
+    question: "What are software programs called that allow a device to connect a network and communicate with other devices?",
+    options: [
+      "Database",
+      "Project",
+      "Drivers",
+      "Files"
+    ],
+    answer: "Drivers"
+  },
+  {
+    question: "<img src='15.png' style='height:200px;'><br>Which of these wiring connections are required to wire a limit switch to input 3 of the sinking input module?",
+    options: [
+      "C to A, B to G, H to D",
+      "C to G, B to D, H to A",
+      "C to D, B to A, H to G",
+      "none of them"
+    ],
+    answer: "C to A, B to G, H to D"
+  },
+  {
+    question: "What step do PLC scan cycles perform after checking the status of inputs and solving program logic?",
+    options: [
+      "Turn off output",
+      "Turn on output",
+      "Energize rung",
+      "Deenergize rung"
+    ],
+    answer: "Turn on output"
+  },
+  {
+    question: "What networks configuration settings must be configured correctly to enable communication between PLC and PC?",
+    options: [
+      "Point to point",
+      "Network name",
+      "Policies",
+      "Connections"
+    ],
+    answer: "Point to point"
+  },
+  {
+    question: "<img src='18.png' style='height:200px;'><br>In the logic diagram, what input conditions will cause output M1 to turn on?",
+    options: [
+      "PB1 True, PB2 True, PB3 False",
+      "PB1 False, PB2 False, PB3 True",
+      "PB1 False, PB2 False, PB3 False",
+      "PB1 True, PB2 False, PB3 False"
+    ],
+    answer: "PB1 True, PB2 True, PB3 False"
+  },
+  {
+    question: "What is the next step to enter ladder logic after the program's editor has been opened and an empty rung is in place?",
+    options: [
+      "Edit properties",
+      "Turn on rungs",
+      "Add instructions",
+      "Finalize"
+    ],
+    answer: "Add instructions"
+  },
+  {
+    question: "Which type of instruction operates just like an output, except that it does not directly control a PLC output?",
+    options: [
+      "Output instructions",
+      "Examine if open",
+      "Output instructions with relative address",
+      "Examine if closed"
+    ],
+    answer: "Output instructions with relative address"
+  },
+  {
+    question: "What file defines the address of discrete input modules input terminals?",
+    options: [
+      "O or device configuration file in this model",
+      "Definitions files",
+      "Address configuration file",
+      "All of them"
+    ],
+    answer: "O or device configuration file in this model"
+  },
+  {
+    question: "What PLC program is used for complex math formulas?",
+    options: [
+      "Figure",
+      "Calibrate",
+      "Compute",
+      "Calculate"
+    ],
+    answer: "Compute"
+  },
+  {
+    question: "What function do the NC contact instructions serve that are identified in the reversing motor control program shown?",
+    options: [
+      "True",
+      "False",
+      "Interlock",
+      "Seal-In"
+    ],
+    answer: "Interlock"
+  },
+  {
+    question: "Which sentence file connects PLC program logic to graphics text, and function keys?",
+    options: [
+      "PLC image",
+      "PLC project",
+      "PLC code",
+      "PLC design"
+    ],
+    answer: "PLC project"
+  },
+  {
+    question: "If a network is not available, what type of connection can be used to configure the controller's IP address?",
+    options: [
+      "Wireless",
+      "Firewire",
+      "USB",
+      "Teach Pendant"
+    ],
+    answer: "USB"
+  },
+  {
+    question: "What file defines the address of discrete input modules input terminals?",
+    options: [
+      "I/O",
+      "Device configuration file",
+      "I/O or device configuration file",
+      "Device defiguraton file"
+    ],
+    answer: "I/O or device configuration file"
+  },
+  {
+    question: "What is the common method of interdicting a motor to a PLC output?",
+    options: [
+      "Motor contactor",
+      "PB1",
+      "Control relay",
+      "PLC input and output"
+    ],
+    answer: "Motor contactor"
+  },
+  {
+    question: "<img src='28.png' style='height:200px;'><br>In the PLC program show, what is the status of Pump 1 and the Mixer Motor, 31 seconds after PB1 has been momentarily pressed? The time base for the timers is 0.1 second.",
+    options: [
+      "Pump 1 is on, mixer motor is off",
+      "Pump 1 is off, mixer motor is on",
+      "Pump 1 and mixer motor are on",
+      "Pump 1 and mixer motor are off"
+    ],
+    answer: "Pump 1 is off, mixer motor is on"
+  },
+  {
+    question: "Where does the application file reside, which obtains the screen objects displayed to the operator HMI panel?",
+    options: [
+      "Objects",
+      "Display",
+      "HMI memory",
+      "HMI picture"
+    ],
+    answer: "HMI memory"
+  },
+  {
+    question: "What is the value in the destination file integer 0 if PB1 is pressed 4 times and PB3 3 times?",
+    options: [
+      "7",
+      "12",
+      "1",
+      "21"
+    ],
+    answer: "12"
+  },
+  {
+    question: "What is each group of digits called?",
+    options: [
+      "Numbers",
+      "Integer",
+      "Figure",
+      "Octet"
+    ],
+    answer: "Octet"
+  },
+  {
+    question: "What number line is used to connect solenoid to output terminal?",
+    options: [
+      "4",
+      "Closest to diamond",
+      "5",
+      "4 or closest to diamond"
+    ],
+    answer: "4 or closest to diamond"
+  },
+  {
+    question: "In which mode does a programmable controller scan the ladder logic program and set output on or off?",
+    options: [
+      "JOG",
+      "WALK",
+      "RUN",
+      "CRAWL"
+    ],
+    answer: "RUN"
+  },
+  {
+    question: "What type of indicators are on processors?",
+    options: [
+      "Network",
+      "Position",
+      "Status",
+      "Condition"
+    ],
+    answer: "Status"
+  },
+  {
+    question: "What is a double word?",
+    options: [
+      "Double digit, 00",
+      "Double integer, 32",
+      "Double figure, AA",
+      "Double numeral, II"
+    ],
+    answer: "Double integer, 32"
+  },
+  {
+    question: "What is a word?",
+    options: [
+      "Integer, 16",
+      "Numeral, I",
+      "Digit, 0",
+      "Figure, A"
+    ],
+    answer: "Integer, 16"
+  },
+  {
+    question: "A boolean is?",
+    options: [
+      "2 bit",
+      "4 bit",
+      "1 bit",
+      "3 bit"
+    ],
+    answer: "1 bit"
+  },
+  {
+    question: "Output indicators are on processors",
+    options: [
+      "True",
+      "False"
+    ],
+    answer: "False"
+  },
+  {
+    question: "What do you have to add up to get the sum of 170, 128, 64, 32, 16, 8, 4, 2, 1",
+    options: [
+      "128, 32, 8, 2",
+      "128, 32, 16, 2",
+      "64, 32, 16, 8, 4",
+      "128, 64, 32, 2, 4"
+    ],
+    answer: "128, 32, 8, 2"
+  },
+  {
+    question: "Convert the binary into a decimal sum of 113. 128 64 32 16 8 4 2 1",
+    options: [
+      "128, 4, 2, 1",
+      "64, 32, 16, 1",
+      "64, 32, 16, 2",
+      "32, 16, 8, 4, 2"
+    ],
+    answer: "64, 32, 16, 1"
+  },
+  {
+    question: "What is used to configure an HMI Panel's IP address?",
+    options: [
+      "Connected PC",
+      "HMI Onboard Software",
+      "PC Program",
+      "SD Memory Card"
+    ],
+    answer: "HMI Onboard Software"
+  }
+];
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
