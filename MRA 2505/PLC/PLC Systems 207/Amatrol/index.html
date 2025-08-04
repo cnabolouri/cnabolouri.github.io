@@ -1,0 +1,1405 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electrical Systems Pretest 202</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Electrical Systems Pretest 202</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    question: "The six basic components of most PLCs are the power supply, the input and output modules, the processor module, the programming device, and the __________.",
+    options: [
+      "I/O chassis",
+      "Input",
+      "Output",
+      "Remote module"
+    ],
+    answer: "I/O chassis"
+  },
+  {
+    question: "The three network levels are Enterprise, Automation and __________, and Field Device.",
+    options: [
+      "Primary",
+      "Control",
+      "Discrete",
+      "Ethernet"
+    ],
+    answer: "Control"
+  },
+  {
+    question: "EtherNet/IP uses the __________ (protocol) to produce a network suitable for use on automation and control level.",
+    options: [
+      "Serial",
+      "Deterministic",
+      "CIP",
+      "Low-speed"
+    ],
+    answer: "CIP"
+  },
+  {
+    question: "A PLC requires much less __________ than a hardwired relay panel that could do the same job.",
+    options: [
+      "Memory",
+      "Thought",
+      "Space",
+      "Safety"
+    ],
+    answer: "Space"
+  },
+  {
+    question: "__________ uses several protocols to convert data from its native format, such as a text message, into a format that can be sent and tracked from the source node to the destination node of a network.",
+    options: [
+      "Ethernet TCP/IP",
+      "RS232",
+      "RS485",
+      "DeviceNet"
+    ],
+    answer: "Ethernet TCP/IP"
+  },
+  {
+    question: "A(n) __________ network is a high speed communications connection used to exchange data between production line equipment and other devices within a manufacturing facility.",
+    options: [
+      "Serial network",
+      "Feedback, network",
+      "Communication loop",
+      "Industrial network"
+    ],
+    answer: "Industrial network"
+  },
+  {
+    question: "PLCs provide a means of controlling machines and other industrial applications with a(n) __________ instead of using hard wired devices, such as relay coils and contacts.",
+    options: [
+      "Relay",
+      "Industrially-hardened computer",
+      "Robot controller",
+      "HMI panel"
+    ],
+    answer: "Industrially-hardened computer"
+  },
+  {
+    question: "The IP addresses of a PC-PLC point-to-point connection will be __________.",
+    options: [
+      "Different IP addresses",
+      "Same IP addresses",
+      "Different subnet masks",
+      "DHCP addresses enabled"
+    ],
+    answer: "Different IP addresses"
+  },
+  {
+    question: "What is the purpose of configuring the IP address and subnet of a PC and PLC?",
+    options: [
+      "Enable communication between them",
+      "Establish nodes",
+      "Create different octets",
+      "Identify the host"
+    ],
+    answer: "Enable communication between them"
+  },
+  {
+    question: "The 1769-L16ER controller's USB port is USB __________ compatible and operates at 12 Mbps.",
+    options: [
+      "1.0",
+      "2.0",
+      "3.0",
+      "4.0"
+    ],
+    answer: "2.0"
+  },
+  {
+    question: "The IP address of a CompactLogix PLC that already has an IP address is viewed and edited using __________ communications software.",
+    options: [
+      "RSDriver",
+      "RSNetwork",
+      "RSLinx",
+      "Studio"
+    ],
+    answer: "RSLinx"
+  },
+  {
+    question: "__________ are software programs that allow a device to connect to a network and communicate with other devices.",
+    options: [
+      "Projects",
+      "Drivers",
+      "Packets",
+      "Files"
+    ],
+    answer: "Drivers"
+  },
+  {
+    question: "Two addresses are used for Ethernet communications, Media Access Control (MAC) and __________.",
+    options: [
+      "Transport Control Protocol (TCP)",
+      "Internet Protocol (IP)",
+      "Ethernet TCP/IP",
+      "DeviceNet"
+    ],
+    answer: "Internet Protocol (IP)"
+  },
+  {
+    question: "What is a USB Type B connector most likely connected to?",
+    options: [
+      "PLC USB communication port",
+      "PC USB communication port",
+      "USB port on a network switch",
+      "RJ-45 port on a local network switch"
+    ],
+    answer: "PLC USB communication port"
+  },
+  {
+    question: "__________ is a network search utility that shows the layout of every network that has a driver configured in RSLinx.",
+    options: [
+      "Who Active",
+      "RSLinx",
+      "Studio",
+      "BOOTP"
+    ],
+    answer: "Who Active"
+  },
+  {
+    question: "What does the absolute I/O address identify on a PLC input module?",
+    options: [
+      "I/O driver",
+      "Actual physical location",
+      "Address label",
+      "Alias"
+    ],
+    answer: "Actual physical location"
+  },
+  {
+    question: "What is a fast way to determine a programmable controller is operating correctly after power up?",
+    options: [
+      "Verify that main power switch is on.",
+      "Verify that HMI Panel is on.",
+      "Verify that Power Supply LED is on.",
+      "Verify correct status of PLC processor status indicators."
+    ],
+    answer: "Verify correct status of PLC processor status indicators."
+  },
+  {
+    question: "What should be noted when the programmable controller processor displays a solid green RUN indicator?",
+    options: [
+      "Processor is functioning properly - program is being executed",
+      "Processor is ready to RUN the program",
+      "Processor is waiting for an input to start the program",
+      "Processor is functioning properly"
+    ],
+    answer: "Processor is functioning properly - program is being executed"
+  },
+  {
+    question: "A problem with identifying a controller's firmware revision by examining the hardware's __________ is that it is often inaccessible once installed.",
+    options: [
+      "Product label",
+      "Firmware revision via RSLinx",
+      "Firmware revision via upload",
+      "Firmware revision via Studio 5000"
+    ],
+    answer: "Product label"
+  },
+  {
+    question: "All PLCs must have a(n) __________ to operate.",
+    options: [
+      "On/off switch",
+      "PC",
+      "User-developed project",
+      "HMI panel"
+    ],
+    answer: "User-developed project"
+  },
+  {
+    question: "__________ is an embedded operating system that controls how microprocessor-controlled hardware devices operate.",
+    options: [
+      "Drivers",
+      "Major revision",
+      "Minor Revision",
+      "Firmware"
+    ],
+    answer: "Firmware"
+  },
+  {
+    question: "__________ displays networks and devices in a similar manner to Windows Explorer.",
+    options: [
+      "TIA Portal",
+      "Studio 5000",
+      "RSWHO",
+      "FactoryTalk View ME"
+    ],
+    answer: "RSWHO"
+  },
+  {
+    question: "<img src='23.png' style='height:200px;'><br>Which of these wiring connections are required to wire a limit switch to input 2 of the Active Hi input module shown?",
+    options: [
+      "G-A, B-D, H-D",
+      "G-A, B-D, C-E",
+      "B-F, C-A, D-E",
+      "C-A, B-F, H-D"
+    ],
+    answer: "C-A, B-F, H-D"
+  },
+  {
+    question: "__________ objects appear on the PanelView's display but do not interact with a PLC's data tags.",
+    options: [
+      "Static",
+      "Dynamic",
+      "Fixed",
+      "Variable"
+    ],
+    answer: "Static"
+  },
+  {
+    question: "Allen-Bradley __________ operator interface terminals are programmable operator stations that enable interaction between users and a PLC controlled system or process.",
+    options: [
+      "HIM",
+      "PanelView Plus",
+      "OPC panel",
+      "KTP600"
+    ],
+    answer: "PanelView Plus"
+  },
+  {
+    question: "What does an operator use on an HMI panel to monitor the program and process conditions?",
+    options: [
+      "Labels",
+      "Display exchange objects",
+      "Graphic icons",
+      "Instructions"
+    ],
+    answer: "Display exchange objects"
+  },
+  {
+    question: "What is used to configure an HMI panel's IP address?",
+    options: [
+      "Connected PC",
+      "HMI onboard software",
+      "PC program",
+      "SD memory card"
+    ],
+    answer: "HMI onboard software"
+  },
+  {
+    question: "__________ objects can be momentary, maintained, latched, or multistate and are operated by touching the object on a touch screen terminal.",
+    options: [
+      "Test",
+      "Pushbutton",
+      "Numeric Input",
+      "Numeric Input Enable"
+    ],
+    answer: "Pushbutton"
+  },
+  {
+    question: "__________ objects display information on the PanelView plus display that notifies the operator about the status of the machine or process.",
+    options: [
+      "Input",
+      "Output",
+      "Numeric Input",
+      "Alarm"
+    ],
+    answer: "Output"
+  },
+  {
+    question: "PanelView Plus terminals provide a(n) __________ mode used for configuring terminal and application settings.",
+    options: [
+      "Run",
+      "Configuration",
+      "Sleep",
+      "Ethernet"
+    ],
+    answer: "Configuration"
+  },
+  {
+    question: "PanelView Plus applications are created in __________ using graphics and tags.",
+    options: [
+      "FactoryTalk View Studio",
+      "RSView",
+      "RSLinx",
+      "Studio"
+    ],
+    answer: "FactoryTalk View Studio"
+  },
+  {
+    question: "PLC input/output diagrams are used to show the specific physical connections between the __________ and the PLC I/O terminals.",
+    options: [
+      "Network",
+      "Device",
+      "PC",
+      "HMI panel"
+    ],
+    answer: "Device"
+  },
+  {
+    question: "In a PLC program, arranging two XIC instructions in series is an example of a(n) __________ logic element.",
+    options: [
+      "OR",
+      "NOT",
+      "AND",
+      "NAND"
+    ],
+    answer: "AND"
+  },
+  {
+    question: "In the module tag Local:1:I.Data, Local refers to the module's __________.",
+    options: [
+      "Name",
+      "Revision",
+      "Location",
+      "Operation"
+    ],
+    answer: "Location"
+  },
+  {
+    question: "What is stored in the I/O configuration tag or file?",
+    options: [
+      "Module or hardware operational settings",
+      "Data sent from PLC",
+      "Data sent to PLC",
+      "Operational settings for PLC"
+    ],
+    answer: "Module or hardware operational settings"
+  },
+  {
+    question: "When voltage is applied to input terminal Local:1:I.Data.0 of a PLC, a programmed XIC instruction with the same address will __________.",
+    options: [
+      "Remain unchanged",
+      "Open",
+      "Close",
+      "None of the above"
+    ],
+    answer: "Close"
+  },
+  {
+    question: "The __________ instruction of a ladder logic network operates in a similar manner to a hard-wired output device.",
+    options: [
+      "OET",
+      "OTE",
+      "OJT",
+      "TEO"
+    ],
+    answer: "OTE"
+  },
+  {
+    question: "The four languages used to program a CompactLogix PLC are sequential function chart, __________, function block diagram, and ladder logic.",
+    options: [
+      "Structured text",
+      "Basic",
+      "Cobol",
+      "C+"
+    ],
+    answer: "Structured text"
+  },
+  {
+    question: "Tags are __________ names given to PLC memory locations used to store information.",
+    options: [
+      "Image-based",
+      "Location-based",
+      "Text-based",
+      "Version-based"
+    ],
+    answer: "Text-based"
+  },
+  {
+    question: "<img src='40.png' style='height:200px;'><br>In the I/O diagram shown, what wire number is used to connect PLC output terminal 0 to the solenoid?",
+    options: [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    answer: "4"
+  },
+  {
+    question: "Two main areas of a CompactLogix processor's __________ are Tasks and Tags.",
+    options: [
+      "Program",
+      "Project",
+      "Memory",
+      "Configuration"
+    ],
+    answer: "Memory"
+  },
+  {
+    question: "Five types of numbering systems are decimal, binary, BCD, octal, and __________.",
+    options: [
+      "Hexadecimal",
+      "Dexadecimal",
+      "Octaldecimal",
+      "Pexadecimal"
+    ],
+    answer: "Hexadecimal"
+  },
+  {
+    question: "__________ tags are 1-bit memory locations used to store the status of a device or instruction.",
+    options: [
+      "INT",
+      "Boolean",
+      "DINT",
+      "REAL"
+    ],
+    answer: "Boolean"
+  },
+  {
+    question: "The binary numbering system is a base 2 numbering system that includes two symbols, 0 and __________.",
+    options: [
+      "0 Ω",
+      "1",
+      "2",
+      "3"
+    ],
+    answer: "1"
+  },
+  {
+    question: "What does the DINTs mean in terms of controller's memory?",
+    options: [
+      "16-bit structure used to store numerical values up to 65,535",
+      "32-bit structure used to store numerical values",
+      "1-bit structure used to store numerical values",
+      "8-bit structure used to store numerical values up to 255"
+    ],
+    answer: "32-bit structure used to store numerical values"
+  },
+  {
+    question: "The base of the decimal numbering system is __________.",
+    options: [
+      "1",
+      "8",
+      "10",
+      "16"
+    ],
+    answer: "10"
+  },
+  {
+    question: "The file extension given to a Studio 5000 project is __________.",
+    options: [
+      ".L5K",
+      ".ACD",
+      ".APA",
+      ".mer"
+    ],
+    answer: ".ACD"
+  },
+  {
+    question: "The __________ dialog is used to name the controller and configure various aspects of its hardware.",
+    options: [
+      "Controller",
+      "I/O Controller",
+      "New Controller",
+      "I/O configuration"
+    ],
+    answer: "New Controller"
+  },
+  {
+    question: "A controller project's version number indicates the Studio 5000 software version that the project was developed with. It also determines the __________ revision the target controller must be running to avoid a firmware mismatch.",
+    options: [
+      "Major firmware",
+      "Minor firmware",
+      "Catalog",
+      "Software"
+    ],
+    answer: "Major firmware"
+  },
+  {
+    question: "CompactLogix I/O modules are intelligent devices, meaning they have on-board __________.",
+    options: [
+      "I/O",
+      "Processors",
+      "Networks",
+      "Software"
+    ],
+    answer: "Processors"
+  },
+  {
+    question: "All devices that communicate with the controller must be added to the controller project's __________ configuration.",
+    options: [
+      "Software",
+      "I/O",
+      "HMI panel",
+      "Network"
+    ],
+    answer: "I/O"
+  },
+  {
+    question: "What is the name of file used to configure the hardware, tags, and communication along with a PLC ladder logic program?",
+    options: [
+      "HMI project",
+      "PLC project",
+      "Driver software",
+      "Subroutines"
+    ],
+    answer: "PLC project"
+  },
+  {
+    question: "Controller __________ is stored in the controller project and transferred to the processor the next time the project is downloaded to the controller.",
+    options: [
+      "Configuration",
+      "Version",
+      "Project",
+      "File"
+    ],
+    answer: "Configuration"
+  },
+  {
+    question: "__________ is the user text associated with the rungs and instructions of a controller project that explains the operation of that item.",
+    options: [
+      "Project documentation",
+      "Project description",
+      "Ladder Logic",
+      "I/O diagram"
+    ],
+    answer: "Project documentation"
+  },
+  {
+    question: "One method of controlling multiple outputs at the same time is by placing each output on a separate rung and using multiple input instructions with the same __________.",
+    options: [
+      "Input",
+      "Output",
+      "Tag",
+      "Routine"
+    ],
+    answer: "Tag"
+  },
+  {
+    question: "After edits have been made to the ladder logic program, what is the process or checking for errors called?",
+    options: [
+      "Editing",
+      "Reviewing",
+      "Verifying",
+      "Downloading"
+    ],
+    answer: "Verifying"
+  },
+  {
+    question: "Stop pushbuttons are always normally __________ contacts.",
+    options: [
+      "Open",
+      "Closed",
+      "Energized",
+      "De-energized"
+    ],
+    answer: "Closed"
+  },
+  {
+    question: "One of the advantages of a PLC is that it permits many instructions to be controlled by one __________.",
+    options: [
+      "Output",
+      "Input",
+      "Memory location",
+      "Network"
+    ],
+    answer: "Input"
+  },
+  {
+    question: "The __________ is the area that displays the ladder logic for the routine.",
+    options: [
+      "Routine View",
+      "Workspace",
+      "Ladder View",
+      "FBD View"
+    ],
+    answer: "Ladder View"
+  },
+  {
+    question: "The MainRoutine may contain all of the program's logic or it may contain instructions that call other routines called __________.",
+    options: [
+      "Tasks",
+      "Subroutines",
+      "Functions",
+      "Function blocks"
+    ],
+    answer: "Subroutines"
+  },
+  {
+    question: "Double-clicking which icon opens the program in the Ladder Editor window?",
+    options: [
+      "MainProgram",
+      "Controller Tags",
+      "MainTask",
+      "MainRoutine"
+    ],
+    answer: "MainRoutine"
+  },
+  {
+    question: "What components of a motor contactor are used to interface with a PLC?",
+    options: [
+      "Solenoid coil and relay contacts",
+      "Wiring for direct control",
+      "PLC and NC contacts",
+      "Isolator and relay contacts"
+    ],
+    answer: "Solenoid coil and relay contacts"
+  },
+  {
+    question: "To create a tag, the user must display the __________ dialog and enter the tag's parameters.",
+    options: [
+      "New Input",
+      "New Tag",
+      "New Output",
+      "New Routine"
+    ],
+    answer: "New Tag"
+  },
+  {
+    question: "Each element of an array has the same name and is identified by a numeric __________.",
+    options: [
+      "Prefix",
+      "Suffix",
+      "Address",
+      "String"
+    ],
+    answer: "Suffix"
+  },
+  {
+    question: "The __________ type defines the size in bits, bytes, or words of data that a tag will use in memory.",
+    options: [
+      "Memory",
+      "Data",
+      "Alias",
+      "Base tag"
+    ],
+    answer: "Data"
+  },
+  {
+    question: "PLC seal-in logic works by using a second XIC instruction that is connected in __________ with the XIC instruction which turns on the output.",
+    options: [
+      "Series",
+      "Parallel",
+      "Unison",
+      "None of the above"
+    ],
+    answer: "Parallel"
+  },
+  {
+    question: "Input instructions having __________ addresses function as dictated by the state of the OTE output instruction.",
+    options: [
+      "Tag",
+      "Input",
+      "Output",
+      "Boolean"
+    ],
+    answer: "Output"
+  },
+  {
+    question: "Two applications of internal output instructions are program memory logic and __________.",
+    options: [
+      "Safety interlocks",
+      "Program interlocks",
+      "Sequencing",
+      "Memory"
+    ],
+    answer: "Program interlocks"
+  },
+  {
+    question: "Studio 5000 provides __________ data types to the user that are the building blocks of all tags and tag structures used in the ControlLogix projects.",
+    options: [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    answer: "5"
+  },
+  {
+    question: "The PLC output __________ should include the NC contacts controlled by the motor starter overload device.",
+    options: [
+      "Indicator",
+      "Diagram",
+      "Wiring",
+      "Schematic"
+    ],
+    answer: "Diagram"
+  },
+  {
+    question: "<img src='71.png' style='height:200px;'><br>In the logic diagram, what input conditions will cause output M1 to turn on?",
+    options: [
+      "PB1 True, PB2 True, PB3 False",
+      "PB1 False, PB2 False, PB3 True",
+      "PB1 False, PB2 False, PB3 False",
+      "PB1 True, PB2 False, PB3 False"
+    ],
+    answer: "PB1 True, PB2 True, PB3 False"
+  },
+  {
+    question: "A programmable controller's outputs can control both __________ and electric motors.",
+    options: [
+      "Inputs",
+      "Fluid power motors",
+      "Outputs",
+      "Power supplies"
+    ],
+    answer: "Fluid power motors"
+  },
+  {
+    question: "Multiple safety interlocks can be used in a program by placing input instructions in __________ with each other on a rung.",
+    options: [
+      "Series",
+      "Parallel",
+      "Opposition",
+      "Reverse"
+    ],
+    answer: "Series"
+  },
+  {
+    question: "Two applications in which interlocks are used are: __________ and safety.",
+    options: [
+      "Interlocks",
+      "Sequencing",
+      "Branching",
+      "Sealing-in"
+    ],
+    answer: "Sequencing"
+  },
+  {
+    question: "A __________ is used to drive a motor at speeds that vary from zero to a maximum speed using digital or analog control signals.",
+    options: [
+      "Potentiometer",
+      "Variable speed drive (VSD)",
+      "Analog input",
+      "Analog output"
+    ],
+    answer: "Variable speed drive (VSD)"
+  },
+  {
+    question: "A variable speed drive (VSD) can be controlled by a __________.",
+    options: [
+      "Servo",
+      "PLC",
+      "HMI",
+      "Valve"
+    ],
+    answer: "PLC"
+  },
+  {
+    question: "PLC programs can use timers as well as __________ to sequence events.",
+    options: [
+      "Maintained pushbuttons",
+      "Limit switches",
+      "Selector switches",
+      "Math instructions"
+    ],
+    answer: "Limit switches"
+  },
+  {
+    question: "What document lists the steps that a machine makes to perform its function?",
+    options: [
+      "I/O diagram",
+      "Ladder program",
+      "Sequence of operations",
+      "Power diagram"
+    ],
+    answer: "Sequence of operations"
+  },
+  {
+    question: "The RTO instruction requires a separate __________ instruction to reset its accumulated value.",
+    options: [
+      "Stop",
+      "OTE",
+      "RES",
+      "RST"
+    ],
+    answer: "RES"
+  },
+  {
+    question: "The __________ timer instruction energizes its DN bit after its accumulated value is equal to its preset value.",
+    options: [
+      "Timer On-Delay",
+      "Timer Off-Delay",
+      "RTO",
+      "TONR"
+    ],
+    answer: "Timer On-Delay"
+  },
+  {
+    question: "When the __________ timer instruction is de-energized, the timer increases the accumulated value by the amount of time the instruction is de-energized.",
+    options: [
+      "Timer On-Delay",
+      "Timer Off-Delay",
+      "RTO",
+      "TONR"
+    ],
+    answer: "Timer Off-Delay"
+  },
+  {
+    question: "A __________ timer accumulates the total amount of time the instruction has been energized and retains this value even when de-energized.",
+    options: [
+      "Non-retentive",
+      "Retentive",
+      "TON",
+      "TOF"
+    ],
+    answer: "Retentive"
+  },
+  {
+    question: "PLC time-driven sequencing program can be designed by using a(n) __________ of timer instructions, with each instruction controlling an event.",
+    options: [
+      "Series",
+      "Parallel",
+      "BRANCH",
+      "ARRAY"
+    ],
+    answer: "Series"
+  },
+  {
+    question: "<img src='84.png' style='height:200px;'><br>After 31 seconds, what is the status of Pump 1 and Mixer Motor?",
+    options: [
+      "Pump 1 is off; mixer motor is on",
+      "Pump 1 is off; mixer motor is off",
+      "Pump 1 is on; mixer motor is on",
+      "Pump 1 is on; mixer motor is off"
+    ],
+    answer: "Pump 1 is off; mixer motor is on"
+  },
+  {
+    question: "The __________ instruction decreases the accumulated value by 1 each time the rung containing the instruction goes from false to true.",
+    options: [
+      "Count down",
+      "Count up",
+      "Count up/down",
+      "Count down/up"
+    ],
+    answer: "Count down"
+  },
+  {
+    question: "To enter a CTUD counter instruction, both the CTU and the CTD instructions must have the same __________.",
+    options: [
+      "Instruction tag",
+      "Accumulated value",
+      "Preset",
+      "Alias"
+    ],
+    answer: "Instruction tag"
+  },
+  {
+    question: "The CTU instruction increases its __________ by one each time the rung containing the instruction goes from false to true.",
+    options: [
+      "Preset value",
+      "Accumulated value",
+      "Count Value",
+      "EN output"
+    ],
+    answer: "Accumulated value"
+  },
+  {
+    question: "A counter's done (DN) bit is set whenever the accumulated value is equal to or greater than the __________ value.",
+    options: [
+      "Reset",
+      "TT",
+      "Preset",
+      "Total"
+    ],
+    answer: "Preset"
+  },
+  {
+    question: "A(n) __________ diagram lets you determine how the machine action affects the PLC inputs and how the PLC outputs affect the machine action.",
+    options: [
+      "Power",
+      "I/O",
+      "Schematic",
+      "Line"
+    ],
+    answer: "I/O"
+  },
+  {
+    question: "The normal operating mode of machines is the __________ mode.",
+    options: [
+      "Manual",
+      "Automatic",
+      "Jog",
+      "Home"
+    ],
+    answer: "Automatic"
+  },
+  {
+    question: "<img src='91.png' style='height:200px;'><br>In the program, what happens when SS1 is closed?",
+    options: [
+      "Pump motor starts",
+      "LS1 opens",
+      "LS2 opens",
+      "LS1 and LS2 opened"
+    ],
+    answer: "Pump motor starts"
+  },
+  {
+    question: "The E-stop pushbutton on a PLC's master control relay circuit causes power to be removed from all the PLC's outputs. What contacts are used for E-stop pushbuttons?",
+    options: [
+      "Normally closed",
+      "Normally open",
+      "Normally open held closed",
+      "Opened switch"
+    ],
+    answer: "Normally closed"
+  },
+  {
+    question: "<img src='93.png' style='height:200px;'><br>If the clamp and drill machine shown has stopped unexpectedly after performing step 2 of its sequence, what are the most likely I/O device failures?",
+    options: [
+      "LS1, SOL1A",
+      "LS3, SOL1A",
+      "LS4, SOL2A",
+      "LS2, SOL2B"
+    ],
+    answer: "LS2, SOL2B"
+  },
+  {
+    question: "In a single-cycle sequence program, the start and stop inputs __________ control the output.",
+    options: [
+      "Indirectly",
+      "Directly",
+      "Do not",
+      "None of the above"
+    ],
+    answer: "Indirectly"
+  },
+  {
+    question: "<img src='95.png' style='height:200px;'><br>When the selector switch SS1 is put in the right position, what does that enable you to do within a program?",
+    options: [
+      "Operate the actuators one at a time",
+      "Run the program in Auto mode",
+      "Program in manual mode",
+      "Program an Interlock"
+    ],
+    answer: "Operate the actuators one at a time"
+  },
+  {
+    question: "What document is used by program developers to determine the state of inputs and outputs for each step in a machine's sequence?",
+    options: [
+      "I/O wiring diagram",
+      "Truth table",
+      "I/O configuration file",
+      "Power diagram"
+    ],
+    answer: "Truth table"
+  },
+  {
+    question: "On/off controllers do not provide steady __________ current or voltage to regulate the process.",
+    options: [
+      "Input",
+      "Instruction",
+      "Output",
+      "Power supply"
+    ],
+    answer: "Output"
+  },
+  {
+    question: "The __________ function will cause a machine to stop after finishing its current step, then resume operation with the next step when an input signal is received.",
+    options: [
+      "Stop",
+      "Halt",
+      "Cycle halt",
+      "Cycle stop"
+    ],
+    answer: "Cycle stop"
+  },
+  {
+    question: "On/off control is a(n) __________ control method that is commonly used in PLC programming.",
+    options: [
+      "Closed-loop",
+      "Open-loop",
+      "PID",
+      "Zone"
+    ],
+    answer: "Closed-loop"
+  },
+  {
+    question: "The manual mode is useful for __________ a machine, because doing so in automatic mode would be dangerous.",
+    options: [
+      "Troubleshooting",
+      "Operating",
+      "Homing",
+      "Jogging"
+    ],
+    answer: "Troubleshooting"
+  },
+  {
+    question: "In the continuous-cycle program, the start and stop pushbuttons control an internal __________, which in turn starts and stops the sequence.",
+    options: [
+      "Input",
+      "XIC",
+      "Coil",
+      "XIO"
+    ],
+    answer: "Coil"
+  },
+  {
+    question: "<img src='102.png' style='height:200px;'><br>If the vacuum does not turn off at step 6 of the sequence, what two IO devices should you check to determine if one of these devices has failed?",
+    options: [
+      "MR2 or SOL2A",
+      "MR1 or SOL3A",
+      "MR1 or SOL4A",
+      "MR3 or SOL4A"
+    ],
+    answer: "MR2 or SOL2A"
+  },
+  {
+    question: "A MCR instruction that is used with the __________ can also be used to initialize a PLC application to some predetermined state.",
+    options: [
+      "Second Scan flag",
+      "First Scan flag",
+      "Minor Fault flag",
+      "Major Fault flag"
+    ],
+    answer: "First Scan flag"
+  },
+  {
+    question: "An MCR zone uses two MCR __________, one on the initial MCR rung and one on the end MCR rung.",
+    options: [
+      "Block instructions",
+      "Coils",
+      "Pointers",
+      "Names"
+    ],
+    answer: "Coils"
+  },
+  {
+    question: "Program control instructions alter the program __________ of a PLC from its normal sequence.",
+    options: [
+      "Scan",
+      "I/O",
+      "Rungs",
+      "Name"
+    ],
+    answer: "Scan"
+  },
+  {
+    question: "The First Scan Flag is often used in applications to __________ a program to a known state on power-up of the controller.",
+    options: [
+      "Stop",
+      "Halt",
+      "Initialize",
+      "Create"
+    ],
+    answer: "Initialize"
+  },
+  {
+    question: "The First Scan flag tag name is __________.",
+    options: [
+      "F:SF",
+      "S:FS",
+      "F:FS",
+      "S:SF"
+    ],
+    answer: "S:FS"
+  },
+  {
+    question: "__________ a PLC program puts all outputs in startup state and checks inputs to verify that the process can safely be restarted.",
+    options: [
+      "Stopping",
+      "Halting",
+      "Initializing",
+      "Downloading"
+    ],
+    answer: "Initializing"
+  },
+  {
+    question: "The JSR instruction is a program control instruction that causes the processor to run a(n) __________.",
+    options: [
+      "Function",
+      "Function block",
+      "Subroutine",
+      "MainRoutine"
+    ],
+    answer: "Subroutine"
+  },
+  {
+    question: "A subroutine is a program that can be called by another __________.",
+    options: [
+      "Routine",
+      "Controller",
+      "HMI panel",
+      "Name"
+    ],
+    answer: "Routine"
+  },
+  {
+    question: "A JMP instruction must always be used with a(n) __________ instruction.",
+    options: [
+      "DEST",
+      "LBL",
+      "JSR",
+      "CPT"
+    ],
+    answer: "LBL"
+  },
+  {
+    question: "When the __________ instruction is true, all program logic between it and the LBL instruction is frozen in its last state.",
+    options: [
+      "JSR",
+      "XIC",
+      "JMP",
+      "JPM"
+    ],
+    answer: "JMP"
+  },
+  {
+    question: "The current __________ of a SUB instruction's Source or Destination is displayed below its tag.",
+    options: [
+      "Tagname",
+      "Value",
+      "Destination",
+      "Source A"
+    ],
+    answer: "Value"
+  },
+  {
+    question: "The __________ instruction is used to copy the data contained in one tag to another tag.",
+    options: [
+      "MOV",
+      "JMP",
+      "LBL",
+      "MCR"
+    ],
+    answer: "MOV"
+  },
+  {
+    question: "How many outputs are possible of a comparison instruction?",
+    options: [
+      "2",
+      "4",
+      "6",
+      "8"
+    ],
+    answer: "2"
+  },
+  {
+    question: "Energizing the ADD instruction causes the processor to add the contents of Source A to the contents of Source B and place the result in the tag defined in the instruction's __________ field.",
+    options: [
+      "Source A",
+      "Destination",
+      "Source B",
+      "DEST B"
+    ],
+    answer: "Destination"
+  },
+  {
+    question: "Sources A and B of the DIV instruction may contain __________ or constant values.",
+    options: [
+      "Contacts",
+      "Tags",
+      "Coils",
+      "I/O"
+    ],
+    answer: "Tags"
+  },
+  {
+    question: "Some of the more common functions include addition, __________, division, and multiplication.",
+    options: [
+      "Exponentiation",
+      "Logarithms",
+      "Subtraction",
+      "Integration"
+    ],
+    answer: "Subtraction"
+  },
+  {
+    question: " __________ tag types may contain integer values between -32,768 and +32,767.",
+    options: [
+      "SINT",
+      "INT",
+      "DINT",
+      "REAL"
+    ],
+    answer: "INT"
+  },
+  {
+    question: "Energizing the __________ instruction causes the value in Source A to be multiplied by the value stored in Source B.",
+    options: [
+      "MUL",
+      "ADD",
+      "DIV",
+      "Sub"
+    ],
+    answer: "MUL"
+  },
+  {
+    question: " __________ instructions are PLC instructions that copy the contents of almost any PLC memory tag to another.",
+    options: [
+      "JSR",
+      "LBL",
+      "Data Transfer",
+      "JMP"
+    ],
+    answer: "Data Transfer"
+  },
+  {
+    question: "<img src='122.png' style='height:200px;'><br>What is the value in the destination file Integer[0] if PB1 is pressed three times and PB3 seven times?",
+    options: [
+      "4",
+      "7",
+      "10",
+      "21"
+    ],
+    answer: "21"
+  },
+  {
+    question: "The __________ field contains the tag to which the instruction writes the result of the operation.",
+    options: [
+      "Source A",
+      "Source B",
+      "Destination",
+      "Output"
+    ],
+    answer: "Destination"
+  },
+  {
+    question: "What PLC program instruction is used to make decisions and control operations based on the values of data in the program?",
+    options: [
+      "Output",
+      "NO contact",
+      "Message",
+      "Comparison"
+    ],
+    answer: "Comparison"
+  },
+  {
+    question: "<img src='125.png' style='height:200px;'><br>What is the value contained in the SUB instruction’s Destination tag of the ladder logic program shown if PB4 has just been pressed and released?",
+    options: [
+      "8",
+      "6",
+      "4",
+      "2"
+    ],
+    answer: "2"
+  }
+];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
