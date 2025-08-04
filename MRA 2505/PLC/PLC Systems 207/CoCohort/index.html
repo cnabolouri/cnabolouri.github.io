@@ -41,10 +41,11 @@
   <h1>CoCort 207</h1>
   <div id="quiz"></div>
   <script>
+    
 const quizData = [
   {
     "question": "Which of the following is a quick method to verify that the programmable controller itself is operating correctly?",
-    "choices": [
+    "options": [
       "Solid Green Light",
       "Blinking Green Light",
       "Solid Yellow Light",
@@ -54,7 +55,7 @@ const quizData = [
   },
   {
     "question": "What does an operator interact with on a HMI panel to monitor process and make adjustments to keep the process running?",
-    "choices": [
+    "options": [
       "Switch",
       "Object",
       "Joystick",
@@ -64,7 +65,7 @@ const quizData = [
   },
   {
     "question": "What device is used to configure an HMI panel IP address?",
-    "choices": [
+    "options": [
       "USB",
       "Keyboard",
       "Scanner",
@@ -74,7 +75,7 @@ const quizData = [
   },
   {
     "question": "Pressing the E-Stop button on a PLC master control relay circuit causes power to be removed from what components?",
-    "choices": [
+    "options": [
       "Input Module",
       "Rungs",
       "Output Module",
@@ -84,7 +85,7 @@ const quizData = [
   },
   {
     "question": "Which IP address",
-    "choices": [
+    "options": [
       "192.--.15",
       "193.--.15",
       "194.--.15",
@@ -94,7 +95,7 @@ const quizData = [
   },
   {
     "question": "<img src='6.png' style='height:200px;'><br>What is the value contained in the RESULTS tag? SUB",
-    "choices": [
+    "options": [
       "2",
       "5",
       "6",
@@ -104,7 +105,7 @@ const quizData = [
   },
   {
     "question": "What trigger for a time driven sequencing process to move to the next?",
-    "choices": [
+    "options": [
       ".TT",
       ".PRE",
       ".EN",
@@ -114,7 +115,7 @@ const quizData = [
   },
   {
     "question": "What type of instructions are used to make decisions and control operations based on the values of data in PLC program?",
-    "choices": [
+    "options": [
       "Differential instructions",
       "Adding instructions",
       "Comparison instructions",
@@ -124,7 +125,7 @@ const quizData = [
   },
   {
     "question": "What software configuration element identifies the actual physical location of a input terminal of a PLC input module?",
-    "choices": [
+    "options": [
       "absolute address",
       "locations",
       "modifications",
@@ -134,7 +135,7 @@ const quizData = [
   },
   {
     "question": "If a 24 VDC PLC input module uses sinking type (active high) inputs, what applied voltage level would cause the input to turn on?",
-    "choices": [
+    "options": [
       "+0V",
       "+12V",
       "+48V",
@@ -144,7 +145,7 @@ const quizData = [
   },
   {
     "question": "A PLC and a PC are connected in this type of network if a single Ethernet cable is used to connect their Ethernet parts",
-    "choices": [
+    "options": [
       "IP addresses are similar but not identical",
       "IP addresses are made identical",
       "LAN",
@@ -154,7 +155,7 @@ const quizData = [
   },
   {
     "question": "What term is used to describe these functions in PLC programming: adding and removing instuctions, changing logic of change addresses?",
-    "choices": [
+    "options": [
       "Edit",
       "Change",
       "Mutate",
@@ -164,7 +165,7 @@ const quizData = [
   },
   {
     "question": "What is a collection of files that includes a PLC ladder logic program, hardware configuration and settings?",
-    "choices": [
+    "options": [
       "Subject",
       "Multiple files",
       "Program",
@@ -174,7 +175,7 @@ const quizData = [
   },
   {
     "question": "What are software programs called that allow a device to connect a network and communicate with other devices?",
-    "choices": [
+    "options": [
       "Database",
       "Project",
       "Drivers",
@@ -184,7 +185,7 @@ const quizData = [
   },
   {
     "question": "<img src='15.png' style='height:200px;'><br>Which of these wiring connections are required to wire a limit switch to input 3 of the sinking input module?",
-    "choices": [
+    "options": [
       "C to A, B to G, H to D",
       "C to G, B to D, H to A",
       "C to D, B to A, H to G",
@@ -194,7 +195,7 @@ const quizData = [
   },
   {
     "question": "What step do PLC scan cycles perform after checking the status of inputs and solving program logic?",
-    "choices": [
+    "options": [
       "Turn off output",
       "Turn on output",
       "Energize rung",
@@ -204,7 +205,7 @@ const quizData = [
   },
   {
     "question": "What networks configuration settings must be configured correctly to enable communication between PLC and PC?",
-    "choices": [
+    "options": [
       "Point to point",
       "Network name",
       "Policies",
@@ -214,7 +215,7 @@ const quizData = [
   },
   {
     "question": "<img src='18.png' style='height:200px;'><br>In the logic diagram, what input conditions will cause output M1 to turn on?",
-    "choices": [
+    "options": [
       "PB1 True, PB2 True, PB3 False",
       "PB1 False, PB2 False, PB3 True",
       "PB1 False, PB2 False, PB3 False",
@@ -224,7 +225,7 @@ const quizData = [
   },
   {
     "question": "What is the next step to enter ladder logic after the programs editor has been opened and an empty rung is in its place?",
-    "choices": [
+    "options": [
       "Edit properties",
       "Turn on rungs",
       "Add instuctions",
@@ -234,7 +235,7 @@ const quizData = [
   },
   {
     "question": "Which type of instruction operates just like an output, except that it does not directly control a PLC output",
-    "choices": [
+    "options": [
       "Output instuctions",
       "Examine if open",
       "Output instuctions with relative address",
@@ -244,7 +245,7 @@ const quizData = [
   },
   {
     "question": "What file defines the address of discrete input modules input terminals?",
-    "choices": [
+    "options": [
       "I/O or device configuration file in this model",
       "Definitions files",
       "Address configuration file",
@@ -254,7 +255,7 @@ const quizData = [
   },
   {
     "question": "What PLC program is used for complex math formulas?",
-    "choices": [
+    "options": [
       "Figure",
       "Calibrate",
       "Compute (CPT)",
@@ -264,7 +265,7 @@ const quizData = [
   },
   {
     "question": "<img src='23.png' style='height:200px;'><br>What function do the NC contact instructions serve that are identified in the reversing motor control program shown?",
-    "choices": [
+    "options": [
       "True",
       "False",
       "Interlock",
@@ -274,7 +275,7 @@ const quizData = [
   },
   {
     "question": "Which sentence file connects PLC program logic to graphics text, and function keys?",
-    "choices": [
+    "options": [
       "PLC image",
       "PLC project",
       "PLC code",
@@ -284,7 +285,7 @@ const quizData = [
   },
   {
     "question": "If a network is not available, what type of connection can be used to configure the controller's IP address?",
-    "choices": [
+    "options": [
       "Wireless",
       "Firewire",
       "USB",
@@ -294,7 +295,7 @@ const quizData = [
   },
   {
     "question": "What is the common method of interdicting a motor to a PLC output?",
-    "choices": [
+    "options": [
       "Motor contactor",
       "PB1",
       "Control relay",
@@ -304,7 +305,7 @@ const quizData = [
   },
   {
     "question": "<img src='27.png' style='height:200px;'><br>In the PLC program show, what is the status of Pump 1 and the Mixer Motor, 31 secounds after PB1 has been momentarily pressed? The time base for the timers is 0.1 secound.",
-    "choices": [
+    "options": [
       "Pump 1 is on, mixer motor is off",
       "Pump 1 is off, mixer motor is on",
       "Pump 1 and mixer motor are on",
@@ -314,7 +315,7 @@ const quizData = [
   },
   {
     "question": "Where does the application file reside, which obtains the screens objects displayed to the operator HMI panel?",
-    "choices": [
+    "options": [
       "Objects",
       "Display",
       "HMI memory",
@@ -324,7 +325,7 @@ const quizData = [
   },
   {
     "question": "<img src='29.png' style='height:200px;'><br>What is the value in the destination file integer o if PB1 is pressed 4 times and PB3 3 times?",
-    "choices": [
+    "options": [
       "7",
       "12",
       "1",
@@ -334,7 +335,7 @@ const quizData = [
   },
   {
     "question": "What is each group of numbers separated by periods or dots in an IP address called? (Also referred to us IPv4 and IPv6)",
-    "choices": [
+    "options": [
       "Numbers",
       "Integer",
       "Figure",
@@ -344,7 +345,7 @@ const quizData = [
   },
   {
     "question": "<img src='31.png' style='height:200px;'><br>What number line is used to connect solenoid to output terminal?",
-    "choices": [
+    "options": [
       "4",
       "Closest to diamond",
       "5",
@@ -354,7 +355,7 @@ const quizData = [
   },
   {
     "question": "In which mode does a programmable controller scan the ladder logic program and set output on of off?",
-    "choices": [
+    "options": [
       "JOG",
       "WALK",
       "RUN",
@@ -364,7 +365,7 @@ const quizData = [
   },
   {
     "question": "What type of indicators are on processors?",
-    "choices": [
+    "options": [
       "Network",
       "Position",
       "Status",
@@ -374,7 +375,7 @@ const quizData = [
   },
   {
     "question": "What is a double word?",
-    "choices": [
+    "options": [
       "Double digit, 00",
       "Double integer, 32(DINT)",
       "Double figure, AA",
@@ -384,7 +385,7 @@ const quizData = [
   },
   {
     "question": "What is a word?",
-    "choices": [
+    "options": [
       "Integer, 16",
       "Numeral, I",
       "Digit, 0",
@@ -394,7 +395,7 @@ const quizData = [
   },
   {
     "question": "A boolen is?",
-    "choices": [
+    "options": [
       "2 bit",
       "4 bit",
       "1 bit",
@@ -404,7 +405,7 @@ const quizData = [
   },
   {
     "question": "Output indicators are on processors",
-    "choices": [
+    "options": [
       "True",
       "False"
     ],
@@ -412,7 +413,7 @@ const quizData = [
   },
   {
     "question": "What do you have to add up to get the sum of 170. 128 64 32 16 8 4 2 1",
-    "choices": [
+    "options": [
       "128, 32, 8, 2",
       "128, 32, 16, 2",
       "64, 32, 16, 8, 4",
@@ -422,7 +423,7 @@ const quizData = [
   },
   {
     "question": "Convert the binary into a decimal sum of 113. 128 64 32 16 8 4 2 1",
-    "choices": [
+    "options": [
       "128, 4, 2, 1",
       "64, 32, 16, 1",
       "64, 32, 16, 2",
@@ -432,7 +433,7 @@ const quizData = [
   },
   {
     "question": "What is used to configure an HMI Panel's IP address?",
-    "choices": [
+    "options": [
       "Connected PC",
       "HMI Onboard Software",
       "PC Program",
@@ -442,7 +443,7 @@ const quizData = [
   },
   {
     "question": "The HMI _______ connects PLC program logic to graphics, text, and function keys.",
-    "choices": [
+    "options": [
       "Project file",
       "Data table",
       "Controller module",
@@ -452,7 +453,7 @@ const quizData = [
   },
   {
     "question": "This kind of software automatically is used when a software is unnecessary for connection?",
-    "choices": [
+    "options": [
       "RS-422",
       "Ethernet/IP",
       "Modbus TCP",
@@ -462,7 +463,7 @@ const quizData = [
   },
   {
     "question": "What is the value contained in the RESULTS tag? ADD 3 3",
-    "choices": [
+    "options": [
       "6",
       "1",
       "9",
@@ -472,7 +473,7 @@ const quizData = [
   },
   {
     "question": "What is the trigger for a timer driven sequencing process to move to the next step in the sequence?",
-    "choices": [
+    "options": [
       "Limit switch",
       "Proximity sensor",
       "Push button",
@@ -482,7 +483,7 @@ const quizData = [
   },
   {
     "question": "What function does SS1 enable in this program when in the left position?",
-    "choices": [
+    "options": [
       "Jog Mode",
       "Run Mode",
       "Manual Override Mode",
@@ -492,7 +493,7 @@ const quizData = [
   },
   {
     "question": "What is the next step to enter ladder logic after the programs editor has been opened and an empty rung is in its place?",
-    "choices": [
+    "options": [
       "Add instruction",
       "Save the program",
       "Run the simulation",
@@ -502,7 +503,7 @@ const quizData = [
   },
   {
     "question": "Some of the more common functions include addition, _________, division, and multiplication.",
-    "choices": [
+    "options": [
       "Subtraction",
       "Logarithms",
       "Exponentiaiton",
@@ -512,7 +513,7 @@ const quizData = [
   },
   {
     "question": "What is stored in the I/O configuration tag or file?",
-    "choices": [
+    "options": [
       "Data sent from plc",
       "Data sent to plc",
       "Module or hardware operational settings",
@@ -522,7 +523,7 @@ const quizData = [
   },
   {
     "question": "What does an operator use on an HMI panel to monitor the program and process conditions?",
-    "choices": [
+    "options": [
       "Display exchange objects",
       "Graphic icons",
       "Labels",
@@ -532,7 +533,7 @@ const quizData = [
   },
   {
     "question": "The basic operation of a(n) __________ is to scan instructions, monitor the status of input devices, and produce outputs based on which inputs are on or off.",
-    "choices": [
+    "options": [
       "HMI panel",
       "Input module",
       "Output module",
@@ -542,7 +543,7 @@ const quizData = [
   },
   {
     "question": "What does the absolute I/O address identify on a PLC input module?",
-    "choices": [
+    "options": [
       "Actual physical location",
       "Address label",
       "I/O driver",
@@ -552,7 +553,7 @@ const quizData = [
   },
   {
     "question": "Once the program editor is open, what is the next step in starting a PLC program?",
-    "choices": [
+    "options": [
       "Add rungs",
       "Add instructions",
       "Assign instruction addresses Add rungs",
@@ -562,7 +563,7 @@ const quizData = [
   },
   {
     "question": "The IP addresses of a PC-PLC point-to-point connection will be __________.",
-    "choices": [
+    "options": [
       "Same IP addresses",
       "Different IP addresses",
       "DHCP addresses enabled",
@@ -572,7 +573,7 @@ const quizData = [
   },
   {
     "question": "What is the purpose of configuring the IP address and subnet of a PC and PLC?",
-    "choices": [
+    "options": [
       "Establish nodes",
       "Enable communication between them",
       "Create different octets",
@@ -582,7 +583,7 @@ const quizData = [
   },
   {
     "question": "<img src='55.png' style='height:200px;'><br>In the program, what happens when SS1 is closed?",
-    "choices": [
+    "options": [
       "Pump motor starts",
       "LS1 opens",
       "LS1 and LS2 opened",
@@ -592,7 +593,7 @@ const quizData = [
   },
   {
     "question": "<img src='56.png' style='height:200px;'><br>What is the value in the destination file Integer[0] if PB1 is pressed three time and PB3 seven times? *Amatrol typo*",
-    "choices": [
+    "options": [
       "10",
       "21",
       "7",
@@ -602,7 +603,7 @@ const quizData = [
   },
   {
     "question": "<img src='57.png' style='height:200px;'><br>What must be activated before the drill cylinder extends?",
-    "choices": [
+    "options": [
       "LS4 and LS1",
       "LS3",
       "LS1",
@@ -612,7 +613,7 @@ const quizData = [
   },
   {
     "question": "What does the completion of each step trigger in an event-driven PLC sequence program?",
-    "choices": [
+    "options": [
       "Start of each step",
       "Rung order",
       "Timer values",
@@ -622,7 +623,7 @@ const quizData = [
   },
   {
     "question": "<img src='59.png' style='height:200px;'><br>Which outputs in this program will be on? (Tip: study all formulas: GRT, GEQ, LES, LEQ, EQV, NEQ)",
-    "choices": [
+    "options": [
       "Output 2",
       "Both outputs",
       "Output 1",
@@ -632,7 +633,7 @@ const quizData = [
   },
   {
     "question": "The HMI screens and screen objects are contained in the application file. Where is this file stored?",
-    "choices": [
+    "options": [
       "In a PLC program",
       "In the HMI memory",
       "In a PLC project",
@@ -642,7 +643,7 @@ const quizData = [
   },
   {
     "question": "What is a fast way to determine a programmable controller is operating correctly after power up?",
-    "choices": [
+    "options": [
       "Verify that Power Supply LED is on",
       "Verify correct status of PLC processor status indicators",
       "Verify that main power switch is on",
@@ -652,7 +653,7 @@ const quizData = [
   },
   {
     "question": "<img src='62.png' style='height:200px;'><br>What causes the clamp to retract in step 4?",
-    "choices": [
+    "options": [
       "LS1 and LS2",
       "LS3",
       "Internal Coil 1 and LS1",
@@ -662,7 +663,7 @@ const quizData = [
   },
   {
     "question": "Adding and removing instructions, changing logic, or changing addresses are all part of what PLC programming task?",
-    "choices": [
+    "options": [
       "Compiling the program",
       "Editing the program",
       "Configuring the program",
@@ -672,7 +673,7 @@ const quizData = [
   },
   {
     "question": "<img src='64.png' style='height:200px;'><br>When the selector switch SS2 is put in the right position, what does that enable you to do within a program?",
-    "choices": [
+    "options": [
       "Run the program in Auto mode",
       "Program an Interlock",
       "Operate the actuators one at a time",
@@ -681,8 +682,8 @@ const quizData = [
     "answer": "Operate the actuators one at a time"
   },
   {
-    "question": "In a PLC program, arranging two XIC instructions in series is an example of a(n) __________ logic element.",
-    "choices": [
+    "question": "In a PLC program, arranging two XIC instructions in series is an example of a(n) _________ logic element.",
+    "options": [
       "AND",
       "OR",
       "NOT",
@@ -692,7 +693,7 @@ const quizData = [
   },
   {
     "question": "What is a USB Type B connector most likely connected to?",
-    "choices": [
+    "options": [
       "PC USB communication port",
       "USB port on a network switch",
       "PLC USB communication port",
@@ -702,7 +703,7 @@ const quizData = [
   },
   {
     "question": "<img src='67.png' style='height:200px;'><br>The E-stop pushbutton on a PLC's master control relay circuit causes power to be removed from all the PLC's outputs. What contacts are used for E-stop pushbuttons?",
-    "choices": [
+    "options": [
       "Normally open held closed",
       "Normally open",
       "Opened switch",
@@ -712,7 +713,7 @@ const quizData = [
   },
   {
     "question": "Two addresses are used for Ethernet communications, Media Access Control (MAC) and ________.",
-    "choices": [
+    "options": [
       "DeviceNet",
       "Transport Control Protocol (TCP)",
       "Internet Protocol (IP)",
@@ -722,7 +723,7 @@ const quizData = [
   },
   {
     "question": "<img src='69.png' style='height:200px;'><br>Which of these values placed in Source A will cause output M1 to turn on when PB1 is pressed?",
-    "choices": [
+    "options": [
       "10",
       "7",
       "9",
@@ -732,17 +733,17 @@ const quizData = [
   },
   {
     "question": "<img src='70.png' style='height:200px;'><br>Which component is most likely faulted if the drill cylinder retracts and does not extend?",
-    "choices": [
+    "options": [
       "LS4",
-      "IsS1",
+      "LsS1",
       "LS3",
       "LS2"
     ],
     "answer": "LS3"
   },
   {
-    "question": "Energizing the ADD instruction causes the processor to add the contents of Source A to the contents of Source B and place the result in the tag defined in the instruction's __________ field.",
-    "choices": [
+    "question": "Energizing the ADD instruction causes the processor to add the contents of Source A to the contents of Source B and place the result in the tag defined in the instruction's _________ field.",
+    "options": [
       "Source B",
       "Destination",
       "Source A",
@@ -752,7 +753,7 @@ const quizData = [
   },
   {
     "question": "<img src='72.png' style='height:200px;'><br>If the clamp and drill machine shown has stopped unexpectedly after performing step 2 of its sequence, what are the most likely I/O device failures?",
-    "choices": [
+    "options": [
       "LS3, SOL1A",
       "LS4, SOL2A",
       "LS1, SOL1A",
@@ -762,7 +763,7 @@ const quizData = [
   },
   {
     "question": "<img src='73.png' style='height:200px;'><br>Which of these wiring connections are required to wire a limit switch to input 2 of the Active Hi input module shown?",
-    "choices": [
+    "options": [
       "B-F, C-A, D-E",
       "G-A, B-D, H-D",
       "C-A, B-F, H-D",
@@ -772,7 +773,7 @@ const quizData = [
   },
   {
     "question": "What should be noted when the programmable controller processor displays a solid green RUN indicator?",
-    "choices": [
+    "options": [
       "Processor is ready to RUN the program",
       "Processor is functioning properly",
       "Processor is functioning properly - program is being executed",
@@ -782,7 +783,7 @@ const quizData = [
   },
   {
     "question": "__________ uses several protocols to convert data from its native format, such as a text message, into a format that can be sent and tracked from the source node to the destination node of a network.",
-    "choices": [
+    "options": [
       "Ethernet TCP/IP",
       "RS485",
       "RS232",
@@ -792,7 +793,7 @@ const quizData = [
   },
   {
     "question": "What type of connector is commonly used to connect a PLC to an Ethernet network?",
-    "choices": [
+    "options": [
       "RG45",
       "USB",
       "RS232",
@@ -802,7 +803,7 @@ const quizData = [
   },
   {
     "question": "A PC is assigned the IP address 192.0.0.40 on a network. Which of the following is a valid IP address for a PLC on the same network?",
-    "choices": [
+    "options": [
       "192.0.0.50",
       "192.0.1.40",
       "192.168.1.1",
@@ -811,6 +812,7 @@ const quizData = [
     "answer": "192.0.0.50"
   }
 ];
+
 
 
     function shuffle(array) {
