@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoCohort 208</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>CoCohort 208</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    "question": "What best describes the process of systems-level troubleshooting?",
+    "options": [
+      "Using a methodical series of tests to isolate the problem to a specific component",
+      "Disassembling a suspected component to determine the cause of system failure",
+      "Replacing components until overall system operation is restored",
+      "Adjusting software parameters to restore overall system operation"
+    ],
+    "answer": "Using a methodical series of tests to isolate the problem to a specific component"
+  },
+  {
+    "question": "Forcing on a PLC output which is associated with the PLC’s logic program could affect all of the following EXCEPT?",
+    "options": [
+      "Program instruction states",
+      "Output device operation",
+      "Processor state",
+      "Output modules output point"
+    ],
+    "answer": "Program instruction states"
+  },
+  {
+    "question": "What document is used by PLC program developers to determine the state of a PLC’s inputs and outputs for each step in a machine’s sequence?",
+    "options": [
+      "I/O wiring diagram",
+      "Truth table",
+      "I/O Configuration file",
+      "Power diagram"
+    ],
+    "answer": "Truth table"
+  },
+  {
+    "question": "What is the FIRST check you should make if a machine suddenly fails, all PLC indicators are now off, and the other machines in the area are still operating?",
+    "options": [
+      "Measure control power voltage to the PLC outputs",
+      "Measure AC voltage at the mains",
+      "Measure voltage between the PLC processor and DC power supply",
+      "Check for an open fuse or circuit breaker"
+    ],
+    "answer": "Check for an open fuse or circuit breaker"
+  },
+  {
+    "question": "What action occurs when I/O forces are first enabled in a PLC?",
+    "options": [
+      "Input forces are applied immediately",
+      "Output forces are applied immediately",
+      "Input and output forces are applied immediately",
+      "Forces are applied after being confirmed by user"
+    ],
+    "answer": "Forces are applied after being confirmed by user"
+  },
+  {
+    "question": "<img src='6.png' style='height:200px;'><br>What is the likely problem only one cycle after PB1 is momentarily pressed to start the sequence?",
+    "options": [
+      "No problem, the program works as designed.",
+      "Sol 1A is faulted open.",
+      "LS4 is faulted open.",
+      "SOL 2A is faulted open."
+    ],
+    "answer": "No problem, the program works as designed."
+  },
+  {
+    "question": "<img src='7.png' style='height:200px;'><br>At which test point would you FIRST take a voltage measurement if one or more output module indicator lights are on but the associated output devices are not on?",
+    "options": [
+      "TP1",
+      "TP5",
+      "TP3",
+      "TP4"
+    ],
+    "answer": "TP3"
+  },
+  {
+    "question": "Which of these is NOT required before forcing on a PLC output to test an output device?",
+    "options": [
+      "Logic program",
+      "Tag assigned to the output in PLC memory",
+      "Master control circuit power on",
+      "All forces enabled or confirmed"
+    ],
+    "answer": "Logic program"
+  },
+  {
+    "question": "Which of these indicators turns solid green when the PLC processor is successfully executing its program?",
+    "options": [
+      "RUN",
+      "EXEC",
+      "PROG",
+      "OK"
+    ],
+    "answer": "RUN"
+  },
+  {
+    "question": "Which type of failure is often easier to troubleshoot because it affects the entire PLC system?",
+    "options": [
+      "Power distribution circuit",
+      "Processor",
+      "I/O Module",
+      "I/O Field Device"
+    ],
+    "answer": "Power distribution circuit"
+  },
+  {
+    "question": "What triggers the start of each step in an event-driven PLC sequence program?",
+    "options": [
+      "The order of the ladder logic rungs",
+      "The timer present values",
+      "The output instruction on the previous rung",
+      "An input triggered by the completion of the previous step"
+    ],
+    "answer": "An input triggered by the completion of the previous step"
+  },
+  {
+    "question": "What is the most likely fault in a PLC system if a PLC output instruction is on in the logic program and control power is on, but there is no output voltage at the output terminal?",
+    "options": [
+      "Output device is bad",
+      "PLC power supply is bad",
+      "PLC is not in run mode",
+      "Output point on the output module is bad"
+    ],
+    "answer": "Output point on the output module is bad"
+  },
+  {
+    "question": "<img src='13.png' style='height:200px;'><br>If the vacuum does not turn on at step 2 of the sequence, what two IO devices should you check to determine if one of these devices has failed?",
+    "options": [
+      "MR2 or SOL2A",
+      "MR1 or SOL3A",
+      "MR1 or SOL4A",
+      "MR3 or SOL4A"
+    ],
+    "answer": "MR2 or SOL2A"
+  },
+  {
+    "question": "<img src='14.png' style='height:200px;'><br>Which component is most likely faulted if the sequence fails to start after PB1 is activated?",
+    "options": [
+      "SOL 1A",
+      "SOL 2A",
+      "LS4",
+      "LS2"
+    ],
+    "answer": "SOL 2A"
+  },
+  {
+    "question": "If a PLC input indicator does not turn on and off when the input device is operated, what is the next check you should make to troubleshoot the problem?",
+    "options": [
+      "Force the input on or off and observe input module indicator",
+      "Measure signal at input module terminal when input device is operated",
+      "Check the program I/O configuration file",
+      "Check program input instruction logic for error"
+    ],
+    "answer": "Measure signal at input module terminal when input device is operated"
+  },
+  {
+    "question": "What is most likely to supply power to DC electronic sensors wired to PLC discrete input?",
+    "options": [
+      "PLC chassis",
+      "PLC processor",
+      "Master control relay circuit",
+      "External power supply"
+    ],
+    "answer": "External power supply"
+  },
+  {
+    "question": "Which of the following is NOT typically used to troubleshoot a PLC processor?",
+    "options": [
+      "Processor status indicator",
+      "Multimeter",
+      "PLC software",
+      "Processor LCD screen"
+    ],
+    "answer": "Multimeter"
+  },
+  {
+    "question": "If a machine has stopped in the middle of its sequence unexpectedly and all the indicators on the PLC are normal, where is the problem likely located?",
+    "options": [
+      "Processor",
+      "Power distribution system",
+      "I/O field devices",
+      "Program logic"
+    ],
+    "answer": "Program logic"
+  },
+  {
+    "question": "What step should be taken before troubleshooting the operation of an input device and its interaction with the PLC program?",
+    "options": [
+      "Disconnect input device from PLC",
+      "Ghost the input device",
+      "Disable Outputs in PLC",
+      "Activate the MCR circuit"
+    ],
+    "answer": "Disable Outputs in PLC"
+  },
+  {
+    "question": "What is the likely problem if a PLC input indicator turns on when the input device is activated but the associated input instruction in the PLC program does not change state?",
+    "options": [
+      "Input wiring",
+      "Input device",
+      "Input module",
+      "I/O power"
+    ],
+    "answer": "Input module"
+  },
+  {
+    "question": "<img src='21.png' style='height:200px;'><br>In this logic program controlling a plastic injection molding machine, what instruction and address would you place into program to replace the SHADED BLOCK MARKED A on the last rung to make the program perform the sequence given?",
+    "options": [
+      "Normally Closed instruction, Address: DI3",
+      "Normally Open instruction, Address: DO2",
+      "Normally Closed instruction, Address: DI2",
+      "Normally Closed Instruction, Address: DO1"
+    ],
+    "answer": "Normally Closed instruction, Address: DI3"
+  },
+  {
+    "question": "What document lists the actions that a machine makes to perform its function?",
+    "options": [
+      "I/O diagram",
+      "Ladder program",
+      "Sequence of operations",
+      "Power diagram"
+    ],
+    "answer": "Sequence of operations"
+  },
+  {
+    "question": "Which troubleshooting method can eliminate the need to test a large portion of a system with one test?",
+    "options": [
+      "Half-Split",
+      "Component",
+      "Output-Back",
+      "Configuration"
+    ],
+    "answer": "Half-Split"
+  },
+  {
+    "question": "If a PLC’s input indicators are correct but expected outputs are NOT produced, what is the first step to troubleshoot the problem?",
+    "options": [
+      "Use software to verify bit status.",
+      "Check output module configuration.",
+      "Verify that the controller is in run mode",
+      "Check PLC power supply."
+    ],
+    "answer": "Verify that the controller is in run mode"
+  },
+  {
+    "question": "<img src='25.png' style='height:200px;'><br>If the clamp and drill machine shown has stopped unexpectedly after performing step 1 of its sequence, what are the most likely I/O device failures?",
+    "options": [
+      "LS1, SOL 1A",
+      "LS3, SOL 1A",
+      "LS4, SOL2A",
+      "LS1, SOL2B"
+    ],
+    "answer": "LS3, SOL 1A"
+  },
+  {
+    "question": "What is the likely problem if the measured voltage at the PLC output terminal changes from low to high when the output is forced on, but the output device does not respond?",
+    "options": [
+      "Output module is bad",
+      "Program logic is wrong",
+      "Master control relay circuit is off.",
+      "Output device or wiring is bad."
+    ],
+    "answer": "Output device or wiring is bad."
+  },
+  {
+    "question": "In a previously working PLC system, which of these problems will NOT appear as a processor fault or fault message?",
+    "options": [
+      "Error in program logic",
+      "Bad chassis",
+      "Defective CPU",
+      "I/O field device failure (Switches, solenoids, indicators, and contacts failures)"
+    ],
+    "answer": "I/O field device failure (Switches, solenoids, indicators, and contacts failures)"
+  },
+  {
+    "question": "Which method of PLC troubleshooting best describes the process of checking the status of a series of input instructions on a rung one after the other to locate the input that is preventing the program sequence from continuing?",
+    "options": [
+      "Half-Split",
+      "Symptom and cause",
+      "Output-Back",
+      "Flowchart"
+    ],
+    "answer": "Output-Back"
+  },
+  {
+    "question": "<img src='29.png' style='height:200px;'><br>Which component is most likely faulted if the drill cylinder extends and not retract?",
+    "options": [
+      "LS1",
+      "LS2",
+      "LS3",
+      "LS4"
+    ],
+    "answer": "LS2"
+  },
+  {
+    "question": "What is the most likely problem if a PLC’s output indicator is on and the output device to which it is wired is off?",
+    "options": [
+      "Output is forced off",
+      "PLC is in program mode",
+      "Output module is faulty (2)",
+      "Output device is bad (1)"
+    ],
+    "answer": "Output device is bad (1)"
+  },
+  {
+    "question": "<img src='31.png' style='height:200px;'><br>At which test point would you FIRST take a voltage measurement if all of the indicator lights on the input module are off and you find these additional conditions: main power switch is switched on, Control Power pushbutton has been pressed, and PLC power supply indicator is on?",
+    "options": [
+      "TP1",
+      "TP2",
+      "TP3",
+      "TP4"
+    ],
+    "answer": "TP2"
+  },
+  {
+    "question": "What produces distinctly different results when comparing the data files of a forced input versus a forced output?",
+    "options": [
+      "Forces",
+      "Inputs",
+      "I/O tags",
+      "Program instruction"
+    ],
+    "answer": "Forces"
+  },
+  {
+    "question": "A program condition that does NOT result in a major processor fault is a(n) __________",
+    "options": [
+      "Required I/O connection failure",
+      "Program Jump to a label that does not exist",
+      "Stack overload",
+      "Arithmetic overflow"
+    ],
+    "answer": "Arithmetic overflow"
+  }
+];
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
