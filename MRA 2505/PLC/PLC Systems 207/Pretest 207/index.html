@@ -1,0 +1,616 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pretest 207</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Pretest 207</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+{
+  question: "<img src='1.png' style='height:400px;'><br>If the clamp and drill machine shown has stopped unexpectedly after performing step 2 of its sequence, what are the most likely I/O device failures?",
+  options: [
+    "LS1, SOL1A",
+    "LS3, SOL1A",
+    "LS4, SOL2A",
+    "LS2, SOL2B"
+  ],
+  answer: "LS2, SOL2B"
+},
+{
+  question: "<img src='2.png' style='height:400px;'><br>What is the value in the destination file Integer[0] if PB1 is pressed three time and PB3 seven times? *Amatrol typo*",
+  options: [
+    "4",
+    "7",
+    "10",
+    "21"
+  ],
+  answer: "21"
+},
+{
+  question: "In the RUN mode the programmable controller __________ the ladder logic and sets outputs on or off.",
+  options: [
+    "Scans",
+    "Deletes",
+    "Saves",
+    "Modifies"
+  ],
+  answer: "Scans"
+},
+{
+  question: "<img src='4.png' style='height:400px;'><br>Which component is most likely faulted if the drill cylinder retracts and does not extend?",
+  options: [
+    "LS1",
+    "LS2",
+    "LS3",
+    "LS4"
+  ],
+  answer: "LS3"
+},
+{
+  question: "<img src='5.png' style='height:400px;'><br>Which outputs in this program will be on?",
+  options: [
+    "Output 1",
+    "Output 2",
+    "Both outputs",
+    "Neither output"
+  ],
+  answer: "Both outputs"
+},
+{
+  question: "<img src='6.png' style='height:400px;'><br>Which of these values placed in Source A will cause output M1 to turn on when PB1 is pressed?",
+  options: [
+    "9",
+    "10",
+    "8",
+    "7"
+  ],
+  answer: "10"
+},
+{
+  question: "<img src='7.png' style='height:400px;'><br>Which of these wiring connections are required to wire a limit switch to input 2 of the Active Hi input module shown?",
+  options: [
+    "G-A, B-D, H-D",
+    "G-A, B-D, C-E",
+    "B-F, C-A, D-E",
+    "C-A, B-F, H-D"
+  ],
+  answer: "C-A, B-F, H-D"
+},
+{
+  question: "What is the purpose of configuring the IP address and subnet of a PC and PLC?",
+  options: [
+    "Enable communication between them",
+    "Establish nodes",
+    "Create different octets",
+    "Identify the host"
+  ],
+  answer: "Enable communication between them"
+},
+{
+  question: "Some of the more common math functions include addition, __________, division, and multiplication.",
+  options: [
+    "Exponentiation",
+    "Logarithms",
+    "Subtraction",
+    "Integration"
+  ],
+  answer: "Subtraction"
+},
+{
+  question: "What is stored in the I/O configuration tag or file?",
+  options: [
+    "Module or hardware operational settings",
+    "Data sent from PLC",
+    "Data sent to PLC",
+    "Operational settings for PLC"
+  ],
+  answer: "Module or hardware operational settings"
+},
+{
+  question: "In a PLC program, arranging two XIC instructions in series is an example of a(n) __________ logic element.",
+  options: [
+    "OR",
+    "NOT",
+    "AND",
+    "NAND"
+  ],
+  answer: "AND"
+},
+{
+  question: "Two addresses are used for Ethernet communications, Media Access Control (MAC) and __________.",
+  options: [
+    "Transport Control Protocol (TCP)",
+    "Internet Protocol (IP)",
+    "Ethernet TCP/IP",
+    "DeviceNet"
+  ],
+  answer: "Internet Protocol (IP)"
+},
+{
+  question: "What are the components of a motor contactor used interfaces with a PLC? *Amatrol typo*",
+  options: [
+    "Solenoid coil and relay contacts",
+    "Wiring for direct control",
+    "PLC and NC contacts",
+    "Isolator and relay contacts"
+  ],
+  answer: "Solenoid coil and relay contacts"
+},
+{
+  question: "<img src='14.png' style='height:400px;'><br>In the program, what happens when SS1 is closed?",
+  options: [
+    "Pump motor starts",
+    "LS1 opens",
+    "LS2 opens",
+    "LS1 and LS2 opened"
+  ],
+  answer: "Pump motor starts"
+},
+{
+  question: "The IP addresses of a PC-PLC point-to-point connection will be __________.",
+  options: [
+    "Different IP addresses",
+    "Same IP addresses",
+    "Different subnet masks",
+    "DHCP addresses enabled"
+  ],
+  answer: "Different IP addresses"
+},
+{
+  question: "What is a fast way to determine a programmable controller is operating correctly after power up?",
+  options: [
+    "Verify that main power switch is on.",
+    "Verify that HMI Panel is on.",
+    "Verify that Power Supply LED is on.",
+    "Verify correct status of PLC processor status indicators."
+  ],
+  answer: "Verify correct status of PLC processor status indicators."
+},
+{
+  question: "The HMI screens and screen objects are contained in the application file. Where is this file stored?",
+  options: [
+    "In the HMI memory",
+    "In a PLC program",
+    "In a PLC Subroutine",
+    "In a PLC project"
+  ],
+  answer: "In the HMI memory"
+},
+{
+  question: "What does the completion of each step trigger in an event-driven PLC sequence program? *Amatrol typo*",
+  options: [
+    "Start of each step",
+    "Timer values",
+    "Rung order",
+    "Output instruction of the next rung"
+  ],
+  answer: "Start of each step"
+},
+{
+  question: "<img src='19.png' style='height:400px;'><br>What causes the clamp to retract in step 4?",
+  options: [
+    "Internal Coil 1 and LS1",
+    "LS3",
+    "LS1 and LS2",
+    "SOL 2B"
+  ],
+  answer: "Internal Coil 1 and LS1"
+},
+{
+  question: "<img src='20.png' style='height:400px;'><br>What function do the reverse and forward XIO contact instructions serve that are identified in the reversing motor control program shown?",
+  options: [
+    "Interlock",
+    "Seal-in",
+    "Sequencing",
+    "Comparison"
+  ],
+  answer: "Interlock"
+},
+{
+  question: "What is a USB Type B connector most likely connected to?",
+  options: [
+    "PLC USB communication port",
+    "PC USB communication port",
+    "USB port on a network switch",
+    "RJ-45 port on a local network switch"
+  ],
+  answer: "PLC USB communication port"
+},
+{
+  question: "What is each group of numbers separated by periods or dots in an IP address called?",
+  options: [
+    "Octet",
+    "Nodes",
+    "Datalink layer",
+    "Packets"
+  ],
+  answer: "Octet"
+},
+{
+  question: "What does the absolute I/O address identify on a PLC input module?",
+  options: [
+    "I/O driver",
+    "Actual physical location",
+    "Address label",
+    "Alias"
+  ],
+  answer: "Actual physical location"
+},
+{
+  question: "If a network is not available, what type of connection can be used to configure the controller's IP address?",
+  options: [
+    "Teach pendant",
+    "Wireless",
+    "Firewire",
+    "USB"
+  ],
+  answer: "USB"
+},
+{
+  question: "Adding and removing instructions, changing logic, or changing addresses are all part of what PLC programming task?",
+  options: [
+    "Configuring the program",
+    "Creating the program",
+    "Compiling the program",
+    "Editing the program"
+  ],
+  answer: "Editing the program"
+},
+{
+  question: "<img src='26.png' style='height:400px;'><br>In the logic diagram, what input conditions will cause output M1 to turn on?",
+  options: [
+    "PB1 True, PB2 True, PB3 False",
+    "PB1 False, PB2 False, PB3 True",
+    "PB1 False, PB2 False, PB3 False",
+    "PB1 True, PB2 False, PB3 False"
+  ],
+  answer: "PB1 True, PB2 True, PB3 False"
+},
+{
+  question: "What instruction uses a mathematic expression to perform conversion operation on an input source? OR Which instruction is used for complex math?",
+  options: [
+    "Compute(CPT)",
+    "Calc(CLT)",
+    "MathPLus(MP)",
+    "Equation(EQT)"
+  ],
+  answer: "Compute(CPT)"
+},
+{
+  question: "__________ are software programs that allow a device to connect to a network and communicate with other devices.",
+  options: [
+    "Projects",
+    "Drivers",
+    "Packets",
+    "Files"
+  ],
+  answer: "Drivers"
+},
+{
+  question: "<img src='29.png' style='height:400px;'><br>What is the value contained in the RESULTS tag of the ladder logic program shown? *Amatrol typo*",
+  options: [
+    "8",
+    "6",
+    "4",
+    "2"
+  ],
+  answer: "2"
+},
+{
+  question: "<img src='30.png' style='height:400px;'><br>What must be activated before the drill cylinder extends?",
+  options: [
+    "LS3",
+    "SOL 2A",
+    "LS1",
+    "LS4 and LS1"
+  ],
+  answer: "LS3"
+},
+{
+  question: "The basic operation of a(n) __________ is to scan instructions, monitor the status of input devices, and produce outputs based on which inputs are on or off.",
+  options: [
+    "HMI panel",
+    "PLC",
+    "Input module",
+    "Output module"
+  ],
+  answer: "PLC"
+},
+{
+  question: "Once the program editor is open, what is the next step in starting a PLC program?",
+  options: [
+    "Add instructions",
+    "Assign instruction addresses",
+    "Add rungs",
+    "Verify controller"
+  ],
+  answer: "Add rungs"
+},
+{
+  question: "What is used to configure an HMI panel's IP address?",
+  options: [
+    "Connected PC",
+    "HMI onboard software",
+    "PC program",
+    "SD memory card"
+  ],
+  answer: "HMI onboard software"
+},
+{
+  question: "What does an operator use on an HMI panel to monitor the program and process conditions?",
+  options: [
+    "Labels",
+    "Display exchange objects",
+    "Graphic icons",
+    "Instructions"
+  ],
+  answer: "Display exchange objects"
+},
+{
+  question: "What applied voltage level would cause the input indicator to turn on in an Active Hi 24 VDC input module?",
+  options: [
+    "0 VDC",
+    "-24 VDC",
+    "+24 VDC",
+    "+5 VDC"
+  ],
+  answer: "+24 VDC"
+},
+{
+  question: "Without an Ethernet network, which type of connection can be used to upload or download programs and monitor the operation of the program?",
+  options: [
+    "2-wire serial",
+    "USB",
+    "WiFi",
+    "CAT-5"
+  ],
+  answer: "USB"
+},
+{
+  question: "What should be noted when the programmable controller processor displays a solid green RUN indicator?",
+  options: [
+    "Processor is functioning properly - program is being executed",
+    "Processor is ready to RUN the program",
+    "Processor is waiting for an input to start the program",
+    "Processor is functioning properly"
+  ],
+  answer: "Processor is functioning properly - program is being executed"
+},
+{
+  question: "<img src='38.png' style='height:400px;'><br>In the I/O diagram shown, what wire number is used to connect PLC output terminal 0 to the solenoid?",
+  options: [
+    "2",
+    "4",
+    "3",
+    "1"
+  ],
+  answer: "4"
+},
+{
+  question: "What is the name of file used to configure the hardware, tags, and communication along with a PLC ladder logic program?",
+  options: [
+    "HMI project",
+    "PLC project",
+    "Driver software",
+    "Subroutines"
+  ],
+  answer: "PLC project"
+},
+{
+  question: "A(n) __________ is a file that contains a hardware configuration and control program.",
+  options: [
+    "Program",
+    "Project",
+    "Hardware configuration",
+    "Packet"
+  ],
+  answer: "Project"
+},
+{
+  question: "Energizing the ADD instruction causes the processor to add the contents of Source A to the contents of Source B and place the result in the instruction's __________ field.",
+  options: [
+    "Source A",
+    "Destination",
+    "Source B",
+    "DEST B"
+  ],
+  answer: "Destination"
+},
+{
+  question: "What does the DINTs mean in terms of controller's memory?",
+  options: [
+    "16-bit structure used to store numerical values up to 65,535",
+    "32-bit structure used to store numerical values",
+    "1-bit structure used to store numerical values",
+    "8-bit structure used to store numerical values up to 255"
+  ],
+  answer: "32-bit structure used to store numerical values"
+},
+{
+  question: "A PLC and PC are connected in a(n) __________ network using a single Ethernet cable.",
+  options: [
+    "Daisy-chain connection",
+    "Ethernet switch",
+    "Profibus",
+    "Point-to-Point"
+  ],
+  answer: "Point-to-Point"
+},
+{
+  question: "<img src='18.png' style='height:400px;'><br>In the PLC program shown, what is the status of Pump 1 and the Mixer Motor 31 seconds after PB1 has been momentarily pressed?",
+  options: [
+    "Pump 1 is on; mixer motor is off",
+    "Pump 1 is off; mixer motor is on",
+    "Pump 1 and mixer motor are on",
+    "Pump 1 and mixer motor are off"
+  ],
+  answer: "Pump 1 is off; mixer motor is on"
+},
+{
+  question: "<img src='18.png' style='height:400px;'><br>When the selector switch SS2 is put in the right position, what does that enable you to do within a program?",
+  options: [
+    "Operate the actuators one at a time",
+    "Run the program in Auto mode",
+    "Program in manual mode",
+    "Program an Interlock"
+  ],
+  answer: "Operate the actuators one at a time"
+},
+{
+  question: "The E-stop pushbutton on a PLC's master control relay circuit causes power to be removed from all the PLC's outputs. What contacts are used for E-stop pushbuttons?",
+  options: [
+    "Normally closed",
+    "Normally open",
+    "Normally open held closed",
+    "Opened switch"
+  ],
+  answer: "Normally closed"
+}
+];
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
