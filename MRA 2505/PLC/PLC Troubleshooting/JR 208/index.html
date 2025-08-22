@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JR 208</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>JR 208</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    "question": "One of the tools the PLC provides to help monitor and troubleshoot is status or diagnostic __________.",
+    "options": ["Readouts", "Lights", "Test points", "Indicators"],
+    "answer": "Indicators"
+  },
+  {
+    "question": "If the processor module’s internal circuitry fails and produces a fault in the processor, program execution is __________.",
+    "options": ["Reset", "Deleted", "Halted", "Locked"],
+    "answer": "Halted"
+  },
+  {
+    "question": "The discrete input indicators of CompactLogix controllers turn on and off to indicate the __________ of individual inputs.",
+    "options": ["Faults", "State", "Voltage", "I/O"],
+    "answer": "State"
+  },
+  {
+    "question": "__________ is the process of finding the cause, or fault, of a machine malfunction.",
+    "options": ["Failure locating", "Damage control", "Failure diagnostics", "Troubleshooting"],
+    "answer": "Troubleshooting"
+  },
+  {
+    "question": "What isrequires __________ power to operate the processor, I/O, and other connected modules (input, output, and communications).",
+    "options": ["DC", "AC/DC", "AC", "Battery"],
+    "answer": "DC"
+  },
+  {
+    "question": "__________ power to the power supply may clear the fault and place the supply back in operation.",
+    "options": ["Cycling", "Increasing", "DC", "Reducing"],
+    "answer": "Cycling"
+  },
+  {
+    "question": "__________ indicators are often the best sign of a problem with the power supply.",
+    "options": ["Run", "Force", "OK", "Status"],
+    "answer": "Status"
+  },
+  {
+    "question": "A(n) __________ circuit is used to provide control power to the systems output devices.",
+    "options": ["Power distribution", "DC", "AC", "MCR"],
+    "answer": "MCR"
+  },
+  {
+    "question": "Technicians respond to machine failures by identifying the __________ and formulating possible causes and remedies.",
+    "options": ["Cause", "Symptoms", "Indicator", "Measurements"],
+    "answer": "Symptoms"
+  },
+  {
+    "question": "What is the FIRST check you should make if a machine suddenly fails, all PLC indicators are now off, and the other machines in the area are still operating?",
+    "options": ["Measure control power voltage to the PLC outputs.", "Measure AC voltage at the mains.", "Measure voltage between the PLC processor and DC power supply.", "Check the main power disconnect."],
+    "answer": "Check the main power disconnect."
+  },
+  {
+    "question": "Forcing __________ can result in sudden or unexpected macine movement, which can damage equipment and injure or kill personnel.",
+    "options": ["Tags", "I/O", "Inputs", "Outputs"],
+    "answer": "I/O"
+  },
+  {
+    "question": "The first step to test a discrete output is to __________.",
+    "options": ["Measure supply voltage", "Check the output indicators", "Check the processor indicators", "Verify that the disconnect is on"],
+    "answer": "Check the output indicators"
+  },
+  {
+    "question": "What happens then a PLC program is moved from Run to Test Mode or Program Mode?",
+    "options": ["Disconnects input device from PLC", "Ghosts the input device", "Disables Outputs in PLC", "Activates the MCR circuit"],
+    "answer": "Disables Outputs in PLC"
+  },
+  {
+    "question": "If the measured voltage at the PLC output terminal changes from low to high when the output is forced on, but the output device does not respond. What is the likely problem?",
+    "options": ["Output module is bad.", "Program logic is wrong.", "Master control relay circuit is off.", "Output device or wiring is bad."],
+    "answer": "Output device or wiring is bad."
+  },
+  {
+    "question": "What may not be updated when an input module has failed?",
+    "options": ["Input wiring", "Controller Status", "Input device", "I/O power"],
+    "answer": "Controller Status"
+  },
+  {
+    "question": "When are I/O forces first applied in a PLC?",
+    "options": ["Input forces are immediate.", "Output forces are applied immediately.", "Input and output forces are immediately applied.", "User must confirm the forces before they are applied."],
+    "answer": "User must confirm the forces before they are applied."
+  },
+  {
+    "question": "Which of the following is the first step when testing discrete input devices?",
+    "options": ["Test the input device", "Disable the system", "Test the input wiring", "Activate the MCR circuit", "None of the above"],
+    "answer": "Disable the system"
+  },
+  {
+    "question": "What does it typically mean if an input status indicator properly reflects changes in the input signal, but the controller’s status is not updated?",
+    "options": ["The input or module has failed", "Input power is varying", "Outputs are overloading the system", "The PLC program has an error"],
+    "answer": "The input or module has failed"
+  },
+  {
+    "question": "The three force conditions are represented by what three characters?",
+    "options": ["1 2 x", "0 1 2", ". 0 1", "0 1 x"],
+    "answer": "0 1 x"
+  },
+  {
+    "question": "Why can it be dangerous to force inputs and outputs?",
+    "options": ["It can result in sudden or unexpected machine motion.", "Forced inputs are passed to the input tag file, regardless of the actual state of the input.", "The controller continues operating normally.", "Zero is always applied to the input."],
+    "answer": "It can result in sudden or unexpected machine motion."
+  },
+  {
+    "question": "Which of the following is NOT one of the steps used when testing discrete outputs?",
+    "options": ["Force the output", "Replace the output", "Check the output’s indicators", "Measure the output terminal’s voltage", "None of the above"],
+    "answer": "Replace the output"
+  },
+  {
+    "question": "Which of the following is NOT one of the steps used when testing discrete output devices?",
+    "options": ["Test the output device and wiring", "Force the PLC output", "Check the voltage at the PLC terminal", "Test the discrete output", "None of the above"],
+    "answer": "None of the above"
+  },
+  {
+    "question": "The most complicated discrete input device is an electromechanical switch, such as a pushbutton.",
+    "options": ["True", "False"],
+    "answer": "False"
+  },
+  {
+    "question": "Forcing an I/O can result in sudden and unexpected __________, damage equipment and injure or kill personnel.",
+    "options": ["Alarms", "Machine stoppage", "Line slow-down", "Machine movement"],
+    "answer": "Machine movement"
+  },
+  {
+    "question": "The first step to test a discrete output is to check the processor __________.",
+    "options": ["Voltage", "Power bus", "Modules", "Status indicators"],
+    "answer": "Status indicators"
+  },
+  {
+    "question": "In the case of modules that fail by a(n) __________ internally and dragging the power supply to ground potential, the symptoms make it appear is if there is a power supply problem.",
+    "options": ["Short", "Open", "Over heating", "Component"],
+    "answer": "Short"
+  },
+  {
+    "question": "Output devices may be tested by __________ the associated output on and off.",
+    "options": ["Removing", "Forcing", "Changing", "Cycling"],
+    "answer": "Forcing"
+  },
+  {
+    "question": "The output devices connected to PLCs are common sources of failure.",
+    "options": ["False", "True"],
+    "answer": "False"
+  },
+  {
+    "question": "What is the most likely problem if a PLC’s output indicator is on and the output device to which it is wired is off?",
+    "options": ["Output is forced off", "PLC is in program mode", "Output module is faulty", "PLC program"],
+    "answer": "Output module is faulty"
+  },
+  {
+    "question": "<img src='30.png' style='height:200px;'><br>Where would the main power be tested?",
+    "options": ["TP1", "TP2", "TP3", "TP4"],
+    "answer": "TP1"
+  },
+  {
+    "question": "The symptoms of an internally shorted module make it appears as if there is a __________ problem.",
+    "options": ["Input", "Output", "Processor", "Power supply"],
+    "answer": "Power supply"
+  },
+  {
+    "question": "If a PLC output is on in the logic program and control power is on, but there is no output voltage at the output terminal. What is the most likely fault in a PLC system?",
+    "options": ["Output device is bad.", "PLC power supply is bad.", "PLC is not in run mode.", "Output point on the output module is bad."],
+    "answer": "Output point on the output module is bad."
+  },
+  {
+    "question": "Forcing __________ can result in sudden or unexpected machine movement, which can damage equipment and injure or kill personnel.",
+    "options": ["Tags", "I/O", "Inputs", "Outputs"],
+    "answer": "I/O"
+  },
+  {
+    "question": "When troubleshooting a CompactLogix processor, the __________ indicator(s) should be observed and interpreted in three sequential steps.",
+    "options": ["Run", "OK", "I/O", "Status"],
+    "answer": "Status"
+  },
+  {
+    "question": "The __________ instruction gathers an object's data and puts it in a user-created tag of the same data type.",
+    "options": ["Attribute", "SSV", "Class", "GSV"],
+    "answer": "GSV"
+  },
+  {
+    "question": "__________ may slow down or even stop the execution of a controller causing it to transition to fault mode.",
+    "options": ["Routines", "Faults", "Programs", "Tags"],
+    "answer": "Faults"
+  },
+  {
+    "question": "The GSV Instruction’s __________ Name field identifies the controller object which to extract data.",
+    "options": ["Attribute", "SSV", "Class", "GSV"],
+    "answer": "Class"
+  },
+  {
+    "question": "__________ are data structures used to store status and identifying data about the controller and its operation, hardware, and program.",
+    "options": ["Attributes", "Objects", "Classes", "GSV’s"],
+    "answer": "Objects"
+  },
+  {
+    "question": "The __________ window is a Studio 5000 software utility that displays configuration, operation, and status information for an online controller.",
+    "options": ["Tag Editor", "Data monitor", "Controller Properties", "Controller organizer"],
+    "answer": "Controller Properties"
+  },
+  {
+    "question": "A(n) __________ is a name, property, parameter, or value for the device for which the object data applies.",
+    "options": ["Attribute", "Object", "Class", "GSV"],
+    "answer": "Attribute"
+  },
+  {
+    "question": "The status information about a processor is stored within which type of object?",
+    "options": ["ControllerDevice", "Axis", "Program", "Routine"],
+    "answer": "ControllerDevice"
+  },
+  {
+    "question": "Which attribute identifies the type of controller?",
+    "options": ["Status", "DeviceName", "Type", "ProductRev", "SerialNumber", "ProductCode", "Vendor"],
+    "answer": "ProductCode"
+  },
+  {
+    "question": "What condition of the OK status LED indicates a non-recoverable fault has occurred?",
+    "options": ["Flashing red", "Off", "Solid green", "Solid red"],
+    "answer": "Solid red"
+  },
+  {
+    "question": "The processor stops when a major fault occurs.",
+    "options": ["True", "False"],
+    "answer": "True"
+  },
+  {
+    "question": "A(n) __________ is a name, property, parameter, or value for the device 2for which the object data applies.",
+    "options": ["Object", "Attribute", "Article", "Element"],
+    "answer": "Attribute"
+  },
+  {
+    "question": "The __________ window is a Studio 5000 software utility that displays configuration, operation, and status information for an on line controller.",
+    "options": ["Controller properties", "Parameter properties", "System protocol properties", "Status indicator properties"],
+    "answer": "Controller properties"
+  },
+  {
+    "question": "The __________ indicates the overall health of the processor and its components.",
+    "options": ["OK LED", "LED status", "I/O indicator", "NOK LED"],
+    "answer": "OK LED"
+  },
+  {
+    "question": "The __________ instruction gathers an object’s attribute data and puts it in a user-created tag of the same data type.",
+    "options": ["SSV", "SINT", "GSV", "DINT"],
+    "answer": "GSV"
+  },
+  {
+    "question": "The GSV instruction’s __________  Name field identifies the controller object from which to extract the data.",
+    "options": ["Controller property", "Class", "Attribute", "Object"],
+    "answer": "Class"
+  },
+  {
+    "question": "__________ are data structures used to store status and identifying data about the controller and its operation, hardware, and program.",
+    "options": ["Objects", "Articles", "Elements", "Attributes"],
+    "answer": "Objects"
+  },
+  {
+    "question": "Controller faults can slow down or even stop the execution of a controller causing it to transition to fault mode.",
+    "options": ["False", "True"],
+    "answer": "True"
+  },
+  {
+    "question": "Most programming software provides __________ functions to locate tags, I/O addresses, or text in a project’s routines.",
+    "options": ["Search", "Replace", "Go to", "Find"],
+    "answer": "Search"
+  },
+  {
+    "question": "What is the next step in PLC system troubleshooting after checking the status indicators?",
+    "options": ["Check the flowcharts and subsystem", "Test and repair the system", "Test the suspect component", "Repair and replace the suspect component"],
+    "answer": "Check the flowcharts and subsystem"
+  },
+  {
+    "question": "Output-back is a troubleshooting method that starts testing the outputs and works back toward the __________.",
+    "options": ["Inputs", "Output rungs", "Switches and lights", "Solenoids and lights"],
+    "answer": "Inputs"
+  },
+  {
+    "question": "The four types of tests that can be used in any troubleshooting situations are the relevant senses, measurement, substitution, and __________.",
+    "options": ["Symptom and cause", "Component/circuit elimination", "Output back", "Flow chart"],
+    "answer": "Component/circuit elimination"
+  },
+  {
+    "question": "The Cross Reference’s __________ tab displays a listing of the selected tag’s instruction assignments and their location in program logic.",
+    "options": ["By logic", "By tag", "Tag hierarchy", "By connection"],
+    "answer": "By logic"
+  },
+  {
+    "question": "The __________ function is used to edit or monitor a selected tag, display a tag cross reference, edit tag or routine properties, navigate to a routine or subroutine.",
+    "options": ["Search", "Replace", "Go to", "Find"],
+    "answer": "Go to"
+  },
+  {
+    "question": "Input __________ issues usually arise at static checkout (after a new installation), or after replacing a faulty sensor with a new one with slightly different input characteristics.",
+    "options": ["Proportionality", "Channel", "Scaling", "Output"],
+    "answer": "Scaling"
+  },
+  {
+    "question": "An analog output is tested by entering digital values into the output’s __________ and using a multimeter to measure the voltage or current level of the output signal.",
+    "options": ["Force mask", "Non-volatile memory", "Volatile memory", "Memory tag"],
+    "answer": "Memory tag"
+  },
+  {
+    "question": "PLCs are usually installed in climate-controlled __________ while the analog output devices are connected to the process in harsher plant conditions.",
+    "options": ["Rooms", "Lockers", "Cabinets", "Areas"],
+    "answer": "Cabinets"
+  },
+  {
+    "question": "Current signals can be measured by using a clamp-on __________, or by inserting a DMM in series with the loop.",
+    "options": ["Voltmeter", "Ammeter", "Signal generator", "Diode"],
+    "answer": "Ammeter"
+  },
+  {
+    "question": "Step 2 in the troubleshooting process for analog input loop is to __________.",
+    "options": ["Compare the proportionality of the input signal to the digitized values", "Check the status indicators", "Test the repaired system", "Test the suspected component"],
+    "answer": "Check the status indicators"
+  },
+  {
+    "question": "A problem with an analog output is usually first noticed as an error reported by the operator or as a(n) __________ on the HMI panel.",
+    "options": ["High level", "Low level", "Alarm", "Indicator"],
+    "answer": "Alarm"
+  },
+  {
+    "question": "One method of measuring analog current signals without interrupting them involves the installation of __________ in the loops, usually at commissioning.",
+    "options": ["Instrumentation", "Diodes", "Test equipment", "Ammeter"],
+    "answer": "Diodes"
+  },
+  {
+    "question": "A failure in a temperature control application can be caused by the _________, the heating element, the thermostat, the solid-state relay, the system’s I/O, or the wiring that connects the system.",
+    "options": ["PLC", "PWM", "Watch-dog timer", "Controller Properties"],
+    "answer": "PLC"
+  },
+  {
+    "question": "Testing a stepper motor requires the troubleshooter to verify that the electromagnetic windings in the motor are not __________ or shorted, as well as verifying that the control signals from the stepper motor controller are actually reaching the motor.",
+    "options": ["Grounded", "Open", "The wrong gauge", "Crossed"],
+    "answer": "Open"
+  },
+  {
+    "question": "Common problems in a PWM temperature control application are the temperature set point not being maintained or __________.",
+    "options": ["The heating element not turning on", "The fluid flow not being maintained", "The tank not being full", "A faulty analog output"],
+    "answer": "The heating element not turning on"
+  },
+  {
+    "question": "A common problem with a stepper motor system is the motor __________.",
+    "options": ["Not moving", "Rotating at the wrong speed", "Rotating in the wrong direction", "Rotating at the wrong frequency"],
+    "answer": "Not moving"
+  },
+  {
+    "question": "The level of speed command is measured by commanding a known speed and then measuring the voltage level of the __________ at the VSD's input terminals.",
+    "options": ["Enable", "Start", "Direction", "Speed Command"],
+    "answer": "Speed Command"
+  },
+  {
+    "question": "A 2-phase stepper motor typically has __________ electromagnetic poles or windings located around the rotor.",
+    "options": ["Two", "Three", "Four", "Five"],
+    "answer": "Four"
+  },
+  {
+    "question": "Common problems in a VSD system are the motor not working or rotating at a __________.",
+    "options": ["Harmonic", "Wrong frequency", "Wrong speed", "Wrong direction"],
+    "answer": "Wrong speed"
+  },
+  {
+    "question": "Which tab in the Cross Reference window lists all occurrences of the selected item in the order that they occurred?",
+    "options": ["By tag", "By logic", "By hierarchy"],
+    "answer": "By logic"
+  },
+  {
+    "question": "Which test is the most common method of isolating circuit and component problems?",
+    "options": ["Component/circuit elimination", "Five senses", "Substitution", "Measurements"],
+    "answer": "Measurements"
+  },
+  {
+    "question": "Step 1 in testing a discrete input device is to __________ the system.",
+    "options": ["Enable", "Disable", "Power", "Reset"],
+    "answer": "Disable"
+  },
+  {
+    "question": "Output devices may be tested by __________.",
+    "options": ["Forcing the PLC output", "Measuring voltage at the output terminal", "Testing the output device and its wiring", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "If the processor faults, program execution is.",
+    "options": ["Continued", "Slowed", "Maintained", "Halted"],
+    "answer": "Halted"
+  },
+  {
+    "question": "If a PLC output instruction is on in the logic program and control power is on, but there is no output voltage at the output terminal. What is the most likely fault in a PLC system?",
+    "options": ["Output device is bad", "PLC power supply is bad", "PLC is not in run mode", "Output point on the output module is bad"],
+    "answer": "Output point on the output module is bad"
+  },
+  {
+    "question": "If a PLC’s input indicators are correct but expected outputs are not produced, what is the first step to troubleshoot the problem?",
+    "options": ["Use software to verify bit status", "Check output module configuration", "Verify that the processor’s force indicator is off", "Check PLC power supply"],
+    "answer": "Verify that the processor’s force indicator is off"
+  },
+  {
+    "question": "What is the next check you should make to troubleshoot the problem if a PLC input indicator does not turn on and off when the input device is operated?",
+    "options": ["Force the input on or off and observe input module indicator", "Measure signal at the input module terminal when input device is operated", "Check the program I/O configuration file", "Check program input instruction logic for error"],
+    "answer": "Measure signal at the input module terminal when input device is operated"
+  },
+  {
+    "question": "If the problem is not a lack of input signal, but an inaccurate one, typical causes include failed __________, a bad analog input, or a bad input module.",
+    "options": ["Instrumentation", "Diodes", "Ammeter", "Terminal"],
+    "answer": "Instrumentation"
+  },
+  {
+    "question": "Installed forces affect only the __________ when forces are disabled.",
+    "options": ["Input tags", "Output tags", "Force mask", "Output device"],
+    "answer": "Force mask"
+  },
+  {
+    "question": "The output tag file and __________ are not changed when a force output is applied.",
+    "options": ["Program status (Instruction states)", "State of input device", "Input tag", "Run logic"],
+    "answer": "Program status (Instruction states)"
+  },
+  {
+    "question": "What happens when a PLC program in moved from Run to Test Mode or Program Mode?",
+    "options": ["Disconnects input device from PLC", "Ghosts the input device", "Disables outputs in PLC", "Activates the MCR circuit"],
+    "answer": "Disables outputs in PLC"
+  },
+  {
+    "question": "Half-split is a troubleshooting method that eliminates the need to test __________ portion of a system.",
+    "options": ["Output-back", "Large", "Component", "Control"],
+    "answer": "Large"
+  },
+  {
+    "question": "Which part of the PLC system should you troubleshoot if the power distribution circuit has powered down?",
+    "options": ["Entire PLC system", "Processor", "Input module", "Output devices"],
+    "answer": "Entire PLC system"
+  },
+  {
+    "question": "What is indicated by a flashing red LED on a PLC processor?",
+    "options": ["Controller is OK", "Power is not applied", "Non-recoverable fault", "Recoverable fault"],
+    "answer": "Recoverable fault"
+  }
+];
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
