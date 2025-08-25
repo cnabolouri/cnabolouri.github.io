@@ -75,14 +75,23 @@
   </style>
 </head>
 <body>
-  <h1> MRA Quiz Links</h1>
-  <div class="choose" id="chooseSection">
-    <button onclick="showSection('ps209')">Pneumatic Systems 209</button>
-    <button onclick="showSection('pt304')">Pneumatic Troubleshooting 304</button>
-    <button onclick="showSection('es201')">Electrical Systems 201</button>
-    <button onclick="showSection('emcs202')">Electrical Motor Control Systems 202</button>
-    <button onclick="showSection('plcc207')">PLC Systems 207</button>
-    <button onclick="showSection('plct208')">PLC Troubleshooting 208</button>
+  <h1>Main Menu</h1>
+  <div class="choose" id="mainMenu">
+    <button onclick="showSection('quizMenu')">MRA Quiz Links</button>
+    <button onclick="showSection('gamesMenu')">Games</button>
+  </div>
+
+  <div class="section" id="quizMenu">
+    <h2>MRA Quiz Links</h2>
+    <div class="choose">
+      <button onclick="showSection('ps209')">Pneumatic Systems 209</button>
+      <button onclick="showSection('pt304')">Pneumatic Troubleshooting 304</button>
+      <button onclick="showSection('es201')">Electrical Systems 201</button>
+      <button onclick="showSection('emcs202')">Electrical Motor Control Systems 202</button>
+      <button onclick="showSection('plcc207')">PLC Systems 207</button>
+      <button onclick="showSection('plct208')">PLC Troubleshooting 208</button>
+    </div>
+    <button class="back-btn" onclick="goBack('mainMenu')">← Back</button>
   </div>
 
   <div class="section" id="ps209">
@@ -98,7 +107,8 @@
         Pneumatics Pretest 209
       </a>
     </div>
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back-btn" onclick="goBack('quizMenu')">← Back</button>
+
   </div>
 
    <div class="section" id="pt304">
@@ -121,7 +131,8 @@
       </a>
     </div>
 
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back-btn" onclick="goBack('quizMenu')">← Back</button>
+
   </div>
 
   <div class="section" id="es201">
@@ -141,7 +152,8 @@
       </a>
     </div>
 
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back-btn" onclick="goBack('quizMenu')">← Back</button>
+
   </div>
 
   
@@ -159,7 +171,7 @@
       </a>
     </div>
 
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back-btn" onclick="goBack('quizMenu')">← Back</button>
   </div>
 
 
@@ -185,7 +197,7 @@
         Pretest 207
       </a>
     </div>
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back-btn" onclick="goBack('quizMenu')">← Back</button>
   </div>
 
 
@@ -210,26 +222,102 @@
         JR 208
       </a>
     </div>
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back-btn" onclick="goBack('quizMenu')">← Back</button>
+
+  </div>
+
+    <!-- Games Menu -->
+  <div class="section" id="gamesMenu">
+    <h2>Games</h2>
+    <div class="choose">
+      <button onclick="showSection('g2048')">2048</button>
+      <button onclick="showSection('gBackgammon')">Backgammon</button>
+      <button onclick="showSection('gCarJam')">Car Jam</button>
+      <button onclick="showSection('gSnake')">Snake</button>
+      <button onclick="showSection('gTRex')">T-Rex</button>
+      <button onclick="showSection('gTetris')">Tetris</button>
+      <button onclick="showSection('gTicTacToe')">Tic Tac Toe</button>
+    </div>
+    <button class="back-btn" onclick="goBack('mainMenu')">← Back</button>
+  </div>
+
+  <!-- Individual Game Sections -->
+  <div class="section" id="g2048">
+    <h2>2048</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Games/2048/index.html" target="_blank">Play 2048</a>
+    </div>
+    <button class="back-btn" onclick="goBack('gamesMenu')">← Back</button>
+  </div>
+
+  <div class="section" id="gBackgammon">
+    <h2>Backgammon</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Games/Backgammon/index.html" target="_blank">Play Backgammon</a>
+    </div>
+    <button class="back-btn" onclick="goBack('gamesMenu')">← Back</button>
+  </div>
+
+  <div class="section" id="gCarJam">
+    <h2>Car Jam</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Games/Car_Jam/index.html" target="_blank">Play Car Jam</a>
+    </div>
+    <button class="back-btn" onclick="goBack('gamesMenu')">← Back</button>
+  </div>
+
+  <div class="section" id="gSnake">
+    <h2>Snake</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Games/Snake/index.html" target="_blank">Play Snake</a>
+    </div>
+    <button class="back-btn" onclick="goBack('gamesMenu')">← Back</button>
+  </div>
+
+  <div class="section" id="gTRex">
+    <h2>T-Rex</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Games/T-Rex/index.html" target="_blank">Play T-Rex</a>
+    </div>
+    <button class="back-btn" onclick="goBack('gamesMenu')">← Back</button>
+  </div>
+
+  <div class="section" id="gTetris">
+    <h2>Tetris</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Games/Tetris/index.html" target="_blank">Play Tetris</a>
+    </div>
+    <button class="back-btn" onclick="goBack('gamesMenu')">← Back</button>
+  </div>
+
+  <div class="section" id="gTicTacToe">
+    <h2>Tic Tac Toe</h2>
+    <div class="links-list">
+      <a href="https://cnabolouri.github.io/MRA%202505/Games/Tic_Tac_Toe/index.html" target="_blank">Play Tic Tac Toe</a>
+    </div>
+    <button class="back-btn" onclick="goBack('gamesMenu')">← Back</button>
   </div>
 
 
- <script>
-    function showSection(id) {
-      document.getElementById('chooseSection').style.display = 'none';
-      document.getElementById('ps209').style.display = 'none';
-      document.getElementById('pt304').style.display = 'none';
-      document.getElementById('es201').style.display = 'none';
-      document.getElementById('emcs202').style.display = 'none';
-      document.getElementById(id).style.display = 'block';
-    }
-    function goBack() {
-      document.getElementById('chooseSection').style.display = 'flex';
-      document.getElementById('ps209').style.display = 'none';
-      document.getElementById('pt304').style.display = 'none';
-      document.getElementById('es201').style.display = 'none';
-      document.getElementById('emcs202').style.display = 'none';
-    }
-  </script>
+<script>
+  function showSection(id) {
+    // hide everything
+    document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+    // hide main menu
+    const mm = document.getElementById('mainMenu');
+    if (mm) mm.style.display = 'none';
+    // show requested section
+    document.getElementById(id).style.display = 'block';
+  }
+  function goBack(targetId) {
+    // hide all sections
+    document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+    // show the target container
+    const target = document.getElementById(targetId);
+    if (targetId === 'mainMenu') target.style.display = 'flex';
+    else target.style.display = 'block';
+  }
+</script>
+
 </body>
 </html>
