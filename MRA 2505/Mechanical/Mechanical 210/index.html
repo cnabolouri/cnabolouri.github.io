@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mechanical Systems Pretest 210</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Mechanical Systems Pretest 210</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    "question": "A mechanical power transmission system generally moves components in either ____________ or _________ directions.",
+    "options": ["straight. triangular", "rotary, circular", "circular, curved", "straight/linear, circular/rotary"],
+    "answer": "straight/linear, circular/rotary"
+  },
+  {
+    "question": "The three types of shaft-to-adjacent-shaft power transmission are ::",
+    "options": ["belt drive, clutch, and gear drive", "clutch, direct coupling, and gear drive", "belt drive, chain drive, and gear drive", "flexible coupling, direct coupling, and sleeve coupling"],
+    "answer": "belt drive, chain drive, and gear drive"
+  },
+  {
+    "question": "What should you not wear when working around mechanical power equipment::",
+    "options": ["Composite toe heavy duty shoes", "Tight fitting clothing", "Gloves, Long Sleeve Shirts, Loose fitting clothing", "Safety glasses"],
+    "answer": "Gloves, Long Sleeve Shirts, Loose fitting clothing"
+  },
+  {
+    "question": "Which of the following should you not do when working on a mechanical power transmission system?",
+    "options": ["Make sure the machine is turned on so you can watch it run", "Announce when you are starting the machine", "Work on a wet floor", "Lockout / tag out the machinery"],
+    "answer": "Make sure the machine is turned on so you can watch it run"
+  },
+  {
+    "question": "The most important rule before working on a mechanical power transmission system is ____________",
+    "options": ["make sure the floor is dry.", "you have all the necessary tools and parts to make the repair.", "There is at least one lockout / tagout on the equipment.", "Make sure the power is off, it has stopped moving and it is locked out / tagged out on the equipment."],
+    "answer": "Make sure the power is off, it has stopped moving and it is locked out / tagged out on the equipment."
+  },
+  {
+    "question": "Before and after grease is applied to machinery using a Zerk fitting the ________ of the grease gun should be removed from the fitting and wiped off.",
+    "options": ["coupler", "grease tube", "lever", "lever"],
+    "answer": "coupler"
+  },
+  {
+    "question": "Reviewing charts and tables from __________ is the best way to determine where to oil and grease a machine.",
+    "options": ["The operation and maintenance manual from the equipment manufacturer", "Consulting machine representative", "Inspecting the machine", "Talking to an operator"],
+    "answer": "The operation and maintenance manual from the equipment manufacturer"
+  },
+  {
+    "question": "The most common fastener used to attach a motor to a bedplate is a hex bolt with ___________",
+    "options": ["a lock washer and a nut", "a flat washer, a lock washer, and a nut", "two flat washers, a lock washer, and a nut", "two flat washers, two lock washers, and a nut"],
+    "answer": "two flat washers, a lock washer, and a nut"
+  },
+  {
+    "question": "Sometimes you might have to add a ____________ measurement to a dial indicator measurement to find the Total Measurement because the dial is not capable of measuring the total all at once.",
+    "options": ["estimated value", "needle measurement", "reference/known", "straight edge"],
+    "answer": "reference/known"
+  },
+  {
+    "question": "<img src='10.png' style='height:300px;'><br>What is the reading of the following dial?",
+    "options": ["15.3", "0.021", "18.5", "18.3"],
+    "answer": "0.021"
+  },
+  {
+    "question": "If an instrument or machine needs to be calibrated it is often calibrated or zeroed using a ___________",
+    "options": ["ruler", "reference, master, tuning fork, ... that is of a known value", "scale", "straight edge"],
+    "answer": "reference, master, tuning fork, ... that is of a known value"
+  },
+  {
+    "question": "<img src='12.png' style='height:300px;'><br>This dial is setup to measure _________",
+    "options": ["end-float", "run-out", "wobble", "shim space"],
+    "answer": "run-out"
+  },
+  {
+    "question": "In general, machines should not have a soft foot greater than _______",
+    "options": ["0.002 (.0508 mm)inch", "0.25 inch", "0.03 inch", "0.51 inch"],
+    "answer": "0.002 (.0508 mm)inch"
+  },
+  {
+    "question": "A soft foot condition on a motor mount should be corrected by __________.",
+    "options": ["Shimming one foot only", "Shimming all four feet", "Ending the soft foot on the motor base", "Shimming two diagonally opposite feet"],
+    "answer": "Shimming one foot only"
+  },
+  {
+    "question": "The soft foot mounting condition can cause this when the motor is in use?",
+    "options": ["Misalignment and vibration", "Corrosion", "Run-out", "End-float"],
+    "answer": "Misalignment and vibration"
+  },
+  {
+    "question": "When assembling a key in a shaft keyseat, the key __________.",
+    "options": ["Should fit into the keyseat without forcing it", "Should be tapped into place with a hammer", "Should be pressed into place using a vise", "Should be cooled and the shaft heated"],
+    "answer": "Should fit into the keyseat without forcing it"
+  },
+  {
+    "question": "The groove in a shaft for a key is called a __________.",
+    "options": ["Keygroove", "Keyseat", "Keyway", "B or C"],
+    "answer": "Keyseat"
+  },
+  {
+    "question": "For the key to extend into the keyseats of both the hub and the shaft, the nominal keyseat height is __________ the key height?",
+    "options": ["Slightly smaller than", "Slightly larger than", "Same as", "Half"],
+    "answer": "Half"
+  },
+  {
+    "question": "The best instrument to use when measuring the inside width of a keyseat or the depth of the keyseat is a __________.",
+    "options": ["Micrometer", "Dial caliper", "Rule", "Feeler gage"],
+    "answer": "Dial caliper"
+  },
+  {
+    "question": "<img src='20.png' style='height:300px;'><br>The Mechanical Advantage Is Always The Amount __________ Divided By The Effort __________.",
+    "options": ["applied, moved", "moved, applied. In this diagram it is 200lbs moved divided by 100lbs or 2", "moved., moved", "applied, applied"],
+    "answer": "moved, applied. In this diagram it is 200lbs moved divided by 100lbs or 2"
+  },
+  {
+    "question": "Torque is a measurement of the force which cause something to rotate around a point and is measured in units of __________.",
+    "options": ["Horsepower", "revolutions per minute(RPM)", "foot-pounds, inch-pounds or newton-meters", "Meters"],
+    "answer": "foot-pounds, inch-pounds or newton-meters"
+  },
+  {
+    "question": "What can cause a decrease in mechanical power efficiency?",
+    "options": ["Current (amps) remains constant", "Current Increases", "Friction Increases", "RPM Increases"],
+    "answer": "Friction Increases"
+  },
+  {
+    "question": "Mechanical Power Efficiency is defined as _________",
+    "options": ["the ratio of the Power out to the Power in(Power out/power in)", "torque times RPM", "output torque divided by load", "load times radius arm"],
+    "answer": "the ratio of the Power out to the Power in(Power out/power in)"
+  },
+  {
+    "question": "<img src='24.png' style='height:300px;'><br>If a machine has many lubrication points it is most logical to use _________",
+    "options": ["A system like in the diagram above that lubricate at multiple points at the same time.", "an oil can", "a grease gun", "drip lubrication"],
+    "answer": "A system like in the diagram above that lubricate at multiple points at the same time."
+  },
+  {
+    "question": "The load capacity of an antifriction bearing can be increased by ____________ the number of ____________",
+    "options": ["increasing, balls or rollers", "decreasing, balls or rollers", "lubricating, couplings", "decreasing, bearings"],
+    "answer": "increasing, balls or rollers"
+  },
+  {
+    "question": "Two methods of installing bearings are  _________(preferred) and ____________(if preferred is not available)",
+    "options": ["arbor press, sleeve and hammer", "sleeve and hammer, arbor press", "screwdriver, hammer", "hammer, vise grip"],
+    "answer": "arbor press, sleeve and hammer"
+  },
+  {
+    "question": "How much grease should be pumped into a Zerk grease fitting ?",
+    "options": ["until old grease comes out", "3 pumps", "1 pump", "until you can't pump any more"],
+    "answer": "until old grease comes out"
+  },
+  {
+    "question": "What type of connection is best to use between motor and a a water pump or air compressor?",
+    "options": ["jaw/spider coupling or other flexible coupling", "a shaft to shaft chain and sprockets", "a shaft to shaft belt and pulleys", "a rigid sleeve coupling"],
+    "answer": "jaw/spider coupling or other flexible coupling"
+  },
+  {
+    "question": "<img src='29.png' style='height:300px;'><br>The order of and names of the 4 couplings shown below are ___________?",
+    "options": ["rigid coupling, belt and pulleys, chain and sprockets, driver and driven gears", "jaw/spider coupling, chain and sprockets, belt and pulleys, driver and driven gears", "grid coupling, chain, belt and gears", "grid coupling, belt, chain and gears"],
+    "answer": "jaw/spider coupling, chain and sprockets, belt and pulleys, driver and driven gears"
+  },
+  {
+    "question": "Compared to other flexible couplings, a flexible jaw coupling allows  ___________ than other couplings",
+    "options": ["higher speed", "more load", "more misalignment", "lower speed"],
+    "answer": "more misalignment"
+  },
+  {
+    "question": "If you have no instruments, an easy way to begin a check of shaft misalignment is to look at the ______________ and __________",
+    "options": ["right view, left view", "botttom view left view", "top view, side view", "left view, right view"],
+    "answer": "top view, side view"
+  },
+  {
+    "question": "For vertical parallel misalignment ___________",
+    "options": ["add shims under one front foot only", "add shims under both front feet only", "check the height of both shafts. If not the same, PLACE EQUAL # SHIMS UNDER ALL FEET", "add shims under right side feet only"],
+    "answer": "check the height of both shafts. If not the same, PLACE EQUAL # SHIMS UNDER ALL FEET"
+  },
+  {
+    "question": "When installing a spider/jaw coupling the driven shaft should be ____________ higher than the driver shaft.",
+    "options": ["30 mm", "15 mm", ".381 mm", ".15 inches"],
+    "answer": ".381 mm"
+  },
+  {
+    "question": "<img src='34.png' style='height:300px;'><br>Shim thickness is the same as the __________ of the feeler gauge used to measure the gap",
+    "options": ["length", "width", "thickness", "depth"],
+    "answer": "thickness"
+  },
+  {
+    "question": "Mechanical Power/Horsepower is made up of  __________ and __________",
+    "options": ["length, speed", "torque, width", "torque, speed", "torque, depth"],
+    "answer": "torque, speed"
+  },
+  {
+    "question": "<img src='36.png' style='height:300px;'><br>The output torque of the system below is _____________",
+    "options": ["400 RPM", "400 ft-lbs", "25 ft-lbs", "25 RPM"],
+    "answer": "25 ft-lbs"
+  },
+  {
+    "question": "<img src='37.png' style='height:300px;'><br>The output speed of the system below is _____________",
+    "options": ["4000 RPM", "400 ft-lbs", "25 RPM", "1000 RPM"],
+    "answer": "4000 RPM"
+  },
+  {
+    "question": "A V-belt should ride _________ in the groove with its top near the top of the sheave, and does not touch the ___________ of the sheave.",
+    "options": ["high, bottom", "low, bottom", "high, top", "low, sides"],
+    "answer": "high, bottom"
+  },
+  {
+    "question": "<img src='39.png' style='height:300px;'><br>The type of misalignment shown on the left side of the picture below is  _________ misalignment",
+    "options": ["vertical angular", "vertical", "horizontal", "torque"],
+    "answer": "vertical angular"
+  },
+  {
+    "question": "<img src='40.png' style='height:300px;'><br>The type of misalignment shown on the right side of the picture below is  _________ misalignment",
+    "options": ["angular", "vertical", "horizontal", "parallel"],
+    "answer": "parallel"
+  },
+  {
+    "question": "In the process of installing a chain drive system, the motor and driven components should be checked  for excessive run-out.  If the total indicator reading is 0.044 mm. The run-out is __________",
+    "options": ["0.044 mm", ".002 inch", ".022 mm", ".02 inch"],
+    "answer": ".022 mm"
+  },
+  {
+    "question": "<img src='42.png' style='height:300px;'><br>The amount of deflection by a belt tension tester should not be more than  _________  of the belt span,",
+    "options": ["3%", "10%", "1/10", "1/64"],
+    "answer": "1/64"
+  },
+  {
+    "question": "A belt drive system has the least capability of handling torque and speed. Next to that, a ___________ drive system can handle more speed and torque",
+    "options": ["gear", "water", "chain", "pulley"],
+    "answer": "chain"
+  },
+  {
+    "question": "The shaft to adjacent shaft drive system with the most capability of handling the most torque and the highest speed is a ___________ drive system.",
+    "options": ["gear", "water", "chain", "pulley"],
+    "answer": "gear"
+  },
+  {
+    "question": "A gear drive has a 12-tooth driver gear and an 18- tooth driven gear. If the driver gear is rotating at 720 RPM the rotational speed of the driven gear will be __________ RPM.",
+    "options": ["1080", "680", "480", "280"],
+    "answer": "480"
+  },
+  {
+    "question": "What are the names of the parts of a standard roller chain?",
+    "options": ["flange, nut, bolt", "flat washer, lock washer", "rollers, bushings, pins", "cog, conventional"],
+    "answer": "rollers, bushings, pins"
+  },
+  {
+    "question": "The thickness of a lubricant is its__________",
+    "options": ["dropping point", "hardness", "rollers, bushings, pins", "viscosity"],
+    "answer": "viscosity"
+  },
+  {
+    "question": "<img src='48.png' style='height:300px;'><br>If the measure of mid-span movement in this diagram is 2 inches, then the sag is _______________",
+    "options": ["2 inches", "4 inches", ".1 inch", "1 inch"],
+    "answer": "1 inch"
+  },
+  {
+    "question": "A chain puller is a tool used to hold two ends of a chain together while the installing a master link and is adjusted by __________.",
+    "options": ["using a pliers", "using a screwdriver", "using a vise grip", "Turning the dial to open or close the jaws"],
+    "answer": "Turning the dial to open or close the jaws"
+  },
+  {
+    "question": "An idler gear is positioned between the Drive Gear and Driven gear to either transfer power to a location that connects it to the driver gear and/or ___________",
+    "options": ["changes the speed of the driven gear", "change the direction of rotation of the driven gear", "changes the torque of the driven gear", "Increases the speed of the driven gear"],
+    "answer": "change the direction of rotation of the driven gear"
+  }
+];
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>

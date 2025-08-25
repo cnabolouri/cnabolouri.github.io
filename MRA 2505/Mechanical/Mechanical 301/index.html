@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mechanical Systems 2 Pretest 301</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #eee;
+    }
+    .correct { background-color: #c8f7c5; }
+    .incorrect { background-color: #f7c5c5; }
+    .result { font-weight: bold; margin-top: 1rem; }
+    img.symbol { max-height: 70px; display: block; margin: 1em auto 1em auto; }
+  </style>
+</head>
+<body>
+  <h1>Mechanical Systems 2 Pretest 301</h1>
+  <div id="quiz"></div>
+  <script>
+const quizData = [
+  {
+    "question": "A bushing is a component that __________.",
+    "options": ["Rotates within a sheave", "Attaches a sheave to its shaft", "Acts as an idler pulley in a V-belt system", "Secures a bearing to its shaft"],
+    "answer": "Attaches a sheave to its shaft"
+  },
+  {
+    "question": "One advantage of the QD bushing is that it __________.",
+    "options": ["Can be disconnected while running", "Will multiply the torque of the drive shaft", "Can be mounted on a sheave in either a clockwise or counter clockwise position", "Can be removed using a bearing puller"],
+    "answer": "Can be mounted on a sheave in either a clockwise or counter clockwise position"
+  },
+  {
+    "question": "A common mistake when installing a taper lock bushing is __________.",
+    "options": ["Can be disconnected while running", "Will multiply the torque of the drive shaft", "Can be mounted on a sheave in either a forward or reverse position", "People line up the grub screw threads that are to used for removal instead of the insertion threads"],
+    "answer": "People line up the grub screw threads that are to used for removal instead of the insertion threads"
+  },
+  {
+    "question": "A fractional horsepower V-belt with a nominal length of 36 inches and an actual length of 36.2 inches would have the following belt size code _________.",
+    "options": ["4L360 48", "4L360 50", "4L360 52", "4L360 55"],
+    "answer": "4L360 52"
+  },
+  {
+    "question": "<img src='5.png' style='height:300px;'><br>The names of these bushings in order from left to right are _______________ bushings.",
+    "options": ["Taper lock, QD, Split taper", "Gear, Belt, Chain", "QD, Split taper, Taper Lock", "Bolt, nut, lock washer"],
+    "answer": "QD, Split taper, Taper Lock"
+  },
+  {
+    "question": "The notched or cog belt __________.",
+    "options": ["Requires a notched or ribbed sheave", "Handles 30% less power than a conventional V-belt", "Can dissipate heat better than a conventional V-belt", "Requires the use of larger sheaves"],
+    "answer": "Can dissipate heat better than a conventional V-belt"
+  },
+  {
+    "question": "The length of a conventional V-belt can be determined by measuring the __________.",
+    "options": ["outside circumference of the belt", "inside circumference of the belt", "pitch line of the belt", "outside circumference of the belt rounded down to nearest inch"],
+    "answer": "inside circumference of the belt"
+  },
+  {
+    "question": "What is the best method to verify two belts with the same nominal length and profile from a manufacturer are the same length?",
+    "options": ["Measure width of belt", "Belt match code", "Cross section belt gauge", "String"],
+    "answer": "Belt match code"
+  },
+  {
+    "question": "The letter L designates which type of belt ________ and a letter designation of A,B,C,D,E is a belt of type _________.",
+    "options": ["Conventional, Wedge", "Cog, Timing", "Timing, HTD", "Fractional horsepower, Conventional"],
+    "answer": "Fractional horsepower, Conventional"
+  },
+  {
+    "question": "If a belt slips it is generally caused by ___________________ and might cause the belt to _________.",
+    "options": ["too much lubrication, be hot", "insufficient tension, squeak or squeal", "no lubrication, smoke", "too much tension, break"],
+    "answer": "insufficient tension, squeak or squeal"
+  },
+  {
+    "question": "The part of a Timing Belt system that transmits power from the shaft to the belt is called a ___________. Whereas, same part of an HTD belt system is called a ____________.",
+    "options": ["sprocket, pulley", "pulley, sprocket", "QD bearing, taper lock bearing", "belt, chain"],
+    "answer": "pulley, sprocket"
+  },
+  {
+    "question": "When installing an HTD belt you do not have to ______________.",
+    "options": ["Aligned", "assure the centers of the two sprockets are equal distance from the component onto which they are mounted", "inspect the sprockets", "apply tension using a table"],
+    "answer": "assure the centers of the two sprockets are equal distance from the component onto which they are mounted"
+  },
+  {
+    "question": "Timing belts and HTD belts are both synchronous belts. However the shape of teeth of an HTD belt are ____________ and the shape of the teeth of the Timing belt are _________________",
+    "options": ["horizontal, vertical", "curved or parabolic, square or trapezoidal", "slack, tight", "tight, slack"],
+    "answer": "curved or parabolic, square or trapezoidal"
+  },
+  {
+    "question": "<img src='14.png' style='height:300px;'><br>The output speed of the system below is _____________.",
+    "options": ["4000 RPM", "400 ft-lbs", "25 RPM", "1000 RPM"],
+    "answer": "4000 RPM"
+  },
+  {
+    "question": "Pitch is ______________.",
+    "options": ["Distance from one point on a gear tooth, timing belt tooth, or bolt tooth to the same point on the next or previous tooth", "A point on a pitch circle", "Force transmitted by a belt", "Speed transmitted by a chain"],
+    "answer": "Distance from one point on a gear tooth, timing belt tooth, or bolt tooth to the same point on the next or previous tooth"
+  },
+  {
+    "question": "The 'easiest' way to determine the correct tension on a timing belt is ______________.",
+    "options": ["To use a tension tester.", "To look at the belt", "Squeeze it", "Tighten it until it begins to break"],
+    "answer": "Squeeze it"
+  },
+  {
+    "question": "A sheave needs to be replaced when ____________________.",
+    "options": ["The belt being used with it looks okay.", "It can no longer be aligned properly", "It is cracked", "The bearing on which it is mounted is aligned properly"],
+    "answer": "It is cracked"
+  },
+  {
+    "question": "A chain might ride high on the teeth of its sprocket if ____________________.",
+    "options": ["The machine is running too slow.", "It is not aligned properly", "The speed is too high, lubrication is poor, it is loose, it is dirty", "It is the wrong type of chain for the application"],
+    "answer": "The speed is too high, lubrication is poor, it is loose, it is dirty"
+  },
+  {
+    "question": "Items that generally do not appear on a Safety Data Sheet are ____________________.",
+    "options": ["Procedure to wash eyes.", "Procedure if inhaled", "Requirement to wear breathing filters", "Procedure if get on skin."],
+    "answer": "Requirement to wear breathing filters"
+  },
+  {
+    "question": "When lifting something less than 50 pounds ____________________.",
+    "options": ["Jerk the load upward quickly.", "Get help", "Keep back straight, bend knees; lift slowly using legs and straight arms", "Use a PIT (powered industrial truck)."],
+    "answer": "Keep back straight, bend knees; lift slowly using legs and straight arms"
+  },
+  {
+    "question": "The first step before working on a machine after a fault is observed or reported is to _________________",
+    "options": ["Turn off the power", "Get the tools needed", "Lockout/Tagout the machine and make sure it is not running", "Listen for unusual noises."],
+    "answer": "Lockout/Tagout the machine and make sure it is not running"
+  },
+  {
+    "question": "If a machine has removable guards make sure the guards have a _______________ which will disable the machine if the guard is not in place.",
+    "options": ["power switch", "red power off light", "interlock", "green power on light"],
+    "answer": "interlock"
+  },
+  {
+    "question": "If a machine safety guard is disabled ___________.",
+    "options": ["reported", "turned off", "the machine must be locked out tagged out", "slowed down"],
+    "answer": "the machine must be locked out tagged out"
+  },
+  {
+    "question": "Before working on a machine one lock for each _____________ must be in place to lock out tag out the machine.",
+    "options": ["operator and supervisor", "electrician and mechanic and technician", "person", "operator and electrician"],
+    "answer": "electrician and mechanic and technician"
+  },
+  {
+    "question": "<img src='25.png' style='height:300px;'><br>Looking at the 5 types of transmissions or couplings below the ___________________ is least likely to have a nip point.",
+    "options": ["belt drive", "flange and sleeve coupling", "chain drive", "gear drive"],
+    "answer": "flange and sleeve coupling"
+  },
+  {
+    "question": "When aligning 2 shafts connected with a flange coupling, check _______________________--.",
+    "options": ["measure the run-out", "Check dial indicator on the face at the 3 and 9 o'clock positions", "measure the end-float", "measure the diameter of the shafts"],
+    "answer": "Check dial indicator on the face at the 3 and 9 o'clock positions"
+  },
+  {
+    "question": "<img src='27.png' style='height:300px;'><br>Vertical parallel misalignment in the diagram below should be determined by _______________________ and in this example is __________________.",
+    "options": ["taking 1/2 of the difference between the total indicator readings at 12 and 6 o' clock, .004 inches", "doubling the TIR at 12 o' clock, .046 inches", "taking one-half of the TIR at 12 o'clock, .023 inches", "taking one-half of the TIR at 6 o'clock, .015 inches"],
+    "answer": "taking 1/2 of the difference between the total indicator readings at 12 and 6 o' clock, .004 inches"
+  },
+  {
+    "question": "In which order should rim and face alignment be performed __________________.",
+    "options": ["vertical angular, vertical parallel, horizontal angular, horizontal parallel", "horizontal parallel, vertical angular, vertical parallel, horizontal angular,", "horizontal angular, horizontal parallel, vertical angular, vertical parallel,", "horizontal angular, vertical angular, vertical parallel, horizontal parallel"],
+    "answer": "vertical angular, vertical parallel, horizontal angular, horizontal parallel"
+  },
+  {
+    "question": "<img src='29.png' style='height:300px;'><br>Using the diagram and information below, how much should the front feet be shimmed? _____________",
+    "options": [".710mm", "2.010mm", ".555mm", ".450"],
+    "answer": "2.010mm"
+  },
+  {
+    "question": "<img src='30.png' style='height:300px;'><br>What types of couplings are these in the order of the picture __________________.",
+    "options": ["gear, grid, chain, bellows", "chain, grid, gear, bellows", "bellows, grid, gear, chain", "grid, gear, chain, bellows"],
+    "answer": "grid, gear, chain, bellows"
+  },
+  {
+    "question": "What is done next after aligning the sprockets of a chain coupling ? __________________.",
+    "options": ["insert the master link", "lockout / tagout", "remove a link from the chain", "put the chain on each sprocket"],
+    "answer": "put the chain on each sprocket"
+  },
+  {
+    "question": "An advantage of a grid coupling compared to a chain coupling is __________________.",
+    "options": ["it requires no lubrication", "it is easier to install", "a grid coupling is less expensive than a chain coupling", "a grid coupling allows for more misalignment than a chain coupling"],
+    "answer": "a grid coupling allows for more misalignment than a chain coupling"
+  },
+  {
+    "question": "Generally it is not recommended to use a hammer when working on couplings, an exception is it is okay to use a _____________ when installing a ___________.",
+    "options": ["5 pound hammer, conventional v-belt", "soft mallet, grid on a grid coupling", "chain puller, fractional horsepower belt", "dial caliper, jaw coupling"],
+    "answer": "soft mallet, grid on a grid coupling"
+  },
+  {
+    "question": "_______________ can be applied to a roller chain depending on ____________.",
+    "options": ["water, temperature", "oil or grease lubrication, speed that it is running", "graphite, vibration", "sand, tension"],
+    "answer": "oil or grease lubrication, speed that it is running"
+  },
+  {
+    "question": "Higher than normal temperatures on components of a mechanical systems can many times be caused by ____________.",
+    "options": ["normally running machinery", "misalignment of couplings, belts, sheaves, or other components", "improperly sized components", "improper belt tension"],
+    "answer": "misalignment of couplings, belts, sheaves, or other components"
+  },
+  {
+    "question": "The portion of a sprocket between the sprocket ________ and ________ is named the ____________.",
+    "options": ["sheave, the belt, pitch", "teeth, bore or bearing, hub", "belt, sheave, pitch circle", "chain, pitch, belt"],
+    "answer": "teeth, bore or bearing, hub"
+  },
+  {
+    "question": "A silent chain has a ____________ that must be inserted into the __________ of the sprocket.",
+    "options": ["tooth, groove", "link, pin", "guide, groove", "groove, guide"],
+    "answer": "guide, groove"
+  },
+  {
+    "question": "<img src='38.png' style='height:300px;'><br>The types of chains pictured below from left to right are ____________________________________.",
+    "options": ["HTD, Timing, Conventional, FHP", "roller less chain, leaf chain, silent chain, roller chain", "multi-strand chain, roller chain, leaf chain, silent chain", "roller less chain, roller chain, leaf chain, offset chain"],
+    "answer": "multi-strand chain, roller chain, leaf chain, silent chain"
+  },
+  {
+    "question": "Multi strand chains can have less sag than a single strand chain. For single strand chain the allowable amount of sag if mounted horizontally is ______________. Therefore, for a multi strand chain it would be less than that.",
+    "options": ["4-6%", "more than 3%", "2-3%", "1-2%"],
+    "answer": "2-3%"
+  },
+  {
+    "question": "A Multi strand chain is _______________ than a single strand chain and therefore when removing it _____________.",
+    "options": ["heavier, be careful to support it", "lighter, be care it does not break", "stronger, it is okay to drop it", "stronger, remove the master link"],
+    "answer": "heavier, be careful to support it"
+  },
+  {
+    "question": "The length of a roller chain with 40 links and a chain pitch of 16 is ________________________ long.",
+    "options": ["80 inches", "40 inches", "16 inches", "6 inches"],
+    "answer": "80 inches"
+  },
+  {
+    "question": "What is the designation for a chain sprocket with 3 strands, a pitch 1 inch, that accepts a roller chain, requires a detachable hub with 30 teeth?",
+    "options": ["T 8 0 D 30", "D 8 0 D 30", "T 8 R D 30", "D 8 0 C 30"],
+    "answer": "T 8 R D 30"
+  },
+  {
+    "question": "When should a standard single strand roller chain should be replaced?___________",
+    "options": ["when exactly 2% of its stated length", "when it’s 3% or more of its stated length", "when more than 2% of its stated length", "when less than 3% of its stated length"],
+    "answer": "when it’s 3% or more of its stated length"
+  },
+  {
+    "question": "A probable cause for chain wear and breakage is __________.",
+    "options": ["Over lubrication", "High operating temperatures", "Dirt in the sprocket teeth due to improper lubrication or high speed", "Abrasive conditions"],
+    "answer": "Dirt in the sprocket teeth due to improper lubrication or high speed"
+  },
+  {
+    "question": "A chain breaker is a tool strictly designed for __________.",
+    "options": ["Removing a master link from a chain", "Removing a roller from the chain", "Shortening a chain or Removing a chain without a master link or moveable sprockets", "Testing the strength of a chain"],
+    "answer": "Shortening a chain or Removing a chain without a master link or moveable sprockets"
+  }
+];
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(quizData);
+
+    let wrongAnswers = [];
+    let current = 0;
+    let score = 0;
+    const quizEl = document.getElementById('quiz');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
+
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
+
+window.checkAnswer = function(btn, selected) {
+  const qObj = quizData[current];
+  const correct = qObj.answer;
+  const resultEl = document.getElementById('result');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(b => b.disabled = true);
+
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
+
+
+    loadQuestion();
+  </script>
+</body>
+</html>
