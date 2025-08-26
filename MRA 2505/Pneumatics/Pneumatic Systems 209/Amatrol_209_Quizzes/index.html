@@ -156,127 +156,103 @@
         [array[i], array[j]] = [array[j], array[i]];
       }
     }
-    
+
     shuffle(quizData);
 
     let wrongAnswers = [];
-
     let current = 0;
     let score = 0;
     const quizEl = document.getElementById('quiz');
 
     function loadQuestion() {
-  const q = quizData[current];
-  const counterHTML = `
-    <div style="margin-bottom:0.8em;font-size:1.1em;">
-      <strong>Question ${current + 1} of ${quizData.length}</strong><br>
-      <span>Correct answers so far: ${score}</span>
-    </div>
-  `;
-  const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option}')">${option}</button>`).join('');
-  quizEl.innerHTML = `
-    <div class="card">
-      ${counterHTML}
-      <h2>${q.question}</h2>
-      <div class="options">${options}</div>
-      <div class="result" id="result"></div>
-    </div>
-  `;
-}
+      const q = quizData[current];
+      const counterHTML = `
+        <div style="margin-bottom:0.8em;font-size:1.1em;">
+          <strong>Question ${current + 1} of ${quizData.length}</strong><br>
+          <span>Correct answers so far: ${score}</span>
+        </div>
+      `;
+      const options = q.options.map(option => `<button onclick="checkAnswer(this, '${option.replace(/'/g,"\\'")}')">${option}</button>`).join('');
+      quizEl.innerHTML = `
+        <div class="card">
+          ${counterHTML}
+          <h2>${q.question}</h2>
+          <div class="options">${options}</div>
+          <div class="result" id="result"></div>
+        </div>
+      `;
+    }
 
-function showResults() {
-  let reviewHTML = "";
-  if (wrongAnswers.length === 0) {
-    reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
-  } else {
-    reviewHTML = `
-      <h3 style="margin-top:2em;">Review: Missed Questions</h3>
-      <ol>
-        ${wrongAnswers.map(item => {
-          // Special note for the food processing question
-          let extraNote = "";
-          if (item.question.startsWith("Air logic is popular in the food processing industry because")) {
-            extraNote = `<div style="margin-top:0.4em; color:#0066cc; font-size:0.98em; border-left:3px solid #0066cc; padding-left:0.7em;">
-              Note: The answer in Amatrol Quiz is <b>'It is cleaner than electricity'</b>, but in the book, it's <b>'Of the moisture present during cleaning'</b>.
-              </div>`;
-          }
-          return `
-            <li style="margin-bottom:1em;">
-              <div style="font-weight:500;">${item.question}</div>
-              <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
-              <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
-              ${extraNote}
-            </li>
-          `;
-        }).join('')}
-      </ol>
-    `;
-  }
-  quizEl.innerHTML = `
-    <div class='card'>
-      <h2>🎉 Quiz Completed!</h2>
-      <p>Your Score: ${score} / ${quizData.length}</p>
-      ${reviewHTML}
-      <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
-    </div>
-  `;
-}
+    function showResults() {
+      let reviewHTML = "";
+      if (wrongAnswers.length === 0) {
+        reviewHTML = `<p style="color:green;font-weight:bold;">You got every question correct! 🎉</p>`;
+      } else {
+        reviewHTML = `
+          <h3 style="margin-top:2em;">Review: Missed Questions</h3>
+          <ol>
+            ${wrongAnswers.map(item => `
+              <li style="margin-bottom:1em;">
+                <div style="font-weight:500;">${item.question}</div>
+                <div>Your answer: <span style="color:#b00;">${item.selected}</span></div>
+                <div>Correct answer: <span style="color:#080;">${item.correct}</span></div>
+              </li>
+            `).join('')}
+          </ol>
+        `;
+      }
+      quizEl.innerHTML = `
+        <div class='card'>
+          <h2>🎉 Quiz Completed!</h2>
+          <p>Your Score: ${score} / ${quizData.length}</p>
+          ${reviewHTML}
+          <button onclick="location.reload()" style="margin-top:2em;">Restart Quiz</button>
+        </div>
+      `;
+    }
 
-    
-function checkAnswer(btn, selected) {
+window.checkAnswer = function(btn, selected) {
   const qObj = quizData[current];
   const correct = qObj.answer;
   const resultEl = document.getElementById('result');
   const buttons = document.querySelectorAll('button');
   buttons.forEach(b => b.disabled = true);
 
+  // Remove any previous click listener to avoid multiple triggers
+  document.body.removeEventListener('click', window._nextQuestionHandler);
+
   if (selected === correct) {
-  btn.classList.add('correct');
-  resultEl.textContent = '✅ Correct!';
-  score++;
-  setTimeout(() => {
+    btn.classList.add('correct');
+    resultEl.innerHTML = '✅ Correct!<span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>';
+    score++;
+  } else {
+    btn.classList.add('incorrect');
+    wrongAnswers.push({
+      question: qObj.question,
+      options: qObj.options,
+      correct: correct,
+      selected: selected
+    });
+    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
+    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>`;
+  }
+
+  // Define a persistent handler and store on window to allow removal
+  window._nextQuestionHandler = function nextQuestionHandler() {
+    document.body.removeEventListener('click', window._nextQuestionHandler);
     current++;
     if (current < quizData.length) {
       loadQuestion();
     } else {
       showResults();
     }
-  }, 300);
-} else {
-  btn.classList.add('incorrect');
-  // Save the wrong answer for review
-  wrongAnswers.push({
-    question: qObj.question,
-    options: qObj.options,
-    correct: correct,
-    selected: selected
-  });
-    // Add extra note for this specific question
-    let extraNote = "";
-    if (qObj.question.startsWith("Air logic is popular in the food processing industry because")) {
-      extraNote = `<div style="margin-top:0.6em; color:#0066cc; font-size:0.98em; border-left:3px solid #0066cc; padding-left:0.7em;">
-      Note: The answer in Amatrol Quiz is <b>'It is cleaner than electricity'</b>, but in the book, it's <b>'of the moisture present during cleaning'</b>.
-      </div>`;
-    }
-    resultEl.innerHTML = `❌ Incorrect. Correct answer: ${correct}
-    <span style="color: #888; font-size: 0.95em; display:block; margin-top:0.8em;">Click anywhere to continue…</span>
-    ${extraNote}`;
-    // Handler to advance on any click
-    function nextQuestionHandler() {
-      document.body.removeEventListener('click', nextQuestionHandler);
-      current++;
-      if (current < quizData.length) {
-        loadQuestion();
-      } else {
-        showResults();
+  };
 
-      }
-    }
-    setTimeout(() => {
-      document.body.addEventListener('click', nextQuestionHandler);
-    }, 200);
-  }
-}
+  // Wait for any click to continue
+  setTimeout(() => {
+    document.body.addEventListener('click', window._nextQuestionHandler);
+  }, 50);
+};
 
 
     loadQuestion();
